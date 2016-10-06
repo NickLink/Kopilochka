@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#010101</color>
+    <color name="blue">#0A79E4</color>
+    <color name="bg_main">#d8dcdf</color>
+    <color name="user_name">#0B2B5C</color>
+    <color name="menu_background">#797979</color>
+    <color name="menu_selected">#626262</color>
+    <color name="menu_top_divider">#686868</color>
+    <color name="menu_bottom_divider">#383838</color>
+    <color name="top_title_background">#e6be3f</color>
+
+    <color name="button_shadows">#D6D6D6</color>
+    <color name="button_top">#9FB3E5</color>
+
+</resources>

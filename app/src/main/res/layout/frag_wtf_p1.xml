@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/top_menu_open"
+        layout="@layout/top_menu_open"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/wtf_name"
+            style="@style/myWTF_TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/wtf_name_text"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/wtf_name_edit"
+            style="@style/myWTF_EditStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/wtf_email"
+            style="@style/myWTF_TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/wtf_email_text"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/wtf_email_edit"
+            style="@style/myWTF_EditStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/wtf_text"
+            style="@style/myWTF_TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/wtf_text_text"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/wtf_text_edit"
+            style="@style/myWTF_EditStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_with_shadow"
+        android:text="@string/wtf_send_button_text"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

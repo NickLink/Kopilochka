@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Kopilochka</string>
+
+    <string name="menu_start">Стартовая страница</string>
+    <string name="menu_notification">Оповещения</string>
+    <string name="menu_action">Акции</string>
+    <string name="menu_history">История регистраций</string>
+    <string name="menu_data">Личные данные</string>
+    <string name="menu_wtf">Что я делаю не так?</string>
+
+
+    <string name="wtf_name_text">ФИО:</string>
+    <string name="wtf_email_text">Email:</string>
+    <string name="wtf_text_text">Вопрос:</string>
+    <string name="wtf_send_button_text">Отправить</string>
+    <string name="cancel_scan">Отменить</string>
+    <string name="data_enter_email_text">Введите email</string>
+    <string name="data_enter_password_text">Введите пароль</string>
+
+    <string name="input_error">Ошибка ввода данных</string>
+    <string name="fill_all_fields">Заполните все поля</string>
+    <string name="input_ok">Ок</string>
+    <string name="data_login_button_text">Вход</string>
+    <string name="data_name_hello">Добрый день, </string>
+    <string name="data_email_text">Ваш контактный email:</string>
+    <string name="data_phone_text">Ваш контактный телефон:</string>
+
+    <!--Error codes-->
+    <string name="incorrect_login_password">Введенные логин/пароль отсутствуют в БД пользователей</string>
+    <string name="not_active">Пользователю закрыт доступ к функционалу приложения</string>
+    <string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>
+    <string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>
+    <string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>
+
+
+</resources>
