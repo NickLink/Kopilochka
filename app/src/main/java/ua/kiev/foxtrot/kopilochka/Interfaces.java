@@ -10,4 +10,5 @@ public interface Interfaces {
     void ScannResult(String result);
 
     void LoginSuccess(String token);
+    void ActionSelected(int action_id);
 }

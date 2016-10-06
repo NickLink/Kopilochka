@@ -26,15 +26,18 @@ import java.util.List;
 import ua.kiev.foxtrot.kopilochka.adapters.SliderMenuAdapter;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P1;
+import ua.kiev.foxtrot.kopilochka.fragments.Action_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.Data_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.History_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Notif_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.ScanFragment;
 import ua.kiev.foxtrot.kopilochka.fragments.Start_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
+import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
-public class MainActivity extends AppCompatActivity implements Interfaces{
+public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress{
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -204,9 +207,9 @@ public class MainActivity extends AppCompatActivity implements Interfaces{
     public void ScannStart() {
         scanner = new ScanFragment();
 
-        TransactionAction(scanner,
-                getSupportFragmentManager().findFragmentByTag(Const.Fr_AcP1),
-                Const.Fr_Scan, Const.Fr_AcP1, true);
+//        TransactionAction(scanner,
+//                fragmentManager.findFragmentByTag(Const.Fr_AcP1),
+//                Const.Fr_Scan, Const.Fr_AcP1, true);
 
 //        fragmentManager
 //                .beginTransaction()
@@ -217,11 +220,12 @@ public class MainActivity extends AppCompatActivity implements Interfaces{
 
     @Override
     public void ScannResult(String result) {
-        TransactionAction(getSupportFragmentManager().findFragmentByTag(Const.Fr_AcP1),
-                scanner, Const.Fr_AcP1, Const.Fr_Scan, false);
 
-        ((TextView)getSupportFragmentManager()
-                .findFragmentByTag(Const.Fr_AcP1).getView().findViewById(R.id.result_test)).setText(result);
+//        TransactionAction(fragmentManager.findFragmentByTag(Const.Fr_AcP1),
+//                scanner, Const.Fr_AcP1, Const.Fr_Scan, false);
+
+//        ((TextView)getSupportFragmentManager()
+//                .findFragmentByTag(Const.Fr_AcP1).getView().findViewById(R.id.result_test)).setText(result);
 //        fragmentManager
 //                .beginTransaction()
 //                .remove(scanner).commit();
@@ -233,9 +237,15 @@ public class MainActivity extends AppCompatActivity implements Interfaces{
 
     }
 
-//    public String getScan_code(){
-//        return scan_code;
-//    }
+    @Override
+    public void ActionSelected(int action_id) { //
+
+        TransactionActionStack(Action_P2.newInstance(action_id), true); //action_id
+
+//        TransactionAction(Action_P2.newInstance(action_id),
+//                fragmentManager.findFragmentByTag(Const.Fr_AcP1),
+//                Const.Fr_AcP2, Const.Fr_AcP1, true);
+    }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -247,19 +257,38 @@ public class MainActivity extends AppCompatActivity implements Interfaces{
         return false;
     }
 
-    void TransactionAction(Fragment fragment_in, Fragment fragment_out,
-                           String tag_in, String tag_out, boolean forward) {
-        transaction = getSupportFragmentManager().beginTransaction();
-        Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
-        if(fragment_out != null && fragment_in != null){
+//    void TransactionAction(Fragment fragment_in, Fragment fragment_out,
+//                           String tag_in, String tag_out, boolean forward) {
+//        transaction = fragmentManager.beginTransaction();
+//        Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
+//        if(fragment_out != null && fragment_in != null){
+//            if(forward) {
+//                //transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out);
+//                transaction.add(R.id.fragment_place, fragment_in, tag_in);
+//                transaction.hide(fragment_out);
+//            } else {
+//                //transaction.setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out);
+//                transaction.remove(fragment_out);
+//                transaction.show(fragment_in);
+//            }
+//            transaction.commit();
+//        }
+//    }
+
+    void TransactionActionStack(Fragment fragment_in, boolean forward) {
+        transaction = fragmentManager.beginTransaction();
+        //Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
+        if(fragment_in != null){
             if(forward) {
-                //transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out);
-                transaction.add(R.id.fragment_place, fragment_in, tag_in);
-                transaction.hide(fragment_out);
+                transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out, R.anim.slide_left_in, R.anim.slide_left_out);
+                transaction.add(R.id.fragment_place, fragment_in, null);
+                transaction.addToBackStack(null);
+                //transaction.hide(fragment_out);
             } else {
-                //transaction.setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out);
-                transaction.remove(fragment_out);
-                transaction.show(fragment_in);
+                //transaction.setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_left_out);
+                fragmentManager.popBackStack();
+                //transaction.remove(fragment_out);
+                //transaction.show(fragment_in);
             }
             transaction.commit();
         }
@@ -267,15 +296,13 @@ public class MainActivity extends AppCompatActivity implements Interfaces{
 
     @Override
     public void onBackPressed() {
-
-//        int count = getFragmentManager().getBackStackEntryCount();
-//
-//        if (count == 0) {
-//            super.onBackPressed();
-//            //additional code
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
+        if(fragmentManager.getBackStackEntryCount()>0)
+            //Back to stack
+            fragmentManager.popBackStack();
+        else
+            //Finnish activity dialog
+            Utils.ShowExitDialog(this, getString(R.string.menu_exit_title), getString(R.string.menu_exit_text),
+                    getString(R.string.menu_exit_no), getString(R.string.menu_exit_yes));
 
     }
 }

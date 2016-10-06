@@ -1,5 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.utils;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -52,7 +53,7 @@ public class Utils {
 
         TextView Title = (TextView)dialog.findViewById(R.id.title);
         TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancelBtn);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
         Message.setText(message);
@@ -62,6 +63,36 @@ public class Utils {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void ShowExitDialog(final Context context, String title, String message, String cancel, String exit){
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_exit);
+
+        TextView Title = (TextView)dialog.findViewById(R.id.title);
+        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
+        Button exitBtn = (Button) dialog.findViewById(R.id.exit_button);
+
+        Title.setText(title);
+        Message.setText(message);
+        cancelBtn.setText(cancel);
+        exitBtn.setText(exit);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((Activity) context).finish();
             }
         });
         dialog.show();

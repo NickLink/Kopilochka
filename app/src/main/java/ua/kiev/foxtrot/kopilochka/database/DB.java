@@ -58,6 +58,18 @@ public class DB {
         return mDB.query(DB_TABLE, null, null, null, null, null, null);
     }
 
+    public Cursor getData_forTitle(String title) {
+        String selection = COLUMN_TITLE + " = " + title;
+        String[] columns = new String[] { selection };
+        return mDB.query(DB_TABLE, columns, null, null, null, null, null);
+    }
+
+    public Cursor getData_forId(int id) {
+        long row_id = id + 1;
+        String selection = COLUMN_ID + " = " + row_id;
+        return mDB.query(DB_TABLE, null, selection, null, null, null, null);
+    }
+
     public long addRec(BBS_News data) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_AUTHOR, data.getAuthor());

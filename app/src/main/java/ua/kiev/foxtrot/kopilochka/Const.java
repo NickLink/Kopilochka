@@ -18,6 +18,7 @@ public class Const {
     public static final String Fr_StP1 = "Fr_StP1";
     public static final String Fr_NtP1 = "Fr_NtP1";
     public static final String Fr_AcP1 = "Fr_AcP1";
+    public static final String Fr_AcP2 = "Fr_AcP2";
     public static final String Fr_HsP1 = "Fr_HsP1";
     public static final String Fr_DtP1 = "Fr_DtP1";
     public static final String Fr_WtP1 = "Fr_WtP1";

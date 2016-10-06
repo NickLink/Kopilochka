@@ -8,6 +8,11 @@
     <string name="menu_data">Личные данные</string>
     <string name="menu_wtf">Что я делаю не так?</string>
 
+    <string name="menu_exit_title">Выход</string>
+    <string name="menu_exit_text">Вы уверены?</string>
+    <string name="menu_exit_yes"> Да </string>
+    <string name="menu_exit_no"> Нет </string>
+
 
     <string name="wtf_name_text">ФИО:</string>
     <string name="wtf_email_text">Email:</string>
