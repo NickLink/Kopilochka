@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 
@@ -21,6 +22,16 @@ import ua.kiev.foxtrot.kopilochka.R;
 public class ScanFragment extends Fragment implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
     Interfaces interfaces;
+    int id;
+
+    public ScanFragment newInstance(int id){
+        ScanFragment fragment = new ScanFragment();
+        Bundle args = new Bundle();
+        args.putInt(Const.action_id, id);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -36,12 +47,12 @@ public class ScanFragment extends Fragment implements ZBarScannerView.ResultHand
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_scan, container,
                 false);
-
+        id = getArguments().getInt(Const.action_id, 0);
         Button cancel_scan = (Button)rootView.findViewById(R.id.cancel_scan);
         cancel_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                interfaces.ScannResult(null);
+                interfaces.ScannResult(id, null);
             }
         });
         mScannerView = new ZBarScannerView(getActivity());
@@ -70,7 +81,7 @@ public class ScanFragment extends Fragment implements ZBarScannerView.ResultHand
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                interfaces.ScannResult(rawResult.getContents().toString());
+                interfaces.ScannResult(id, rawResult.getContents().toString());
                 //mScannerView.resumeCameraPreview(ScanFragment.this);
             }
         }, 500);

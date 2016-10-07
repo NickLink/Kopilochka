@@ -36,6 +36,12 @@
     <string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>
     <string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>
     <string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>
+    <string name="action_period_text">Период действия:</string>
+    <string name="action_type_text">Тип акции:</string>
+    <string name="action_data_text">Дата начисления</string>
+    <string name="action_list_name">Название</string>
+    <string name="action_list_days">Осталось дней</string>
+    <string name="action_list_points">Баллов</string>
 
 
 </resources>

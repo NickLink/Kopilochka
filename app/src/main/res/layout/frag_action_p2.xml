@@ -10,97 +10,42 @@
         android:id="@+id/top_menu_back"
         layout="@layout/top_menu_back"/>
 
-    <TextView
-        android:id="@+id/action_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ACTION NAME"
-        android:layout_gravity="center_horizontal" />
-
     <LinearLayout
-        android:orientation="vertical"
+        style="@style/myLinearLayout"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:weightSum="5">
 
-        <LinearLayout
-            style="@style/myLinearLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/action_name"
+            style="@style/myNormal_TextStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:weightSum="5">
+            android:text="ACTION NAME"
+            android:layout_weight="4"/>
 
-            <TextView
-                android:id="@+id/action_period_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="2"/>
-
-            <TextView
-                android:id="@+id/action_period"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="3"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/myLinearLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/action_models_count"
+            style="@style/myNormal_TextStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:weightSum="5">
+            android:text="Count"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/action_type_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="2"/>
-
-            <TextView
-                android:id="@+id/action_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="3"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/myLinearLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="5">
-
-            <TextView
-                android:id="@+id/action_data_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="2"/>
-
-            <TextView
-                android:id="@+id/action_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="ACTION DATA"
-                android:layout_weight="3"/>
-        </LinearLayout>
 
     </LinearLayout>
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/imageView_image"
+    <View
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="2dp"
+        android:background="@color/holo_green_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView_text" />
+    <ListView
+        android:id="@+id/models_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        style="@style/myLinearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/action_period_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_period_text"
+            android:layout_weight="2"
+            style="@style/mySmall_TextStyle" />
+
+        <TextView
+            android:id="@+id/action_period"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="ACTION DATA"
+            android:layout_weight="3"
+            style="@style/mySmall_TextStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/myLinearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/action_type_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_type_text"
+            android:layout_weight="2"
+            style="@style/mySmall_TextStyle" />
+
+        <TextView
+            android:id="@+id/action_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="ACTION DATA"
+            android:layout_weight="3"
+            style="@style/mySmall_TextStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/myLinearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/action_data_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_data_text"
+            android:layout_weight="2"
+            style="@style/mySmall_TextStyle" />
+
+        <TextView
+            android:id="@+id/action_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="ACTION DATA"
+            android:layout_weight="3"
+            style="@style/mySmall_TextStyle" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/action_comment"
+        style="@style/mySmall_TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        style="@style/myLinearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8">
+
+        <TextView
+            android:id="@+id/action_list_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_list_name"
+            android:layout_weight="5"/>
+
+        <TextView
+            android:id="@+id/action_list_days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_list_days"
+            android:layout_weight="2"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/action_list_points"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_list_points"
+            android:layout_weight="1"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+</LinearLayout>

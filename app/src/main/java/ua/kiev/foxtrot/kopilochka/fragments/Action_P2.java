@@ -4,24 +4,29 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+
+import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppController;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.database.Tables;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 06.10.2016.
@@ -32,6 +37,10 @@ public class Action_P2 extends Fragment {
     private int action_id;
     private String title;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ListView models_list;
+    Models_ListView_Adapter adapter;
+    View action_header;
+    ArrayList<BBS_News> models_data;
 
 
     public static Action_P2 newInstance(int action_id) { //
@@ -63,25 +72,44 @@ public class Action_P2 extends Fragment {
         View rootView = inflater.inflate(R.layout.frag_action_p2, container,
                 false);
         action_id = getArguments().getInt(Const.action_id, 0);
-//        if(action_id == 0){
-//            //Error getting data
-//            Utils.ShowInputErrorDialog(getActivity(), "Error", "Action number error", "OK");
-//            return null;
-//        }
+        if(action_id == 0){
+            //Error getting data
+            Utils.ShowInputErrorDialog(getActivity(), "Error", "Action number error", "OK");
+            return null;
+        }
         //All ok
 
-        //title = getArguments().getString(Const.action_id);
+        //Inflate header
+        action_header = inflater.inflate(R.layout.frag_action_p2_list_header, null);
 
+        TextView action_period = (TextView)action_header.findViewById(R.id.action_period);
+        TextView action_type = (TextView)action_header.findViewById(R.id.action_type);
+        TextView action_data = (TextView)action_header.findViewById(R.id.action_data);
+        TextView action_comment = (TextView)action_header.findViewById(R.id.action_comment);
+
+
+        //Inflate main viev
         TextView action_name = (TextView)rootView.findViewById(R.id.action_name);
-        TextView textView_text = (TextView)rootView.findViewById(R.id.textView_text);
-        NetworkImageView imageView_image = (NetworkImageView)rootView.findViewById(R.id.imageView_image);
+        TextView action_models_count = (TextView)rootView.findViewById(R.id.action_models_count);
+        models_list = (ListView)rootView.findViewById(R.id.models_list);
+        models_list.addHeaderView(action_header);
+        //Initializing
+        models_data = new ArrayList<BBS_News>();
+        adapter = new Models_ListView_Adapter(getActivity(), models_data);
+        models_list.setAdapter(adapter);
+        models_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                interfaces.ModelSelected(i);
+            }
+        });
 
-        BBS_News item = getItem_fromBase(action_id);
-        if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
-        action_name.setText(item.getTitle());
-        textView_text.setText(item.getDescription());
-        imageView_image.setImageUrl(item.getUrlToImage(), imageLoader);
+        //Get info on action
+        action_name.setText(getItem_fromBase(action_id).getTitle());
+        action_models_count.setText(String.valueOf(action_id));
+
+        //Send request
+        Get_From_Database();
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -89,8 +117,7 @@ public class Action_P2 extends Fragment {
         menu_item_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // interfaces.OpenClose();
-                Toast.makeText(getActivity(), "Pressed in Fragment", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Pressed in Fragment", Toast.LENGTH_SHORT).show();
                 onBackPress.onBackPressed();
             }
         });
@@ -114,5 +141,28 @@ public class Action_P2 extends Fragment {
             return item;
         } else
             return null;
+    }
+
+    private void Get_From_Database() {
+        Log.v("", "SSS Start = " + models_data.size());
+        models_data.clear();
+        DB db = new DB(getActivity());
+        db.open();
+        Cursor myCursor = db.getAllData();
+        myCursor.moveToFirst();
+        while (myCursor.isAfterLast() == false) {
+            BBS_News item = new BBS_News();
+            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
+            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
+            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
+            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
+            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
+            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
+            models_data.add(item);
+            myCursor.moveToNext();
+        }
+        Log.v("", "SSS Finish = " + models_data.size());
+        db.close();
+        adapter.notifyDataSetChanged();
     }
 }

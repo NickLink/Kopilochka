@@ -7,8 +7,9 @@ public interface Interfaces {
     void OpenClose();
 
     void ScannStart();
-    void ScannResult(String result);
+    void ScannResult(int id, String result);
 
     void LoginSuccess(String token);
     void ActionSelected(int action_id);
+    void ModelSelected(int model_id);
 }

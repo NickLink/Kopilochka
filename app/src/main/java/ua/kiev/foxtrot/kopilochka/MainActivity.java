@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import ua.kiev.foxtrot.kopilochka.adapters.SliderMenuAdapter;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P2;
+import ua.kiev.foxtrot.kopilochka.fragments.Action_P3;
 import ua.kiev.foxtrot.kopilochka.fragments.Data_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.History_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Notif_P1;
@@ -206,26 +208,18 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     @Override
     public void ScannStart() {
         scanner = new ScanFragment();
-
-//        TransactionAction(scanner,
-//                fragmentManager.findFragmentByTag(Const.Fr_AcP1),
-//                Const.Fr_Scan, Const.Fr_AcP1, true);
-
-//        fragmentManager
-//                .beginTransaction()
-//                .addToBackStack("action")
-//                .add(R.id.fragment_place,
-//                        scanner, "scanner").commit();
+        TransactionActionStack(scanner, Const.Fr_Scan, true); //action_id
     }
 
     @Override
-    public void ScannResult(String result) {
+    public void ScannResult(int id, String result) {
 
 //        TransactionAction(fragmentManager.findFragmentByTag(Const.Fr_AcP1),
 //                scanner, Const.Fr_AcP1, Const.Fr_Scan, false);
 
-//        ((TextView)getSupportFragmentManager()
-//                .findFragmentByTag(Const.Fr_AcP1).getView().findViewById(R.id.result_test)).setText(result);
+        ((EditText)getSupportFragmentManager()
+                .findFragmentByTag(Const.Fr_AcP3).getView().findViewById(R.id.scan_result)).setText(result);
+        onBackPressed();
 //        fragmentManager
 //                .beginTransaction()
 //                .remove(scanner).commit();
@@ -240,11 +234,16 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     @Override
     public void ActionSelected(int action_id) { //
 
-        TransactionActionStack(Action_P2.newInstance(action_id), true); //action_id
+        TransactionActionStack(Action_P2.newInstance(action_id), Const.Fr_AcP2, true); //action_id
 
 //        TransactionAction(Action_P2.newInstance(action_id),
 //                fragmentManager.findFragmentByTag(Const.Fr_AcP1),
 //                Const.Fr_AcP2, Const.Fr_AcP1, true);
+    }
+
+    @Override
+    public void ModelSelected(int model_id) {
+        TransactionActionStack(Action_P3.newInstance(), Const.Fr_AcP3, true);
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -275,13 +274,13 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 //        }
 //    }
 
-    void TransactionActionStack(Fragment fragment_in, boolean forward) {
+    void TransactionActionStack(Fragment fragment_in, String tag_in, boolean forward) {
         transaction = fragmentManager.beginTransaction();
         //Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
         if(fragment_in != null){
             if(forward) {
                 transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out, R.anim.slide_left_in, R.anim.slide_left_out);
-                transaction.add(R.id.fragment_place, fragment_in, null);
+                transaction.add(R.id.fragment_place, fragment_in, tag_in);
                 transaction.addToBackStack(null);
                 //transaction.hide(fragment_out);
             } else {
