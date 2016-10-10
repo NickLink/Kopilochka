@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -206,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     }
 
     @Override
-    public void ScannStart() {
-        scanner = new ScanFragment();
-        TransactionActionStack(scanner, Const.Fr_Scan, true); //action_id
+    public void ScannStart(int id) {
+        //scanner = new ScanFragment();
+        TransactionActionStack(ScanFragment.newInstance(id), Const.Fr_Scan, true); //action_id
     }
 
     @Override
@@ -216,9 +215,11 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
 //        TransactionAction(fragmentManager.findFragmentByTag(Const.Fr_AcP1),
 //                scanner, Const.Fr_AcP1, Const.Fr_Scan, false);
-
-        ((EditText)getSupportFragmentManager()
-                .findFragmentByTag(Const.Fr_AcP3).getView().findViewById(R.id.scan_result)).setText(result);
+        Action_P3 frag = (Action_P3)
+        getSupportFragmentManager().findFragmentByTag(Const.Fr_AcP3);
+        frag.updateScanCode(id, result);
+//        ((EditText)getSupportFragmentManager()
+//                .findFragmentByTag(Const.Fr_AcP3).getView().findViewById(R.id.scan_result)).setText(result);
         onBackPressed();
 //        fragmentManager
 //                .beginTransaction()

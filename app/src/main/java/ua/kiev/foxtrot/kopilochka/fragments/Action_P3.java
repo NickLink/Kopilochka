@@ -73,14 +73,18 @@ public class Action_P3 extends Fragment implements Delete_Serial{
 //        });
 //        EditText scan_result = (EditText)rootView.findViewById(R.id.scan_result);
 
-        serials_data = new ArrayList<BBS_News>();
-        serials_data.add(new BBS_News());
+//        serials_data = new ArrayList<BBS_News>();
+//        serials_data.add(new BBS_News());
 
         add_footer = inflater.inflate(R.layout.frag_action_p3_list_footer, null);
+
+
+
         serial_numbers_list = (ListView)rootView.findViewById(R.id.serial_numbers_list);
         serial_numbers_list.addFooterView(add_footer);
 
-        adapter = new Serials_ListView_Adapter(getActivity(), serials_data, Action_P3.this, interfaces);
+        adapter = new Serials_ListView_Adapter(getActivity(), new ArrayList<BBS_News>(), Action_P3.this, interfaces);
+        //new ArrayList<BBS_News>() === serials_data
         serial_numbers_list.setAdapter(adapter);
 
 
@@ -88,7 +92,8 @@ public class Action_P3 extends Fragment implements Delete_Serial{
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Adding", Toast.LENGTH_SHORT).show();
-                serials_data.add(new BBS_News());
+                //serials_data.add(new BBS_News());
+                adapter.getSerials_data().add(new BBS_News());
                 adapter.notifyDataSetChanged();
             }
         });
@@ -108,7 +113,14 @@ public class Action_P3 extends Fragment implements Delete_Serial{
 
     @Override
     public void delete_serial(int i) {
-        serials_data.remove(i);
+        adapter.getSerials_data().remove(i);
+        //serials_data.remove(i);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void updateScanCode(int id, String code){
+        adapter.getSerials_data().get(id).setTitle(code);
+        //serials_data.get(id).setTitle(code);
         adapter.notifyDataSetChanged();
     }
 }

@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:background="@drawable/button_with_shadow">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <ImageView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:src="@drawable/icon_add_serial"
-        android:layout_gravity="center" />
+        android:padding="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_with_shadow">
 
-    <TextView
-        style="@style/mySmall_TextStyle"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:src="@drawable/icon_add_serial"
+            android:layout_gravity="center" />
+
+        <TextView
+            style="@style/mySmall_TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить поле ввода"
+            android:id="@+id/add_serial_field" />
+    </LinearLayout>
+
+    <View
         android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/holo_green_light"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:id="@+id/action_register_model_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить поле ввода"
-        android:id="@+id/add_serial_field" />
+        android:text="@string/action_register_model_button"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+
 </LinearLayout>

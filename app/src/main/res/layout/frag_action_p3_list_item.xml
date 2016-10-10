@@ -15,7 +15,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/scan_result"
-            android:layout_weight="4"/>
+            android:layout_weight="4"
+            android:cursorVisible="false"
+            android:singleLine="true"/>
 
         <Button
             android:id="@+id/scan_button"

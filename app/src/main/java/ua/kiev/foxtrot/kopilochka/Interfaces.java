@@ -6,7 +6,7 @@ package ua.kiev.foxtrot.kopilochka;
 public interface Interfaces {
     void OpenClose();
 
-    void ScannStart();
+    void ScannStart(int id);
     void ScannResult(int id, String result);
 
     void LoginSuccess(String token);

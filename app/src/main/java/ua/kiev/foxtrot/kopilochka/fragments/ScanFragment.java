@@ -24,7 +24,7 @@ public class ScanFragment extends Fragment implements ZBarScannerView.ResultHand
     Interfaces interfaces;
     int id;
 
-    public ScanFragment newInstance(int id){
+    public static ScanFragment newInstance(int id){
         ScanFragment fragment = new ScanFragment();
         Bundle args = new Bundle();
         args.putInt(Const.action_id, id);
@@ -47,7 +47,11 @@ public class ScanFragment extends Fragment implements ZBarScannerView.ResultHand
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_scan, container,
                 false);
-        id = getArguments().getInt(Const.action_id, 0);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            id = arguments.getInt(Const.action_id, 0);
+        } else return null;
+
         Button cancel_scan = (Button)rootView.findViewById(R.id.cancel_scan);
         cancel_scan.setOnClickListener(new View.OnClickListener() {
             @Override
