@@ -9,6 +9,7 @@ public class Const {
 
     public static final String BBS_NEWS_API_KEY = "a463fd41d3e94d9b8237df34320e6b9d";
     public static final String BBS_NEWS_API_PATH = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=";
+    public static final String API_PATH = "http://dev.f5.ua/api/kopilochka/";
 
 
     public static final String TAG = "kopilochka";
@@ -26,9 +27,11 @@ public class Const {
     public static final String Fr_Scan = "Fr_Scan";
 
     //GetToken
-    public static final int GetToken = 1;
+    public static final int getToken = 1;
+    public static final String GetToken = "GetToken";
     //-->in
-    public static final String user = "user";
+    public static final String method = "method";
+    public static final String login = "login";
     public static final String password = "password";
     //-->out
     public static final String session = "session";
@@ -121,5 +124,6 @@ public class Const {
     public static final String question = "question";
     //-->out
 
+    //==================Errors==========================
 
 }

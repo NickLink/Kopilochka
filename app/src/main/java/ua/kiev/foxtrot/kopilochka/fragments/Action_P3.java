@@ -2,7 +2,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -130,9 +129,9 @@ public class Action_P3 extends Fragment implements Delete_Serial{
         dialog.setContentView(R.layout.dialog_action_serial);
 
         final EditText serial = (EditText)dialog.findViewById(R.id.editText);
-        Button ok = (Button) dialog.findViewById(R.id.button2);
-        Button scan = (Button) dialog.findViewById(R.id.button3);
-        Button delete = (Button) dialog.findViewById(R.id.button4);
+        Button ok = (Button) dialog.findViewById(R.id.action_ok);
+        Button scan = (Button) dialog.findViewById(R.id.action_scan);
+        Button delete = (Button) dialog.findViewById(R.id.action_delete);
 
         serial.setText(adapter.getSerials_data().get(position).getTitle());
 

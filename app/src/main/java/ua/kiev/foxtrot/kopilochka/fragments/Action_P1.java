@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -29,6 +30,7 @@ import ua.kiev.foxtrot.kopilochka.database.Tables;
  * Created by NickNb on 29.09.2016.
  */
 public class Action_P1 extends Fragment {
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     TextView result_test;
     Button button2;
@@ -92,9 +94,14 @@ public class Action_P1 extends Fragment {
         action_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 interfaces.ActionSelected(i);
             }
         });
+        Get_From_Database();
 
 //        button2 = (Button)rootView.findViewById(R.id.button2);
 //        button2.setOnClickListener(new View.OnClickListener() {

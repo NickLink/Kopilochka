@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -102,8 +103,8 @@ public class Data_P1 extends Fragment implements HttpRequest{
         data_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Utils.email_Correct(data_email_edit.getText().toString()) &&
-                        Utils.password_Correct(data_password_edit.getText().toString())){
+                if(!data_email_edit.getText().toString().trim().isEmpty() && //Utils.email_Correct(data_email_edit.getText().toString())
+                      !data_password_edit.getText().toString().trim().isEmpty()  ){ //Utils.password_Correct(data_password_edit.getText().toString())
                     getToken(data_email_edit.getText().toString(),
                             data_password_edit.getText().toString());
                 } else {
@@ -117,11 +118,12 @@ public class Data_P1 extends Fragment implements HttpRequest{
         });
     }
 
-    private void getToken(String user, String password) {
-        Requests requests = new Requests(Const.GetToken, Data_P1.this);
+    private void getToken(String login, String password) {
+        Requests requests = new Requests(Const.getToken, Data_P1.this);
         HashMap<String, String> params = new HashMap<>();
-        params.put(Const.user, user);
+        params.put(Const.login, login);
         params.put(Const.password, password);
+        params.put(Const.method, Const.GetToken);
         requests.getToken(params);
     }
 
@@ -134,9 +136,10 @@ public class Data_P1 extends Fragment implements HttpRequest{
     @Override
     public void http_result(int type, String result) {
         switch (type){
-            case Const.GetToken:
+            case Const.getToken:
                 //Parse data
 
+                Toast.makeText(getActivity(), "Responce = " + result, Toast.LENGTH_LONG).show();
                 //Encrypt & Save token
 
                 //Reload fragment
@@ -151,7 +154,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
     @Override
     public void http_error(int type, String error) {
         switch (type){
-            case Const.GetToken:
+            case Const.getToken:
 
                 break;
 

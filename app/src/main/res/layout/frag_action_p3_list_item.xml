@@ -5,13 +5,14 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        style="@style/myLinearLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:weightSum="6">
 
         <TextView
+            style="@style/myNormal_TextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/scan_result"

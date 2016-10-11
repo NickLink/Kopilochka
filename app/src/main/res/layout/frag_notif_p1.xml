@@ -8,4 +8,9 @@
         android:id="@+id/top_menu_open"
         layout="@layout/top_menu_open"/>
 
+    <ListView
+        android:id="@+id/notif_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

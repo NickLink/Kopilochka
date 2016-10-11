@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  * Created by NickNb on 06.10.2016.
  */
 public class Action_P2 extends Fragment {
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
     private int action_id;
@@ -100,6 +102,10 @@ public class Action_P2 extends Fragment {
         models_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 interfaces.ModelSelected(i);
             }
         });
