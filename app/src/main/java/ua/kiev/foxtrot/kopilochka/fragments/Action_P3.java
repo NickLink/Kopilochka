@@ -1,12 +1,17 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -77,8 +82,8 @@ public class Action_P3 extends Fragment implements Delete_Serial{
 //        serials_data.add(new BBS_News());
 
         add_footer = inflater.inflate(R.layout.frag_action_p3_list_footer, null);
-
-
+        Button add_new_serial = (Button)add_footer.findViewById(R.id.add_serial_field);
+        Button action_register_model_button = (Button)add_footer.findViewById(R.id.action_register_model_button);
 
         serial_numbers_list = (ListView)rootView.findViewById(R.id.serial_numbers_list);
         serial_numbers_list.addFooterView(add_footer);
@@ -86,15 +91,23 @@ public class Action_P3 extends Fragment implements Delete_Serial{
         adapter = new Serials_ListView_Adapter(getActivity(), new ArrayList<BBS_News>(), Action_P3.this, interfaces);
         //new ArrayList<BBS_News>() === serials_data
         serial_numbers_list.setAdapter(adapter);
+        serial_numbers_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ShowSerialDialog(i);
+            }
+        });
 
 
-        add_footer.setOnClickListener(new View.OnClickListener() {
+        add_new_serial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Adding", Toast.LENGTH_SHORT).show();
                 //serials_data.add(new BBS_News());
                 adapter.getSerials_data().add(new BBS_News());
-                adapter.notifyDataSetChanged();
+                ShowSerialDialog(adapter.getSerials_data().size()-1);
+
+                //adapter.notifyDataSetChanged();
             }
         });
 
@@ -111,6 +124,46 @@ public class Action_P3 extends Fragment implements Delete_Serial{
         return rootView;
     }
 
+    void ShowSerialDialog(final int position){
+        final Dialog dialog = new Dialog(getActivity(), R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_action_serial);
+
+        final EditText serial = (EditText)dialog.findViewById(R.id.editText);
+        Button ok = (Button) dialog.findViewById(R.id.button2);
+        Button scan = (Button) dialog.findViewById(R.id.button3);
+        Button delete = (Button) dialog.findViewById(R.id.button4);
+
+        serial.setText(adapter.getSerials_data().get(position).getTitle());
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.getSerials_data().get(position).setTitle(serial.getText().toString());
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                interfaces.ScannStart(position);
+                dialog.dismiss();
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.getSerials_data().remove(position);
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+    }
+
     @Override
     public void delete_serial(int i) {
         adapter.getSerials_data().remove(i);
@@ -122,5 +175,6 @@ public class Action_P3 extends Fragment implements Delete_Serial{
         adapter.getSerials_data().get(id).setTitle(code);
         //serials_data.get(id).setTitle(code);
         adapter.notifyDataSetChanged();
+        ShowSerialDialog(id);
     }
 }

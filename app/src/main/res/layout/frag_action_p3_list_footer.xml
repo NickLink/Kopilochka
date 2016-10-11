@@ -10,22 +10,15 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/button_with_shadow">
+        android:layout_marginRight="20dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView3"
-            android:src="@drawable/icon_add_serial"
-            android:layout_gravity="center" />
-
-        <TextView
+        <Button
             style="@style/mySmall_TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Добавить поле ввода"
-            android:id="@+id/add_serial_field" />
+            android:text="+ Добавить поле ввода"
+            android:id="@+id/add_serial_field"
+            android:background="@drawable/button_with_shadow"/>
     </LinearLayout>
 
     <View

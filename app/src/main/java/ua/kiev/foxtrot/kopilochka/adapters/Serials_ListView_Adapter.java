@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class Serials_ListView_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Delete_Serial delete_click = null;
     private Interfaces interfaces;
-    EditText scan_result;
+    TextView scan_result;
     Button scan_button;
     Button delete_button;
 
@@ -65,9 +66,9 @@ public class Serials_ListView_Adapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.frag_action_p3_list_item, viewGroup, false);
 
-        scan_result = (EditText)convertView.findViewById(R.id.scan_result);
-        scan_button = (Button)convertView.findViewById(R.id.scan_button);
-        delete_button = (Button)convertView.findViewById(R.id.delete_button);
+        scan_result = (TextView)convertView.findViewById(R.id.scan_result);
+//        scan_button = (Button)convertView.findViewById(R.id.scan_button);
+//        delete_button = (Button)convertView.findViewById(R.id.delete_button);
 
 
 //        scan_result.setFocusable(true);
@@ -112,7 +113,7 @@ public class Serials_ListView_Adapter extends BaseAdapter {
 //            }
 //        });
 //
-//        scan_result.setText(getItem(position).getTitle());
+        scan_result.setText(getItem(position).getTitle());
 
         return convertView;
     }
