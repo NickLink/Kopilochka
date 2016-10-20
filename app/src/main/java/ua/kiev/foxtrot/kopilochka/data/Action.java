@@ -1,11 +1,13 @@
 package ua.kiev.foxtrot.kopilochka.data;
 
+import java.util.ArrayList;
+
 /**
  * Created by NickNb on 05.10.2016.
  */
 public class Action {
 
-    private String action_id;
+    private int action_id;
     private String action_name;
     private int action_type_id; //ИД типа акции 0 = Накопительная; 1 = Бонусная
     private String action_type;
@@ -13,13 +15,13 @@ public class Action {
     private String action_date_to;
     private String action_date_charge;
     private String action_description;
-    private String action_image;
+    private ArrayList<Model> models = new ArrayList<Model>();
 
-    public String getAction_id() {
+    public int getAction_id() {
         return action_id;
     }
 
-    public void setAction_id(String action_id) {
+    public void setAction_id(int action_id) {
         this.action_id = action_id;
     }
 
@@ -79,11 +81,11 @@ public class Action {
         this.action_description = action_description;
     }
 
-    public String getAction_image() {
-        return action_image;
+    public ArrayList<Model> getModels() {
+        return models;
     }
 
-    public void setAction_image(String action_image) {
-        this.action_image = action_image;
+    public void setModels(ArrayList<Model> models) {
+        this.models = models;
     }
 }

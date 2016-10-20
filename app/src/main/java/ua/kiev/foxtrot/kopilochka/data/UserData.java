@@ -5,26 +5,46 @@ package ua.kiev.foxtrot.kopilochka.data;
  */
 public class UserData {
 
-    private String session;
-    private boolean active;
+    private String login;
+    private String password;
+    private int active;
+    private String session_id;
     private String user_name;
     private String user_phone;
     private String user_email;
+    private int code;
+    private String comment;
 
-    public String getSession() {
-        return session;
+    public String getLogin() {
+        return login;
     }
 
-    public void setSession(String session) {
-        this.session = session;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public boolean isActive() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(int active) {
         this.active = active;
+    }
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
     }
 
     public String getUser_name() {
@@ -49,5 +69,22 @@ public class UserData {
 
     public void setUser_email(String user_email) {
         this.user_email = user_email;
+    }
+
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

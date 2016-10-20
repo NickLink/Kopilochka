@@ -13,7 +13,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.app.AppController;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 
 /**
@@ -22,7 +22,7 @@ import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 public class BBS_News_Adapter extends BaseAdapter {
     private Context context;
     private ArrayList<BBS_News> _news_data;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
 
     public BBS_News_Adapter(Context context, ArrayList<BBS_News> _news_data) {
@@ -57,7 +57,7 @@ public class BBS_News_Adapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.frag_start_p1_list_item, viewGroup, false);
 
         if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
+            imageLoader = AppContr.getInstance().getImageLoader();
 
         NetworkImageView imageView = (NetworkImageView)convertView.findViewById(R.id.imageView);
         TextView title = (TextView)convertView.findViewById(R.id.textView);

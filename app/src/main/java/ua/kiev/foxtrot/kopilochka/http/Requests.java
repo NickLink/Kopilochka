@@ -3,12 +3,10 @@ package ua.kiev.foxtrot.kopilochka.http;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
@@ -19,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ua.kiev.foxtrot.kopilochka.Const;
-import ua.kiev.foxtrot.kopilochka.app.AppController;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 
 /**
@@ -54,10 +52,10 @@ public class Requests {
                     }
 
                 });
-        AppController.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
+        AppContr.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
     }
 
-    public void getToken(HashMap<String, String> params){
+    public void getHTTP_Responce(HashMap<String, String> params){
 
         JSONObject jsonBody = new JSONObject();
         try {
@@ -77,7 +75,7 @@ public class Requests {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            VolleyLog.d(TAG, "Error: " + error.getMessage());
+                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
                             Log.v(TAG, "SSS Error = " + error.getMessage().toString());
                             request.http_error(req_type, error.getMessage());
                         }
@@ -97,17 +95,8 @@ public class Requests {
                         return null;
                     }
                 }
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-//                    String responseString = "";
-//                    if (response != null) {
-//                        responseString = String.valueOf(response.statusCode);
-//                        // can get more details such as response.headers
-//                    }
-                    return Response.success(response.data.toString(), HttpHeaderParser.parseCacheHeaders(response)); //responseString
-                }
             };
-            AppController.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
+            AppContr.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
             
         } catch (JSONException e) {
             Log.v(TAG, "SSS JSONException = " + e.toString());
@@ -116,27 +105,5 @@ public class Requests {
         }
 
     }
-
-//    String user = params.get(Const.user);
-//    String password = params.get(Const.password);
-//    String get_params = "?" + Const.user + "=" + user + "&" + Const.password + "=" + password;
-//    StringRequest stringObjReq = new StringRequest(Request.Method.GET,
-//            Const.BBS_NEWS_API_PATH + Const.BBS_NEWS_API_KEY,new Response.Listener<String>() {
-//        @Override
-//        public void onResponse(String response) {
-//            Log.v(TAG, "SSS String responce=" + response.toString());
-//            request.http_result(req_type, response.toString());
-//        }
-//    },
-//            new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-//                    request.http_error(req_type, error.getMessage());
-//                }
-//
-//            });
-//    AppController.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
-
 
 }

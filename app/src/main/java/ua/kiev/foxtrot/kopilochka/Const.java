@@ -6,6 +6,7 @@ package ua.kiev.foxtrot.kopilochka;
 public class Const {
     public static final String BACKGROUND_SERVICE_BATTERY_CONTROL = new String("battery_service");
     public static final String BEER_DOWNLOAD_PROGRESS = new String("beer_download_progress");
+    public static final String myAppPrefs = "myAppPrefs";
 
     public static final String BBS_NEWS_API_KEY = "a463fd41d3e94d9b8237df34320e6b9d";
     public static final String BBS_NEWS_API_PATH = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=";
@@ -14,7 +15,13 @@ public class Const {
 
     public static final String TAG = "kopilochka";
     public static final String TAG_JSON = "TAG_JSON";
-
+    //Preferences saves
+    public static final String SAVED_LOG = "string_init";
+    public static final String SAVED_PAS = "string_complete";
+    public static final String SAVED_SES = "string_disabled";
+    public static final String SAVED_NAME = "string_name";
+    public static final String SAVED_EMAIL = "string_email";
+    public static final String SAVED_PHONE = "string_phone";
 
     public static final String Fr_StP1 = "Fr_StP1";
     public static final String Fr_NtP1 = "Fr_NtP1";
@@ -23,18 +30,21 @@ public class Const {
     public static final String Fr_AcP3 = "Fr_AcP3";
     public static final String Fr_HsP1 = "Fr_HsP1";
     public static final String Fr_DtP1 = "Fr_DtP1";
+    public static final String Fr_DtPL = "Fr_DtPL";
     public static final String Fr_WtP1 = "Fr_WtP1";
     public static final String Fr_Scan = "Fr_Scan";
 
-    //GetToken
-    public static final int getToken = 1;
-    public static final String GetToken = "GetToken";
+    //GetSession
+    public static final int getSession = 1;
+    public static final String GetSession = "GetToken";
     //-->in
     public static final String method = "method";
     public static final String login = "login";
     public static final String password = "password";
     //-->out
     public static final String session = "session";
+    //public static final String session_id = "session_id";
+    //public static final String hash = "hash";
     public static final String active = "active";
     public static final String user_name = "user_name";
     public static final String user_phone = "user_phone";
@@ -43,22 +53,29 @@ public class Const {
 
 
     //GetNotices
-    public static final int GetNotices = 2;
+    public static final int getNotices = 2;
+    public static final String GetNotices = "GetNotices";
     //-->in
     //public static final String session = "session";
     //-->out
+    public static final String notices = "notices";
     public static final String notice_id = "notice_id";
     public static final String notice_name = "notice_name";
-    public static final String notice_date_from = "notice_date_from";
-    public static final String notice_date_to = "notice_date_to";
+    //public static final String notice_date_from = "notice_date_from";
+    //public static final String notice_date_to = "notice_date_to";
     public static final String notice_text = "notice_text";
-    public static final String notice_image = "notice_image";
+    //public static final String notice_image = "notice_image";
+    public static final String notice_type_id = "notice_type_id";
+    public static final String notice_type = "notice_type";
+
 
     //GetActions
-    public static final int GetActions = 3;
+    public static final int getActions = 3;
+    public static final String GetActions = "GetActions";
     //-->in
     //public static final String session = "session";
     //--- actions
+    public static final String actions = "actions";
     public static final String action_id = "action_id";
     public static final String action_name = "action_name";
     public static final String action_type_id = "action_type_id";
@@ -67,18 +84,18 @@ public class Const {
     public static final String action_date_to = "action_date_to";
     public static final String action_date_charge = "action_date_charge";
     public static final String action_description = "action_description";
-    public static final String action_image = "action_image";
     //--- models
+    public static final String models = "models";
     public static final String model_id = "model_id";
     public static final String model_name = "model_name";
-    public static final String model_sn_count = "model_sn_count";
     public static final String model_points = "model_points";
     public static final String model_brand_id = "model_brand_id";
-    public static final String model_brand = "model_brand";
     public static final String model_group_id = "model_group_id";
-    public static final String model_group = "model_group";
     public static final String model_url = "model_url";
-    public static final String model_image = "model_image";
+    public static final String model_brand_name = "model_brand_name";
+    public static final String model_group_name = "model_group_name";
+    public static final String model_sn_count = "model_sn_count";
+    public static final String model_action = "model_action";
 
     //PostSN
     public static final int PostSN = 4;
@@ -125,5 +142,8 @@ public class Const {
     //-->out
 
     //==================Errors==========================
-
+    public static final String JSON_Error = "error";
+    public static final String JSON_Code = "code";
+    public static final String JSON_Comment = "comment";
+    public static final int JSON_Ok = -1;
 }

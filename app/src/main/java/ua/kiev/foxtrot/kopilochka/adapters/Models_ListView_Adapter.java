@@ -19,7 +19,7 @@ public class Models_ListView_Adapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<BBS_News> models_data;
-//    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+//    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
 
     public Models_ListView_Adapter(Context context, ArrayList<BBS_News> models_data) {
@@ -52,7 +52,7 @@ public class Models_ListView_Adapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.frag_action_p2_list_item, viewGroup, false);
 
 //        if (imageLoader == null)
-//            imageLoader = AppController.getInstance().getImageLoader();
+//            imageLoader = AppContr.getInstance().getImageLoader();
 
         TextView action_list_item_name = (TextView)convertView.findViewById(R.id.action_list_item_name);
         TextView action_list_item_days = (TextView)convertView.findViewById(R.id.action_list_item_days);

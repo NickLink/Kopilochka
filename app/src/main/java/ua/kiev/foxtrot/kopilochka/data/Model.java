@@ -5,22 +5,22 @@ package ua.kiev.foxtrot.kopilochka.data;
  */
 public class Model {
 
-    private String model_id;
+    private int model_id;
     private String model_name;
     private int model_sn_count;
     private int model_points;
-    private String model_brand_id;
-    private String model_brand;
-    private String model_group_id;
-    private String model_group;
+    private int model_brand_id;
+    private String model_brand_name;
+    private int model_group_id;
+    private String model_group_name;
     private String model_url;
-    private String model_image;
+    private int model_action;
 
-    public String getModel_id() {
+    public int getModel_id() {
         return model_id;
     }
 
-    public void setModel_id(String model_id) {
+    public void setModel_id(int model_id) {
         this.model_id = model_id;
     }
 
@@ -48,36 +48,36 @@ public class Model {
         this.model_points = model_points;
     }
 
-    public String getModel_brand_id() {
+    public int getModel_brand_id() {
         return model_brand_id;
     }
 
-    public void setModel_brand_id(String model_brand_id) {
+    public void setModel_brand_id(int model_brand_id) {
         this.model_brand_id = model_brand_id;
     }
 
-    public String getModel_brand() {
-        return model_brand;
+    public String getModel_brand_name() {
+        return model_brand_name;
     }
 
-    public void setModel_brand(String model_brand) {
-        this.model_brand = model_brand;
+    public void setModel_brand_name(String model_brand_name) {
+        this.model_brand_name = model_brand_name;
     }
 
-    public String getModel_group_id() {
+    public int getModel_group_id() {
         return model_group_id;
     }
 
-    public void setModel_group_id(String model_group_id) {
+    public void setModel_group_id(int model_group_id) {
         this.model_group_id = model_group_id;
     }
 
-    public String getModel_group() {
-        return model_group;
+    public String getModel_group_name() {
+        return model_group_name;
     }
 
-    public void setModel_group(String model_group) {
-        this.model_group = model_group;
+    public void setModel_group_name(String model_group_name) {
+        this.model_group_name = model_group_name;
     }
 
     public String getModel_url() {
@@ -88,11 +88,11 @@ public class Model {
         this.model_url = model_url;
     }
 
-    public String getModel_image() {
-        return model_image;
+    public int getModel_action() {
+        return model_action;
     }
 
-    public void setModel_image(String model_image) {
-        this.model_image = model_image;
+    public void setModel_action(int model_action) {
+        this.model_action = model_action;
     }
 }

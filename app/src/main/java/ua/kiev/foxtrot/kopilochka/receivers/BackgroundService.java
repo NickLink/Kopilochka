@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ua.kiev.foxtrot.kopilochka.Const;
-import ua.kiev.foxtrot.kopilochka.app.AppController;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -29,8 +29,8 @@ public class BackgroundService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("", "SSS onStartCommand Service Started");
-        AppController appController = (AppController) getApplicationContext();
-        SharedPreferences sharedPreferences = appController.getSharedPreferences();
+        AppContr appContr = (AppContr) getApplicationContext();
+        SharedPreferences sharedPreferences = appContr.getSharPref();
         IntentFilter batteryStatusIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatusIntent = registerReceiver(null, batteryStatusIntentFilter);
 
@@ -52,7 +52,7 @@ public class BackgroundService extends Service {
             sharedPreferences.edit().putBoolean(Const.BACKGROUND_SERVICE_BATTERY_CONTROL, true).apply();
         }
 
-        mPeriodicTaskReceiver.restartPeriodicTaskHeartBeat(BackgroundService.this, appController);
+        mPeriodicTaskReceiver.restartPeriodicTaskHeartBeat(BackgroundService.this, appContr);
         return START_STICKY;
     }
 

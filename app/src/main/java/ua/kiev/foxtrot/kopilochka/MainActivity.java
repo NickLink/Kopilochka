@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.adapters.SliderMenuAdapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P3;
 import ua.kiev.foxtrot.kopilochka.fragments.Data_P1;
+import ua.kiev.foxtrot.kopilochka.fragments.Data_P1_Logged;
 import ua.kiev.foxtrot.kopilochka.fragments.History_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Notif_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.ScanFragment;
@@ -36,6 +38,7 @@ import ua.kiev.foxtrot.kopilochka.fragments.Start_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
+import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress{
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
     ScanFragment scanner;
     private String scan_code;
+    private Encryption encrypt;
+    private boolean account_logged = false;
+    private String start_session, start_login, start_password;
 
     private String TAG = "MainActivity";
 
@@ -68,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         db = new DB(this);
         db.create();
         db.close();
+
+        encrypt = Encryption.getDefault("Key", "Disabled", new byte[16]);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -137,10 +145,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
                                         History_P1.newInstance(), Const.Fr_HsP1).commit();
                         break;
                     case 4:
-                        fragmentManager
-                                .beginTransaction()
-                                .replace(R.id.fragment_place,
-                                        Data_P1.newInstance(), Const.Fr_DtP1).commit();
+                        checkForLoggedStatus();
+
                         break;
                     case 5:
                         fragmentManager
@@ -168,6 +174,28 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
 
 
+
+
+    }
+
+    private void checkForLoggedStatus() {
+        Log.v(TAG, "SSS TIME Start=" + System.currentTimeMillis());
+        Utils.Restore_User(this, encrypt);
+        Log.v(TAG, "SSS TIME Finish=" + System.currentTimeMillis());
+        if(Utils.Correct_User()){
+            //All data exist we can move
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_place,
+                            Data_P1_Logged.newInstance(), Const.Fr_DtPL).commit();
+        } else {
+            //Something broken - full relogin & clear database
+            Utils.Clear_User();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_place,
+                            Data_P1.newInstance(), Const.Fr_DtP1).commit();
+        }
 
     }
 
@@ -228,7 +256,33 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     }
 
     @Override
-    public void LoginSuccess(String token) {
+    public void LoginSuccess() {
+        //Encrypt & Save token
+        Utils.Save_User(this, encrypt);
+        transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.flip_in, R.anim.flip_out); //, R.anim.slide_left_in, R.anim.slide_left_out
+        transaction.add(R.id.fragment_place, Data_P1_Logged.newInstance(), Const.Fr_DtPL);
+        transaction.remove(fragmentManager.findFragmentByTag(Const.Fr_DtP1));
+        transaction.commit();
+
+
+        //    Encryption encrypt = Encryption.getDefault("Key", "Salt", new byte[16]);
+        //    String encrypted = encrypt.encryptOrNull("top secret string");
+        //    String decrypted = encrypt.decryptOrNull(encrypted);
+    }
+
+    @Override
+    public void LogOut() {
+        //Clear user data
+        Utils.Clear_User();
+        AppContr.userData = null;
+        DB db = new DB(this);
+        db.erase();
+        transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.flip_in, R.anim.flip_out); //, R.anim.slide_left_in, R.anim.slide_left_out
+        transaction.add(R.id.fragment_place, Data_P1.newInstance(), Const.Fr_DtP1);
+        transaction.remove(fragmentManager.findFragmentByTag(Const.Fr_DtPL));
+        transaction.commit();
 
     }
 

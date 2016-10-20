@@ -5,39 +5,31 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <ua.kiev.foxtrot.kopilochka.ui.RoundedCornerLayout
-        android:id="@+id/image_rl"
-        android:layout_width="50dp"
-        android:layout_height="50dp">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/notif_listview_item_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@null"
-            android:scaleType="centerCrop" />
-
-    </ua.kiev.foxtrot.kopilochka.ui.RoundedCornerLayout>
+    <ImageView
+        android:id="@+id/notif_listview_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/image_rl"
+        android:layout_toRightOf="@+id/notif_listview_item_icon"
         android:background="@drawable/bg_grey_border_empty"
         android:padding="10dp"
         android:layout_marginLeft="10dp">
 
         <TextView
             android:id="@+id/notif_listview_item_title"
-            style="@style/myTitle_TextStyle"
+            style="@style/myNormal_TextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text" />
 
         <TextView
             android:id="@+id/notif_listview_item_text"
-            style="@style/myNormal_TextStyle"
+            style="@style/mySmall_TextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text" />

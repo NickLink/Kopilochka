@@ -9,7 +9,9 @@ public interface Interfaces {
     void ScannStart(int id);
     void ScannResult(int id, String result);
 
-    void LoginSuccess(String token);
+    void LoginSuccess();
+    void LogOut();
     void ActionSelected(int action_id);
     void ModelSelected(int model_id);
+
 }

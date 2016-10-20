@@ -351,9 +351,9 @@ public class Encryption {
                     .setIv(iv)
                     .setKey(key)
                     .setSalt(salt)
-                    .setKeyLength(128)
+                    .setKeyLength(128) //128
                     .setCharsetName("UTF8")
-                    .setIterationCount(65536)
+                    .setIterationCount(1024) //65536
                     .setDigestAlgorithm("SHA1")
                     .setBase64Mode(Base64.DEFAULT)
                     .setAlgorithm("AES/CBC/PKCS5Padding")

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Kopilochka</string>
 
+    <string name="JSON_title_error">Ошибка</string>
+    <string name="JSON_text_error">Полученые данные повреждены, попробуйте позже</string>
+    <string name="JSON_button_error">Ок</string>
+
     <string name="menu_start">Стартовая страница</string>
     <string name="menu_notification">Оповещения</string>
     <string name="menu_action">Акции</string>
@@ -47,6 +51,8 @@
     <string name="action_ok">Ок</string>
     <string name="action_scan">Сканировать</string>
     <string name="action_delete">Удалить</string>
+    <string name="data_extradata_button">Посмотреть личные данные</string>
 
 
+    <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
 </resources>

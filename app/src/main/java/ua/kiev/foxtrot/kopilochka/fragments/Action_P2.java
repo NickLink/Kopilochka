@@ -22,7 +22,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppController;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.database.Tables;
@@ -38,7 +38,7 @@ public class Action_P2 extends Fragment {
     OnBackPress onBackPress;
     private int action_id;
     private String title;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     ListView models_list;
     Models_ListView_Adapter adapter;
     View action_header;

@@ -3,7 +3,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Parser;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -32,7 +32,8 @@ public class Data_P1 extends Fragment implements HttpRequest{
     private boolean logged;
 
     private EditText data_email_edit, data_password_edit;
-    private Button data_login_button, data_show_extra_button;
+    private Button data_login_button;
+    private String login, password;
 
     public static Data_P1 newInstance() {
         Data_P1 fragment = new Data_P1();
@@ -57,23 +58,30 @@ public class Data_P1 extends Fragment implements HttpRequest{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_data_p1, container,
                 false);
-        login_layout = (LinearLayout)rootView.findViewById(R.id.login_layout);
-        loged_layout = (LinearLayout)rootView.findViewById(R.id.loged_layout);
+//        login_layout = (LinearLayout)rootView.findViewById(R.id.login_layout);
+//        loged_layout = (LinearLayout)rootView.findViewById(R.id.loged_layout);
 
         data_email_edit = (EditText)rootView.findViewById(R.id.data_email_edit);
         data_password_edit = (EditText)rootView.findViewById(R.id.data_password_edit);
         data_login_button = (Button)rootView.findViewById(R.id.data_login_button);
-        data_show_extra_button = (Button)rootView.findViewById(R.id.data_show_extra_button);
 
-        if(logged){
-            login_layout.setVisibility(View.GONE);
-            loged_layout.setVisibility(View.VISIBLE);
-            doShowData();
-        } else {
-            login_layout.setVisibility(View.VISIBLE);
-            loged_layout.setVisibility(View.GONE);
-            doLogin();
-        }
+        data_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login = data_email_edit.getText().toString();
+                password = data_password_edit.getText().toString();
+                if(!login.trim().isEmpty() && //Utils.email_Correct(data_email_edit.getText().toString())
+                        !password.trim().isEmpty()  ){ //Utils.password_Correct(data_password_edit.getText().toString())
+                    getToken(login, password);
+                } else {
+                    //Data not complete
+                    Utils.ShowInputErrorDialog(getActivity(), getString(R.string.input_error),
+                            getString(R.string.fill_all_fields),
+                            getString(R.string.input_ok));
+
+                }
+            }
+        });
 
 
 
@@ -90,61 +98,44 @@ public class Data_P1 extends Fragment implements HttpRequest{
         return rootView;
     }
 
-    private void doShowData() {
-        data_show_extra_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
-
-    private void doLogin() {
-        data_login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!data_email_edit.getText().toString().trim().isEmpty() && //Utils.email_Correct(data_email_edit.getText().toString())
-                      !data_password_edit.getText().toString().trim().isEmpty()  ){ //Utils.password_Correct(data_password_edit.getText().toString())
-                    getToken(data_email_edit.getText().toString(),
-                            data_password_edit.getText().toString());
-                } else {
-                    //Data not complete
-                    Utils.ShowInputErrorDialog(getActivity(), getString(R.string.input_error),
-                            getString(R.string.fill_all_fields),
-                            getString(R.string.input_ok));
-
-                }
-            }
-        });
-    }
-
     private void getToken(String login, String password) {
-        Requests requests = new Requests(Const.getToken, Data_P1.this);
+        Requests requests = new Requests(Const.getSession, Data_P1.this);
         HashMap<String, String> params = new HashMap<>();
         params.put(Const.login, login);
         params.put(Const.password, password);
-        params.put(Const.method, Const.GetToken);
-        requests.getToken(params);
+        params.put(Const.method, Const.GetSession);
+        requests.getHTTP_Responce(params);
     }
 
-    private void RefreshView() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
-    }
+//    private void RefreshView() {
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(this).attach(this).commit();
+//    }
 
 
     @Override
     public void http_result(int type, String result) {
         switch (type){
-            case Const.getToken:
+            case Const.getSession:
                 //Parse data
+                AppContr.userData = Parser.getUserData(result);
+                if(AppContr.userData != null){
+                    //HTTP responce OK, now check for internal data
+                    if(AppContr.userData.getCode() == Const.JSON_Ok){
+                        //Session is ok, saving Login&Password
+                        AppContr.userData.setLogin(login);
+                        AppContr.userData.setPassword(password);
+                        interfaces.LoginSuccess();
+                    } else {
+                        //Error in session
+                        Utils.Error_Dispencer(getActivity(), type, AppContr.userData.getCode());
+                    }
 
-                Toast.makeText(getActivity(), "Responce = " + result, Toast.LENGTH_LONG).show();
-                //Encrypt & Save token
+                } else {
+                    Utils.ShowJSONErrorDialog(getActivity());
+                    return;
+                }
 
-                //Reload fragment
-                logged = true;
-                RefreshView();
                 break;
 
         }
@@ -154,7 +145,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
     @Override
     public void http_error(int type, String error) {
         switch (type){
-            case Const.getToken:
+            case Const.getSession:
 
                 break;
 
@@ -162,7 +153,4 @@ public class Data_P1 extends Fragment implements HttpRequest{
 
     }
 
-//    Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
-//    String encrypted = encryption.encryptOrNull("top secret string");
-//    String decrypted = encryption.decryptOrNull(encrypted);
 }

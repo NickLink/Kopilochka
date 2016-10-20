@@ -12,8 +12,8 @@ import com.android.volley.toolbox.ImageLoader;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.app.AppController;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.data.Action;
 
 /**
  * Created by NickNb on 06.10.2016.
@@ -21,24 +21,34 @@ import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 public class Action_ListView_Adapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<BBS_News> action_data;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    //private ArrayList<BBS_News> action_data;
+    private ArrayList<Action> _action_data;
+    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
 
-    public Action_ListView_Adapter(Context context, ArrayList<BBS_News> action_data) {
+    public Action_ListView_Adapter(Context context, ArrayList<Action> action_data) {
         this.context = context;
-        this.action_data = action_data;
+        this._action_data = action_data;
+    }
+
+    public ArrayList<Action> getAction_data(){
+        return _action_data;
+    }
+
+    public void setAction_data(ArrayList<Action> data){
+        this._action_data = data;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return action_data.size();
+        return _action_data.size();
     }
 
     @Override
-    public BBS_News getItem(int position) { //Object
+    public Action getItem(int position) { //Object
         // TODO Auto-generated method stub
-        return action_data.get(position);
+        return _action_data.get(position);
     }
 
     @Override
@@ -55,17 +65,17 @@ public class Action_ListView_Adapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.frag_action_p1_list_item, viewGroup, false);
 
         if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
+            imageLoader = AppContr.getInstance().getImageLoader();
 
         //NetworkImageView imageView = (NetworkImageView)convertView.findViewById(R.id.imageView);
         TextView action_name = (TextView)convertView.findViewById(R.id.action_name);
         TextView action_count = (TextView)convertView.findViewById(R.id.action_count);
 
-        BBS_News feed = action_data.get(position);
+        //BBS_News feed = action_data.get(position);
 
         //imageView.setImageUrl(feed.getUrlToImage(), imageLoader);
-        action_name.setText(feed.getTitle());
-        action_count.setText(String.valueOf(position));
+        action_name.setText(getItem(position).getAction_name());
+        action_count.setText(String.valueOf(getItem(position).getModels().size()));
 
 
         return convertView;

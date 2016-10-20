@@ -18,18 +18,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Action_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.database.Tables;
+import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Encryption;
+import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Action_P1 extends Fragment {
+public class Action_P1 extends Fragment implements HttpRequest {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     TextView result_test;
@@ -39,6 +47,7 @@ public class Action_P1 extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     Action_ListView_Adapter adapter;
     private ArrayList<BBS_News> action_data;
+    DB db;
 
     public static Action_P1 newInstance() {
         Action_P1 fragment = new Action_P1();
@@ -69,12 +78,12 @@ public class Action_P1 extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Get_From_Database();
+                //Get_From_Database();
+                getFromInternet();
                 Log.v("", "SSS Refresh Started ");
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {
                         //Run refresh querry
-                        //
                         swipeRefreshLayout.setRefreshing(false);
                         Log.v("", "SSS Refresh finished ");
                     }
@@ -87,9 +96,11 @@ public class Action_P1 extends Fragment {
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
 
-        action_data = new ArrayList<BBS_News>();
+        //action_data = new ArrayList<BBS_News>();
+        db = new DB(getActivity());
+
         action_listview = (ListView)rootView.findViewById(R.id.action_listview);
-        adapter = new Action_ListView_Adapter(getActivity(), action_data);
+        adapter = new Action_ListView_Adapter(getActivity(), db.getActionArray());
         action_listview.setAdapter(adapter);
         action_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,16 +112,8 @@ public class Action_P1 extends Fragment {
                 interfaces.ActionSelected(i);
             }
         });
-        Get_From_Database();
 
-//        button2 = (Button)rootView.findViewById(R.id.button2);
-//        button2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                interfaces.ScannStart();
-//            }
-//        });
-//        result_test = (TextView)rootView.findViewById(R.id.result_test);
+
 
 
 
@@ -153,6 +156,46 @@ public class Action_P1 extends Fragment {
         Log.v("", "SSS Finish = " + action_data.size());
         db.close();
         adapter.notifyDataSetChanged();
+    }
+
+    private void getFromInternet(){
+        //ACTIONS-----------------------------------------------
+        Requests actions_requests = new Requests(Const.getActions, this);
+        HashMap<String, String> actions_params = new HashMap<String, String>();
+        actions_params.put(Const.method, Const.GetActions);
+        actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+        actions_requests.getHTTP_Responce(actions_params);
+    }
+
+    @Override
+    public void http_result(int type, String result) {
+        switch (type){
+            case Const.getActions:
+                ArrayList<Action> actions = new ArrayList<>();
+                actions = Parser.getActionsArray(result);
+                if(actions != null){
+                    //Actions ok
+                    PutActionsInDatabase(actions);
+                    adapter.setAction_data(actions);
+
+                }
+
+        }
+    }
+
+    @Override
+    public void http_error(int type, String error) {
+
+    }
+
+    private void PutActionsInDatabase(ArrayList<Action> actions) {
+        db = new DB(getActivity());
+        if(db.addActionArray(actions)){
+            //Data to base added successfully
+        } else {
+            Log.v("Error", "SSS ActionP1 PutActionsInDatabase error");
+        }
     }
 
 //    @Override

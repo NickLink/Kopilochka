@@ -5,18 +5,17 @@ package ua.kiev.foxtrot.kopilochka.data;
  */
 public class Notice {
 
-    private String notice_id;
+    private int notice_id;
     private String notice_name;
-    private String notice_date_from;
-    private String notice_date_to;
     private String notice_text;
-    private String notice_image;
+    private int notice_type_id;
+    private String notice_type;
 
-    public String getNotice_id() {
+    public int getNotice_id() {
         return notice_id;
     }
 
-    public void setNotice_id(String notice_id) {
+    public void setNotice_id(int notice_id) {
         this.notice_id = notice_id;
     }
 
@@ -28,22 +27,6 @@ public class Notice {
         this.notice_name = notice_name;
     }
 
-    public String getNotice_date_from() {
-        return notice_date_from;
-    }
-
-    public void setNotice_date_from(String notice_date_from) {
-        this.notice_date_from = notice_date_from;
-    }
-
-    public String getNotice_date_to() {
-        return notice_date_to;
-    }
-
-    public void setNotice_date_to(String notice_date_to) {
-        this.notice_date_to = notice_date_to;
-    }
-
     public String getNotice_text() {
         return notice_text;
     }
@@ -52,11 +35,19 @@ public class Notice {
         this.notice_text = notice_text;
     }
 
-    public String getNotice_image() {
-        return notice_image;
+    public int getNotice_type_id() {
+        return notice_type_id;
     }
 
-    public void setNotice_image(String notice_image) {
-        this.notice_image = notice_image;
+    public void setNotice_type_id(int notice_type_id) {
+        this.notice_type_id = notice_type_id;
+    }
+
+    public String getNotice_type() {
+        return notice_type;
+    }
+
+    public void setNotice_type(String notice_type) {
+        this.notice_type = notice_type;
     }
 }
