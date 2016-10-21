@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -26,9 +25,7 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Action_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.database.Tables;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
@@ -46,7 +43,7 @@ public class Action_P1 extends Fragment implements HttpRequest {
     ListView action_listview;
     SwipeRefreshLayout swipeRefreshLayout;
     Action_ListView_Adapter adapter;
-    private ArrayList<BBS_News> action_data;
+    //private ArrayList<BBS_News> action_data;
     DB db;
 
     public static Action_P1 newInstance() {
@@ -109,7 +106,7 @@ public class Action_P1 extends Fragment implements HttpRequest {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                interfaces.ActionSelected(i);
+                interfaces.ActionSelected(adapter.getAction_data().get(i).getAction_id());
             }
         });
 
@@ -135,28 +132,6 @@ public class Action_P1 extends Fragment implements HttpRequest {
 //
 //    }
 
-    private void Get_From_Database() {
-        Log.v("", "SSS Start = " + action_data.size());
-        action_data.clear();
-        DB db = new DB(getActivity());
-        db.open();
-        Cursor myCursor = db.getAllData();
-        myCursor.moveToFirst();
-        while (myCursor.isAfterLast() == false) {
-            BBS_News item = new BBS_News();
-            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
-            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
-            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
-            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
-            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
-            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
-            action_data.add(item);
-            myCursor.moveToNext();
-        }
-        Log.v("", "SSS Finish = " + action_data.size());
-        db.close();
-        adapter.notifyDataSetChanged();
-    }
 
     private void getFromInternet(){
         //ACTIONS-----------------------------------------------

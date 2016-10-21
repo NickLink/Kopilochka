@@ -12,6 +12,6 @@ public interface Interfaces {
     void LoginSuccess();
     void LogOut();
     void ActionSelected(int action_id);
-    void ModelSelected(int model_id);
+    void ModelSelected(int action_id, int model_id);
 
 }

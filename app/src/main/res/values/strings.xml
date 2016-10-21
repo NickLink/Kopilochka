@@ -48,6 +48,7 @@
     <string name="action_list_points">Баллов</string>
     <string name="action_register_model_button">Зарегистрировать модель</string>
     <string name="action_enter_serial_text">Введите серийный номер</string>
+    <string name="action_p3_info_text">Для регистрации смартфонов, планшетов и ноутбуков – вводи IMEI, для бытовой техники – серийный номер:</string>
     <string name="action_ok">Ок</string>
     <string name="action_scan">Сканировать</string>
     <string name="action_delete">Удалить</string>

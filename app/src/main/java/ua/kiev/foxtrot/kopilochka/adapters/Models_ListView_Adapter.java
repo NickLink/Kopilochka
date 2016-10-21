@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
+import ua.kiev.foxtrot.kopilochka.data.Model;
 
 /**
  * Created by NickNb on 07.10.2016.
@@ -18,11 +18,11 @@ import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 public class Models_ListView_Adapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<BBS_News> models_data;
+    private ArrayList<Model> models_data;
 //    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
 
-    public Models_ListView_Adapter(Context context, ArrayList<BBS_News> models_data) {
+    public Models_ListView_Adapter(Context context, ArrayList<Model> models_data) {
         this.context = context;
         this.models_data = models_data;
     }
@@ -33,7 +33,7 @@ public class Models_ListView_Adapter extends BaseAdapter {
     }
 
     @Override
-    public BBS_News getItem(int position) { //Object
+    public Model getItem(int position) { //Object
         // TODO Auto-generated method stub
         return models_data.get(position);
     }
@@ -58,11 +58,11 @@ public class Models_ListView_Adapter extends BaseAdapter {
         TextView action_list_item_days = (TextView)convertView.findViewById(R.id.action_list_item_days);
         TextView action_list_item_points = (TextView)convertView.findViewById(R.id.action_list_item_points);
 
-        BBS_News feed = models_data.get(position);
+        Model feed = models_data.get(position);
 
-        action_list_item_name.setText(feed.getTitle());
+        action_list_item_name.setText(feed.getModel_name());
         action_list_item_days.setText(String.valueOf(position + 10));
-        action_list_item_points.setText(String.valueOf(position));
+        action_list_item_points.setText(String.valueOf(feed.getModel_points()));
 
 
         return convertView;

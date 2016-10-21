@@ -297,8 +297,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     }
 
     @Override
-    public void ModelSelected(int model_id) {
-        TransactionActionStack(Action_P3.newInstance(), Const.Fr_AcP3, true);
+    public void ModelSelected(int action_id, int model_id) {
+        TransactionActionStack(Action_P3.newInstance(action_id, model_id), Const.Fr_AcP3, true);
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

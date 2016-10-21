@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,9 @@ import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
+import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.database.Tables;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
@@ -42,7 +43,9 @@ public class Action_P2 extends Fragment {
     ListView models_list;
     Models_ListView_Adapter adapter;
     View action_header;
-    ArrayList<BBS_News> models_data;
+    ArrayList<Model> models_data;
+    DB db;
+    Action action;
 
 
     public static Action_P2 newInstance(int action_id) { //
@@ -96,8 +99,11 @@ public class Action_P2 extends Fragment {
         models_list = (ListView)rootView.findViewById(R.id.models_list);
         models_list.addHeaderView(action_header);
         //Initializing
-        models_data = new ArrayList<BBS_News>();
-        adapter = new Models_ListView_Adapter(getActivity(), models_data);
+
+        db = new DB(getActivity());
+        action = db.getActionById(action_id);
+        //models_data = new ArrayList<Model>();
+        adapter = new Models_ListView_Adapter(getActivity(), action.getModels());
         models_list.setAdapter(adapter);
         models_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,16 +112,20 @@ public class Action_P2 extends Fragment {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                interfaces.ModelSelected(i);
+                interfaces.ModelSelected(action.getAction_id(), action.getModels().get(i).getModel_id());
             }
         });
 
-        //Get info on action
-        action_name.setText(getItem_fromBase(action_id).getTitle());
-        action_models_count.setText(String.valueOf(action_id));
+        //Set info on action
+        action_period.setText(action.getAction_date_from());
+        action_type.setText(action.getAction_type());
+        action_data.setText(action.getAction_date_charge());
+        action_comment.setText(action.getAction_description());
+        action_name.setText(action.getAction_name());
+        action_models_count.setText(String.valueOf(action.getModels().size()));
 
         //Send request
-        Get_From_Database();
+        //Get_From_Database();
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -149,26 +159,26 @@ public class Action_P2 extends Fragment {
             return null;
     }
 
-    private void Get_From_Database() {
-        Log.v("", "SSS Start = " + models_data.size());
-        models_data.clear();
-        DB db = new DB(getActivity());
-        db.open();
-        Cursor myCursor = db.getAllData();
-        myCursor.moveToFirst();
-        while (myCursor.isAfterLast() == false) {
-            BBS_News item = new BBS_News();
-            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
-            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
-            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
-            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
-            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
-            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
-            models_data.add(item);
-            myCursor.moveToNext();
-        }
-        Log.v("", "SSS Finish = " + models_data.size());
-        db.close();
-        adapter.notifyDataSetChanged();
-    }
+//    private void Get_From_Database() {
+//        Log.v("", "SSS Start = " + models_data.size());
+//        models_data.clear();
+//        DB db = new DB(getActivity());
+//        db.open();
+//        Cursor myCursor = db.getAllData();
+//        myCursor.moveToFirst();
+//        while (myCursor.isAfterLast() == false) {
+//            BBS_News item = new BBS_News();
+//            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
+//            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
+//            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
+//            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
+//            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
+//            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
+//            models_data.add(item);
+//            myCursor.moveToNext();
+//        }
+//        Log.v("", "SSS Finish = " + models_data.size());
+//        db.close();
+//        adapter.notifyDataSetChanged();
+//    }
 }

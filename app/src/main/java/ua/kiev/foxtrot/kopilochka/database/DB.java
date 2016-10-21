@@ -195,18 +195,30 @@ public class DB {
         return notif_data;
     }
     //==================================MODELS DATA====================================
-    public Cursor getAllModelsData() {
+    public Cursor getModelsCursor() {
         return mDB.query(Tables.table_name_models, null, null, null, null, null, null);
     }
 
-    public Cursor getModelsData(int action) {
+    public Cursor getModelByActionIdCursor(int action) {
         String selection = Const.model_action + " = ?";
         String[] selectionArgs = {String.valueOf(action)};
         return mDB.query(Tables.table_name_models, null, selection, selectionArgs, null, null, null);
     }
 
-    public Cursor getActionsData() {
+    public Cursor getModelByIdsCursor(int action, int model) {
+        String selection = Const.model_action + " = ?"  +" AND " + Const.model_id + " = ?";
+        String[] selectionArgs = {String.valueOf(action), String.valueOf(model)};
+        return mDB.query(Tables.table_name_models, null, selection, selectionArgs, null, null, null);
+    }
+
+    public Cursor getActionsCursor() {
         return mDB.query(Tables.table_name_actions, null, null, null, null, null, null);
+    }
+
+    public Cursor getActionByIdCursor(int action) {
+        String selection = Const.action_id + " = ?";
+        String[] selectionArgs = {String.valueOf(action)};
+        return mDB.query(Tables.table_name_actions, null, selection, selectionArgs, null, null, null);
     }
 
     public long addModel(Model data) {
@@ -277,49 +289,76 @@ public class DB {
         }
     }
 
+    public Model getModel(Cursor myCursor){
+        Model item = new Model();
+        item.setModel_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_id)));
+        item.setModel_name(myCursor.getString(myCursor.getColumnIndex(Const.model_name)));
+        item.setModel_points(myCursor.getInt(myCursor.getColumnIndex(Const.model_points)));
+        item.setModel_brand_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_brand_id)));
+        item.setModel_group_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_group_id)));
+        item.setModel_url(myCursor.getString(myCursor.getColumnIndex(Const.model_url)));
+        item.setModel_brand_name(myCursor.getString(myCursor.getColumnIndex(Const.model_brand_name)));
+        item.setModel_group_name(myCursor.getString(myCursor.getColumnIndex(Const.model_group_name)));
+        item.setModel_sn_count(myCursor.getInt(myCursor.getColumnIndex(Const.model_sn_count)));
+        item.setModel_action(myCursor.getInt(myCursor.getColumnIndex(Const.model_action)));
+        return item;
+    }
+
+    public Model getModelByIds(int action, int model){
+        Model item = new Model();
+        this.open();
+        Cursor myCursor = this.getModelByIdsCursor(action, model);
+        if(myCursor.moveToFirst()) {
+            item = getModel(myCursor);
+        } else item =  null;
+        this.close();
+        return item;
+    }
+
     public ArrayList<Model> getModelsArray(int action){
         ArrayList<Model> models = new ArrayList<Model>();
-
-        this.open();
-        Cursor myCursor = this.getModelsData(action);
+        Cursor myCursor = this.getModelByActionIdCursor(action);
         myCursor.moveToFirst();
         while (myCursor.isAfterLast() == false) {
-            Model item = new Model();
-            item.setModel_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_id)));
-            item.setModel_name(myCursor.getString(myCursor.getColumnIndex(Const.model_name)));
-            item.setModel_points(myCursor.getInt(myCursor.getColumnIndex(Const.model_points)));
-            item.setModel_brand_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_brand_id)));
-            item.setModel_group_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_group_id)));
-            item.setModel_url(myCursor.getString(myCursor.getColumnIndex(Const.model_url)));
-            item.setModel_brand_name(myCursor.getString(myCursor.getColumnIndex(Const.model_brand_name)));
-            item.setModel_group_name(myCursor.getString(myCursor.getColumnIndex(Const.model_group_name)));
-            item.setModel_sn_count(myCursor.getInt(myCursor.getColumnIndex(Const.model_sn_count)));
-            item.setModel_action(myCursor.getInt(myCursor.getColumnIndex(Const.model_action)));
-            models.add(item);
+            models.add(getModel(myCursor));
             myCursor.moveToNext();
         }
         Log.v("", "SSS getModelsArray = " + models.size());
-        this.close();
         return models;
+    }
+
+    public Action getAction(Cursor myCursor){
+        Action item = new Action();
+        item.setAction_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_id)));
+        item.setAction_name(myCursor.getString(myCursor.getColumnIndex(Const.action_name)));
+        item.setAction_type_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_type_id)));
+        item.setAction_type(myCursor.getString(myCursor.getColumnIndex(Const.action_type)));
+        item.setAction_date_from(myCursor.getString(myCursor.getColumnIndex(Const.action_date_from)));
+        item.setAction_date_to(myCursor.getString(myCursor.getColumnIndex(Const.action_date_to)));
+        item.setAction_date_charge(myCursor.getString(myCursor.getColumnIndex(Const.action_date_charge)));
+        item.setAction_description(myCursor.getString(myCursor.getColumnIndex(Const.action_description)));
+        item.setModels(getModelsArray(item.getAction_id()));
+        return item;
+    }
+
+    public Action getActionById(int id){
+        Action item = new Action();
+        this.open();
+        Cursor myCursor = this.getActionByIdCursor(id);
+        if(myCursor.moveToFirst()) {
+            item = getAction(myCursor);
+        } else item =  null;
+        this.close();
+        return item;
     }
 
     public ArrayList<Action> getActionArray(){
         ArrayList<Action> actions = new ArrayList<Action>();
         this.open();
-        Cursor myCursor = this.getActionsData();
+        Cursor myCursor = this.getActionsCursor();
         myCursor.moveToFirst();
         while (myCursor.isAfterLast() == false) {
-            Action item = new Action();
-            item.setAction_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_id)));
-            item.setAction_name(myCursor.getString(myCursor.getColumnIndex(Const.action_name)));
-            item.setAction_type_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_type_id)));
-            item.setAction_type(myCursor.getString(myCursor.getColumnIndex(Const.action_type)));
-            item.setAction_date_from(myCursor.getString(myCursor.getColumnIndex(Const.action_date_from)));
-            item.setAction_date_to(myCursor.getString(myCursor.getColumnIndex(Const.action_date_to)));
-            item.setAction_date_charge(myCursor.getString(myCursor.getColumnIndex(Const.action_date_charge)));
-            item.setAction_description(myCursor.getString(myCursor.getColumnIndex(Const.action_description)));
-            item.setModels(getModelsArray(item.getAction_id()));
-            actions.add(item);
+            actions.add(getAction(myCursor));
             myCursor.moveToNext();
         }
         Log.v("", "SSS getActionArray = " + actions.size());

@@ -18,12 +18,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Serials_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
+import ua.kiev.foxtrot.kopilochka.data.Model;
+import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 07.10.2016.
@@ -41,9 +45,16 @@ public class Action_P3 extends Fragment implements Delete_Serial{
     Serials_ListView_Adapter adapter;
     View add_footer;
     private ArrayList<BBS_News> serials_data;
+    private int action_id, model_id;
+    DB db;
+    Model model;
 
-    public static Action_P3 newInstance() {
+    public static Action_P3 newInstance(int action_id, int model_id) {
         Action_P3 fragment = new Action_P3();
+        Bundle args = new Bundle();
+        args.putInt(Const.action_id, action_id);
+        args.putInt(Const.model_id, model_id);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -66,19 +77,19 @@ public class Action_P3 extends Fragment implements Delete_Serial{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_action_p3, container,
                 false);
+        action_id = getArguments().getInt(Const.action_id, 0);
+        model_id = getArguments().getInt(Const.model_id, 0);
+        if(action_id == 0 || model_id == 0){
+            //Error getting data
+            Utils.ShowInputErrorDialog(getActivity(), "Error", "Action & model error", "OK");
+            return null;
+        }
+        db = new DB(getActivity());
+        model = db.getModelByIds(action_id, model_id);
 
-
-//        Button scan_button = (Button)rootView.findViewById(R.id.scan_button);
-//        scan_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                interfaces.ScannStart();
-//            }
-//        });
-//        EditText scan_result = (EditText)rootView.findViewById(R.id.scan_result);
-
-//        serials_data = new ArrayList<BBS_News>();
-//        serials_data.add(new BBS_News());
+        TextView action_name = (TextView)rootView.findViewById(R.id.action_name);
+        TextView model_name = (TextView)rootView.findViewById(R.id.model_name);
+        TextView bonus_points = (TextView)rootView.findViewById(R.id.action_p3_bonus_points);
 
         add_footer = inflater.inflate(R.layout.frag_action_p3_list_footer, null);
         Button add_new_serial = (Button)add_footer.findViewById(R.id.add_serial_field);
@@ -96,7 +107,9 @@ public class Action_P3 extends Fragment implements Delete_Serial{
                 ShowSerialDialog(i);
             }
         });
-
+        action_name.setText(model.getModel_name());
+        model_name.setText(model.getModel_name());
+        bonus_points.setText(String.valueOf(model.getModel_points()));
 
         add_new_serial.setOnClickListener(new View.OnClickListener() {
             @Override
