@@ -13,6 +13,7 @@ import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 
 /**
  * Created by NickNb on 30.09.2016.
@@ -195,6 +196,33 @@ public class DB {
         return notif_data;
     }
     //==================================MODELS DATA====================================
+    public Cursor getModelsForPGroup(){
+        String[] columns = new String[] { Const.model_group_name, "COUNT(*) AS " + Const.models_count, Const.model_group_id };
+        return mDB.query(Tables.table_name_models, columns, null, null, Const.model_group_name, null, Const.model_group_name);
+    }
+
+    public ArrayList<ProductGroup> getGroupsNamesAndCount(){
+        ArrayList<ProductGroup> arrayList = new ArrayList<ProductGroup>();
+        this.open();
+        Cursor myCursor = getModelsForPGroup();
+        myCursor.moveToFirst();
+        while (!myCursor.isAfterLast()){
+            ProductGroup item = new ProductGroup();
+            String groupName = myCursor.getString(myCursor.getColumnIndex(Const.model_group_name));
+            int modelsCount = myCursor.getInt(myCursor.getColumnIndex(Const.models_count));
+            int group_id = myCursor.getInt(myCursor.getColumnIndex(Const.model_group_id));
+            item.setGroup_name(groupName);
+            item.setModels_count(modelsCount);
+            item.setGroup_id(group_id);
+            arrayList.add(item);
+            Log.v("TAG", "SSSS groupName =" + groupName + " modelsCount =" + modelsCount + " group_id =" + group_id);
+            myCursor.moveToNext();
+        }
+        this.close();
+        return arrayList;
+    }
+
+
     public Cursor getModelsCursor() {
         return mDB.query(Tables.table_name_models, null, null, null, null, null, null);
     }
@@ -313,6 +341,18 @@ public class DB {
         } else item =  null;
         this.close();
         return item;
+    }
+
+    public ArrayList<Model> getModelsArray(){
+        ArrayList<Model> models = new ArrayList<Model>();
+        Cursor myCursor = this.getModelsCursor();
+        myCursor.moveToFirst();
+        while (myCursor.isAfterLast() == false) {
+            models.add(getModel(myCursor));
+            myCursor.moveToNext();
+        }
+        Log.v("", "SSS getModelsArray = " + models.size());
+        return models;
     }
 
     public ArrayList<Model> getModelsArray(int action){

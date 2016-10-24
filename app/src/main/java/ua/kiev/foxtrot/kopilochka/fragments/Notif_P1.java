@@ -13,15 +13,25 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Notif_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
+import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Encryption;
+import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Notif_P1 extends Fragment {
+public class Notif_P1 extends Fragment implements HttpRequest {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -68,12 +78,13 @@ public class Notif_P1 extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                getFromInternet();
                 Log.v("", "SSS Refresh Started ");
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {
                         //Run refresh querry
                         adapter.setNotice_data(db.getNoticeArray());
-                        swipeRefreshLayout.setRefreshing(false);
+
                         Log.v("", "SSS Refresh finished ");
                     }
                 }, 1000);
@@ -103,4 +114,46 @@ public class Notif_P1 extends Fragment {
         return rootView;
     }
 
+    private void getFromInternet(){
+        //NOTICES----------------------------------------------
+        Requests notice_requests = new Requests(Const.getNotices, this);
+        HashMap<String, String> notice_params = new HashMap<String, String>();
+        notice_params.put(Const.method, Const.GetNotices);
+        notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+        notice_requests.getHTTP_Responce(notice_params);
+    }
+
+    @Override
+    public void http_result(int type, String result) {
+        switch (type){
+            case Const.getNotices:
+                ArrayList<Notice> notices = new ArrayList<>();
+                notices = Parser.getNoticesArray(result);
+                if(notices != null){
+                    //Actions ok
+                    if(PutNoticesInDatabase(notices)) {
+                        adapter.setNotice_data(notices);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+
+        }
+    }
+
+    @Override
+    public void http_error(int type, String error) {
+
+    }
+
+    private boolean PutNoticesInDatabase(ArrayList<Notice> notices) {
+        db = new DB(getActivity());
+        if(db.addNoticeArray(notices)){
+            //Data to base added successfully
+            return true;
+        } else {
+            Log.v("Error", "SSS ActionP1 PutActionsInDatabase error");
+            return false;
+        }
+    }
 }

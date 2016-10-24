@@ -2,7 +2,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -77,15 +76,6 @@ public class Action_P1 extends Fragment implements HttpRequest {
             public void onRefresh() {
                 //Get_From_Database();
                 getFromInternet();
-                Log.v("", "SSS Refresh Started ");
-                new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
-                        //Run refresh querry
-                        swipeRefreshLayout.setRefreshing(false);
-                        Log.v("", "SSS Refresh finished ");
-                    }
-                }, 1000);
-
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright,
@@ -153,7 +143,7 @@ public class Action_P1 extends Fragment implements HttpRequest {
                     //Actions ok
                     PutActionsInDatabase(actions);
                     adapter.setAction_data(actions);
-
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
         }

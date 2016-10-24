@@ -164,11 +164,19 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         if(fragmentList !=null && fragmentList.get(fragmentList.size()-1)!=null){
             //Fragments exist
         } else {
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_place,
-                            Start_P1.newInstance(), Const.Fr_StP1).commit();
-            list_slidermenu.setItemChecked(0, true);
+            if(AppContr.getSharPref().getString(Const.SAVED_SES, null)!=null) {
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_place,
+                                Start_P1.newInstance(), Const.Fr_StP1).commit();
+                list_slidermenu.setItemChecked(0, true);
+            } else {
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_place,
+                                Data_P1.newInstance(), Const.Fr_DtP1).commit();
+                list_slidermenu.setItemChecked(4, true);
+            }
         }
 
 

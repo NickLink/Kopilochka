@@ -96,6 +96,7 @@ public class Const {
     public static final String model_group_name = "model_group_name";
     public static final String model_sn_count = "model_sn_count";
     public static final String model_action = "model_action";
+    public static final String models_count = "models_count";
 
     //PostSN
     public static final int PostSN = 4;

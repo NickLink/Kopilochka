@@ -12,6 +12,8 @@
     <string name="menu_data">Личные данные</string>
     <string name="menu_wtf">Что я делаю не так?</string>
 
+    <string name="start_cumulative_points">Накопительные баллы</string>
+
     <string name="menu_exit_title">Выход</string>
     <string name="menu_exit_text">Вы уверены?</string>
     <string name="menu_exit_yes"> Да </string>

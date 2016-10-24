@@ -3,39 +3,40 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_grey_border_empty"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:weightSum="8">
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/imageView" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/title"
+        style="@style/myNormal_TextStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
+        android:layout_weight="6"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"/>
 
-        <TextView
-            style="@style/myNormal_TextStyle"
+    <TextView
+        android:id="@+id/count"
+        style="@style/myNormal_TextStyle"
+        android:background="@drawable/bg_grey_border_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView" />
+            android:src="@drawable/menu_arrow"
+            android:layout_centerInParent="true" />
 
-        <TextView
-            style="@style/mySmall_TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView2" />
+    </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView3" />
-    </LinearLayout>
+
 
 </LinearLayout>

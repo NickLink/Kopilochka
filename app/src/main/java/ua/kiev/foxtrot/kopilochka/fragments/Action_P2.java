@@ -112,6 +112,7 @@ public class Action_P2 extends Fragment {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+                i -= models_list.getHeaderViewsCount();
                 interfaces.ModelSelected(action.getAction_id(), action.getModels().get(i).getModel_id());
             }
         });

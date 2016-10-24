@@ -76,7 +76,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime() + 20000,
-                    AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+                    AlarmManager.INTERVAL_HOUR, pendingIntent);
         }
     }
 
@@ -247,7 +247,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 .addAction(R.drawable.icon_open, "Open", pIntent)
                 .addAction(R.drawable.icon_later, "Later", pIntent)
                 .setSound(ringURI)
-                .setVibrate(vibrate)
+                //.setVibrate(vibrate)
                 .build();
         // убираем уведомление, когда его выбрали
         builder.flags |= Notification.FLAG_AUTO_CANCEL;

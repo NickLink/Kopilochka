@@ -8,6 +8,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -243,6 +246,29 @@ public class Utils {
             return true;
         else
             return false;
+    }
+
+    public static long getMillisFromDate(String date){
+        long millis = 0;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date d = f.parse(date);
+            millis = d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return millis;
+    }
+
+    public static boolean isDateInRange(String start_date, String end_date){
+        long current_time = System.currentTimeMillis();
+        long action_start_time = getMillisFromDate(start_date);
+        long action_end_time = getMillisFromDate(end_date);
+        if(current_time >= action_start_time && current_time <= action_end_time){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

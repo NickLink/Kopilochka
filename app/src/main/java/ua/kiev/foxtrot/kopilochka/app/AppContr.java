@@ -86,4 +86,15 @@ public class AppContr extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+    public void cancelAllRequests() {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+                @Override
+                public boolean apply(Request<?> request) {
+                    return true;
+                }
+            });
+        }
+    }
 }
