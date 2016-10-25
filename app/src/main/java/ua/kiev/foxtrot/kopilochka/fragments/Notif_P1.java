@@ -116,7 +116,7 @@ public class Notif_P1 extends Fragment implements HttpRequest {
 
     private void getFromInternet(){
         //NOTICES----------------------------------------------
-        Requests notice_requests = new Requests(Const.getNotices, this);
+        Requests notice_requests = new Requests(getActivity(), Const.getNotices, this);
         HashMap<String, String> notice_params = new HashMap<String, String>();
         notice_params.put(Const.method, Const.GetNotices);
         notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])

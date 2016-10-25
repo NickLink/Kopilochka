@@ -196,6 +196,17 @@ public class DB {
         return notif_data;
     }
     //==================================MODELS DATA====================================
+//    public Cursor getModelsForPGroup_id(int group_id, int action_type_id){
+//        String table = Tables.table_name_models + " as MD inner join "
+//                + Tables.table_name_actions + " as AC on MD." + Const.model_action + " = AC." + Const.action_id;
+//
+//
+//        String selection = "";
+//        String[] selection_args = {};
+//
+//        return mDB.query(Tables.table_name_models, columns, null, null, Const.model_group_name, null, Const.model_group_name);
+//    }
+
     public Cursor getModelsForPGroup(){
         String[] columns = new String[] { Const.model_group_name, "COUNT(*) AS " + Const.models_count, Const.model_group_id };
         return mDB.query(Tables.table_name_models, columns, null, null, Const.model_group_name, null, Const.model_group_name);
@@ -246,6 +257,12 @@ public class DB {
     public Cursor getActionByIdCursor(int action) {
         String selection = Const.action_id + " = ?";
         String[] selectionArgs = {String.valueOf(action)};
+        return mDB.query(Tables.table_name_actions, null, selection, selectionArgs, null, null, null);
+    }
+
+    public Cursor getActionByTypeCursor(int action_type_id) {
+        String selection = Const.action_type_id + " = ?";
+        String[] selectionArgs = {String.valueOf(action_type_id)};
         return mDB.query(Tables.table_name_actions, null, selection, selectionArgs, null, null, null);
     }
 
@@ -392,16 +409,34 @@ public class DB {
         return item;
     }
 
+    public ArrayList<Action> getActionByTypeArray(int action_type_id){
+        ArrayList<Action> actions = new ArrayList<Action>();
+        this.open();
+        Cursor myCursor = this.getActionByTypeCursor(action_type_id);
+        myCursor.moveToFirst();
+        //if(myCursor.moveToFirst()) {
+            while (myCursor.isAfterLast() == false) {
+                actions.add(getAction(myCursor));
+                myCursor.moveToNext();
+            }
+       // } else actions = null;
+        Log.v("", "SSS getActionByTypeArray = " + actions.size());
+        this.close();
+        return actions;
+    }
+
     public ArrayList<Action> getActionArray(){
         ArrayList<Action> actions = new ArrayList<Action>();
         this.open();
         Cursor myCursor = this.getActionsCursor();
         myCursor.moveToFirst();
-        while (myCursor.isAfterLast() == false) {
-            actions.add(getAction(myCursor));
-            myCursor.moveToNext();
-        }
-        Log.v("", "SSS getActionArray = " + actions.size());
+        //if(myCursor.moveToFirst()) {
+            while (myCursor.isAfterLast() == false) {
+                actions.add(getAction(myCursor));
+                myCursor.moveToNext();
+            }
+        //} else actions = null;
+        //Log.v("", "SSS getActionArray = " + actions.size());
         this.close();
         return actions;
     }

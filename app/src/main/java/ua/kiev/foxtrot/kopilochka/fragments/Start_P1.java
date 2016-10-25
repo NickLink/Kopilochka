@@ -51,7 +51,6 @@ public class Start_P1 extends Fragment implements HttpRequest{
     private ArrayList<ProductGroup> productList;
     private int cumulative_count = 0;
     ListView start_listview;
-    View header;
 
     public static Start_P1 newInstance() {
         Start_P1 fragment = new Start_P1();
@@ -81,24 +80,23 @@ public class Start_P1 extends Fragment implements HttpRequest{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_start_p1, container,
                 false);
         start_listview = (ListView)rootView.findViewById(R.id.listView);
-        header = inflater.inflate(R.layout.frag_start_p1_list_item, null);
-        TextView header_title = (TextView)header.findViewById(R.id.title);
-        TextView header_count = (TextView)header.findViewById(R.id.count);
 
         db = new DB(getActivity());
         actionList = db.getActionArray();
 
+        productList = new ArrayList<>();
         if(actionList != null){
             cumulative_count = LookForCumulativeActions(actionList);
             if(cumulative_count > 0){
-                start_listview.addHeaderView(header);
-                header_title.setText(getString(R.string.start_cumulative_points));
-                header_count.setText(String.valueOf(cumulative_count));
+                ProductGroup item = new ProductGroup();
+                item.setGroup_name(getString(R.string.start_cumulative_points));
+                item.setModels_count(cumulative_count);
+                productList.add(item);
             }
 
         } else {
@@ -106,35 +104,39 @@ public class Start_P1 extends Fragment implements HttpRequest{
         }
 
         db = new DB(getActivity());
-        productList = db.getGroupsNamesAndCount();
-        //modelList = db.getModelsArray();
-//        if(modelList != null){
-//
-//            //SortByProductGroup(modelList);
-//        } else {
-//            Utils.ShowInputErrorDialog(getActivity(), "Ашипка", "Старт П1", "Массив моделей пуст/сломан");
-//        }
 
+        productList.addAll(db.getGroupsNamesAndCount());
 
-        //counter.setText(String.valueOf(cumulative_count));
+        if(productList != null && productList.size() != 0){
 
-        //news_data = new ArrayList<BBS_News>();
+            adapter = new Product_ListView_Adapter(getActivity(), productList);
+            start_listview.setAdapter(adapter);
 
-        adapter = new Product_ListView_Adapter(getActivity(), productList);
-        start_listview.setAdapter(adapter);
+            start_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if(cumulative_count > 0 && i == 0) {
+                        interfaces.ProductGroupSelected(
+                                productList.get(i).getGroup_id(),
+                                productList.get(i).getGroup_name(),
+                                0);
+                    } else {
+                        interfaces.ProductGroupSelected(
+                                productList.get(i).getGroup_id(),
+                                productList.get(i).getGroup_name(),
+                                1);
+                    }
+                    Toast.makeText(getActivity(), "Product group name = " +
+                            productList.get(i).getGroup_name() + " group_id = " +
+                            productList.get(i).getGroup_id(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "header Selected", Toast.LENGTH_LONG).show();
-            }
-        });
-        start_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "start_listview Selected pos = " + i, Toast.LENGTH_LONG).show();
-            }
-        });
+        } else {
+            //Выводим что бонусирование не проводиться
+
+            Utils.ShowInputErrorDialog(getActivity(), "Ашипка", "Старт П1", "Массив моделей пуст/сломан");
+        }
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -155,7 +157,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
             boolean isCumulative = item.getAction_type_id() == 0 ? true : false;
             boolean isDateValid = Utils.isDateInRange(item.getAction_date_from(), item.getAction_date_to());
             if(isCumulative && isDateValid){
-                cumulative_count++;
+                cumulative_count+=item.getModels().size();
             }
         }
         return cumulative_count;
@@ -196,7 +198,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
 //    }
 
     void loadMore(){
-        Requests requests = new Requests(1, Start_P1.this);
+        Requests requests = new Requests(getActivity(), 1, Start_P1.this);
         requests.getNewsData();
         load_more_progress.setVisibility(View.VISIBLE);
     }
@@ -204,35 +206,13 @@ public class Start_P1 extends Fragment implements HttpRequest{
     @Override
     public void onResume() {
         super.onResume();
-        //Get_From_Database();
     }
 
-//    private void Get_From_Database() {
-//        news_data.clear();
-//        db = new DB(getActivity());
-//        db.open();
-//        myCursor = db.getAllData();
-//        myCursor.moveToFirst();
-//        while (myCursor.isAfterLast() == false) {
-//            BBS_News item = new BBS_News();
-//            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
-//            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
-//            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
-//            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
-//            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
-//            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
-//            news_data.add(item);
-//            myCursor.moveToNext();
-//        }
-//        adapter.notifyDataSetChanged();
-//        counter.setText(" " + news_data.size());
-//    }
+
 
 
     @Override
     public void http_result(int type, String result) {
-        //load_more_progress.setVisibility(View.INVISIBLE);
-        //PutDataInDatabase(Parser.getNewsArray(result));
 
     }
 
@@ -242,15 +222,5 @@ public class Start_P1 extends Fragment implements HttpRequest{
 
     }
 
-//    private void PutDataInDatabase(ArrayList<BBS_News> news) {
-//        db = new DB(getActivity());
-//        db.open();
-//        if(db.addNewsArray(news)){
-//            //Data to base added successfully
-//            Get_From_Database();
-//        } else {
-//            //CreateNotification("Error", "Database Transaction FAIL", "");
-//            Utils.ShowInputErrorDialog(getActivity(), "Error", "Database Transaction FAIL", "OK");
-//        }
-//    }
+
 }

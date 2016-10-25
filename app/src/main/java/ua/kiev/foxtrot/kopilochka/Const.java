@@ -24,6 +24,7 @@ public class Const {
     public static final String SAVED_PHONE = "string_phone";
 
     public static final String Fr_StP1 = "Fr_StP1";
+    public static final String Fr_StP2 = "Fr_StP2";
     public static final String Fr_NtP1 = "Fr_NtP1";
     public static final String Fr_AcP1 = "Fr_AcP1";
     public static final String Fr_AcP2 = "Fr_AcP2";
@@ -31,6 +32,7 @@ public class Const {
     public static final String Fr_HsP1 = "Fr_HsP1";
     public static final String Fr_DtP1 = "Fr_DtP1";
     public static final String Fr_DtPL = "Fr_DtPL";
+    public static final String Fr_DtPE = "Fr_DtPE";
     public static final String Fr_WtP1 = "Fr_WtP1";
     public static final String Fr_Scan = "Fr_Scan";
 
@@ -99,7 +101,8 @@ public class Const {
     public static final String models_count = "models_count";
 
     //PostSN
-    public static final int PostSN = 4;
+    public static final int postSN = 4;
+    public static final String PostSN = "PostSN";
     //-->in
     //public static final String session = "session";
     //public static final String action_id = "action_id";
@@ -115,7 +118,8 @@ public class Const {
     //public static final String sn = "sn";
 
     //GetFinInfo
-    public static final int GetFinInfo = 5;
+    public static final int getFinInfo = 5;
+    public static final String GetFinInfo = "GetFinInfo";
     //->in
     //public static final String session = "session";
     //-->out
@@ -126,7 +130,7 @@ public class Const {
     public static final String charges = "charges";
     public static final String action_charge = "action_charge";
     public static final String date_charge = "date_charge";
-    public static final String amount_charges = "amount_charges";
+    public static final String amount_charge = "amount_charge";
     public static final String payments = "payments";
     public static final String action_payment = "action_payment";
     public static final String date_payment = "date_payment";
@@ -134,11 +138,12 @@ public class Const {
     public static final String comment_payment = "comment_payment";
 
     //PostQuestion
-    public static final int PostQuestion = 6;
+    public static final int postQuestion = 6;
+    public static final String PostQuestion = "PostQuestion";
     //-->in
     //public static final String session = "session";
     public static final String fio = "fio";
-    public static final String e_mail = "e-mail";
+    public static final String email = "email";
     public static final String question = "question";
     //-->out
 

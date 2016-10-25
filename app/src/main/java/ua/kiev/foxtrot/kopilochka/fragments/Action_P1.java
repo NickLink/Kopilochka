@@ -125,7 +125,7 @@ public class Action_P1 extends Fragment implements HttpRequest {
 
     private void getFromInternet(){
         //ACTIONS-----------------------------------------------
-        Requests actions_requests = new Requests(Const.getActions, this);
+        Requests actions_requests = new Requests(getActivity(), Const.getActions, this);
         HashMap<String, String> actions_params = new HashMap<String, String>();
         actions_params.put(Const.method, Const.GetActions);
         actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])

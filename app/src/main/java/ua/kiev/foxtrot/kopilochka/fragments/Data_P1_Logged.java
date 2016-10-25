@@ -60,6 +60,13 @@ public class Data_P1_Logged extends Fragment implements HttpRequest {
         data_email_email.setText(AppContr.userData.getUser_email());
         data_phone_phone.setText(AppContr.userData.getUser_phone());
 
+        data_show_extra_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                interfaces.ShowDataExtra();
+            }
+        });
+
         data_show_logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

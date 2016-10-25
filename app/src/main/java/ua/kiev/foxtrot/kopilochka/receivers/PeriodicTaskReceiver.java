@@ -98,7 +98,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
 //            BBC_requests.getNewsData();
 
             //NOTICES----------------------------------------------
-            Requests notice_requests = new Requests(Const.getNotices, this);
+            Requests notice_requests = new Requests(context, Const.getNotices, this);
             HashMap<String, String> notice_params = new HashMap<String, String>();
             notice_params.put(Const.method, Const.GetNotices);
             notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
@@ -106,7 +106,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
             notice_requests.getHTTP_Responce(notice_params);
 
             //ACTIONS-----------------------------------------------
-            Requests actions_requests = new Requests(Const.getActions, this);
+            Requests actions_requests = new Requests(context, Const.getActions, this);
             HashMap<String, String> actions_params = new HashMap<String, String>();
             actions_params.put(Const.method, Const.GetActions);
             actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])

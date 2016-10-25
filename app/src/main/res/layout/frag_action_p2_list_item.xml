@@ -10,13 +10,11 @@
         android:background="@color/holo_green_light"/>
 
     <LinearLayout
-        style="@style/myLinearLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="8">
+        android:padding="10dp"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/action_list_item_name"

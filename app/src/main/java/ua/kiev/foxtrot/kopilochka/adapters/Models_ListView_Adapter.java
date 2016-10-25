@@ -60,8 +60,9 @@ public class Models_ListView_Adapter extends BaseAdapter {
 
         Model feed = models_data.get(position);
 
+
         action_list_item_name.setText(feed.getModel_name());
-        action_list_item_days.setText(String.valueOf(position + 10));
+        action_list_item_days.setText(String.valueOf(feed.getModel_days_left()));
         action_list_item_points.setText(String.valueOf(feed.getModel_points()));
 
 

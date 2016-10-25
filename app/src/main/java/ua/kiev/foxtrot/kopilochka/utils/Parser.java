@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
+import ua.kiev.foxtrot.kopilochka.data.Charge;
+import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.data.Payment;
 import ua.kiev.foxtrot.kopilochka.data.UserData;
 
 /**
@@ -189,6 +192,70 @@ public class Parser {
         }
     }
 
+    //=========================FININFO DATA===========================================
+    public static Charge getCharge(JSONObject jsonObject){
+        Charge item = new Charge();
+        try {
+            item.setAction_charge(jsonObject.getString(Const.action_charge));
+            item.setDate_charge(jsonObject.getString(Const.date_charge));
+            item.setAmount_charges(jsonObject.getInt(Const.amount_charge));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return item;
+    }
+
+    public static Payment getPayment(JSONObject jsonObject){
+        Payment item = new Payment();
+        try {
+            item.setAction_payment(jsonObject.getString(Const.action_payment));
+            item.setDate_payment(jsonObject.getString(Const.date_payment));
+            item.setAmount_payment(jsonObject.getInt(Const.amount_payment));
+            item.setComment_payment(jsonObject.getString(Const.comment_payment));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return item;
+    }
+
+
+    public static FinInfo getFinInfo(String response){
+        FinInfo finInfo = new FinInfo();
+        try {
+
+
+
+
+
+
+        } catch (Exception e){
+            Log.v("", "SSS getActionsArray Exception=" + e.toString());
+            return null;
+        }
+        return finInfo;
+    }
+
+    public static int parseQuestionResponce(String response){
+        try{
+            JSONObject data = new JSONObject(response);
+            if (data.has(Const.JSON_Error)) {
+                switch (data.getInt(Const.JSON_Code)){
+                    case 1:
+                        return 1;
+                    case 2:
+                        return 2;
+                }
+            } else {
+                return 0;
+            }
+        }
+        catch (Exception e){
+            return -1;
+        }
+        return 1;
+    }
 
 
 

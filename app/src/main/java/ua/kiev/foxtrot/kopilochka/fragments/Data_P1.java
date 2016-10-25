@@ -99,7 +99,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
     }
 
     private void getToken(String login, String password) {
-        Requests requests = new Requests(Const.getSession, Data_P1.this);
+        Requests requests = new Requests(getActivity(), Const.getSession, Data_P1.this);
         HashMap<String, String> params = new HashMap<>();
         params.put(Const.login, login);
         params.put(Const.password, password);

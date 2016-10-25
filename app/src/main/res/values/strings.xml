@@ -56,6 +56,14 @@
     <string name="action_delete">Удалить</string>
     <string name="data_extradata_button">Посмотреть личные данные</string>
 
+    <string name="wtf_fields_title">Внимание!</string>
+    <string name="wtf_fields_not_complete">Не все поля правильно заполнены.</string>
+    <string name="wtf_sent_success">Сообщение успешно отправлено.</string>
 
+    <string name="wtf_ok">Ок</string>
+
+    <string name="warning_title">Внимание!</string>
+    <string name="warning_session_expired">Время токена соединения истекло - перелогиньтесь пожалуйста.</string>
+    <string name="warning_user_not_active">Пользователь не активен, обратитесь за разъяснениями к администрации Ф5.</string>
     <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
 </resources>

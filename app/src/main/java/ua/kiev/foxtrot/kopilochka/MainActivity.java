@@ -30,11 +30,13 @@ import ua.kiev.foxtrot.kopilochka.fragments.Action_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P3;
 import ua.kiev.foxtrot.kopilochka.fragments.Data_P1;
+import ua.kiev.foxtrot.kopilochka.fragments.Data_P1_Extra;
 import ua.kiev.foxtrot.kopilochka.fragments.Data_P1_Logged;
 import ua.kiev.foxtrot.kopilochka.fragments.History_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Notif_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.ScanFragment;
 import ua.kiev.foxtrot.kopilochka.fragments.Start_P1;
+import ua.kiev.foxtrot.kopilochka.fragments.Start_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
@@ -280,6 +282,11 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     }
 
     @Override
+    public void ShowDataExtra() {
+        TransactionActionStack(Data_P1_Extra.newInstance(), Const.Fr_DtPE, true);
+    }
+
+    @Override
     public void LogOut() {
         //Clear user data
         Utils.Clear_User();
@@ -307,6 +314,11 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     @Override
     public void ModelSelected(int action_id, int model_id) {
         TransactionActionStack(Action_P3.newInstance(action_id, model_id), Const.Fr_AcP3, true);
+    }
+
+    @Override
+    public void ProductGroupSelected(int group_id, String group_name, int action_type_id) {
+        TransactionActionStack(Start_P2.newInstance(group_id, group_name, action_type_id), Const.Fr_StP2, true);
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

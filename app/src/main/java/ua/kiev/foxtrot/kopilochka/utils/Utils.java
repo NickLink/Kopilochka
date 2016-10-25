@@ -223,16 +223,16 @@ public class Utils {
 
 
                 break;
-            case Const.PostSN:
+            case Const.postSN:
 
 
 
                 break;
-            case Const.GetFinInfo:
+            case Const.getFinInfo:
 
 
                 break;
-            case Const.PostQuestion:
+            case Const.postQuestion:
 
 
 
@@ -265,6 +265,21 @@ public class Utils {
         long action_start_time = getMillisFromDate(start_date);
         long action_end_time = getMillisFromDate(end_date);
         if(current_time >= action_start_time && current_time <= action_end_time){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static int daysLeft(String end_date){
+        int days = 0;
+        long action_end_time = getMillisFromDate(end_date);
+        days = (int)((action_end_time - System.currentTimeMillis()) / (24 * 60 * 60 * 1000));
+        return days < 0 ? -days: days;
+    }
+
+    public static boolean isQuestionCorrect(String name, String email, String question){
+        if(notNull_orEmpty(name) && email_Correct(email) && notNull_orEmpty(question)) {
             return true;
         } else {
             return false;

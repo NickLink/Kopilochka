@@ -6,18 +6,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Encryption;
+import ua.kiev.foxtrot.kopilochka.utils.Parser;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class WTF_P1 extends Fragment {
+public class WTF_P1 extends Fragment implements HttpRequest {
     Interfaces interfaces;
-
+    EditText wtf_name_edit, wtf_email_edit, wtf_text_edit;
 
     public static WTF_P1 newInstance() {
         WTF_P1 fragment = new WTF_P1();
@@ -42,7 +53,27 @@ public class WTF_P1 extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_wtf_p1, container,
                 false);
+        wtf_name_edit = (EditText)rootView.findViewById(R.id.wtf_name_edit);
+        wtf_email_edit = (EditText)rootView.findViewById(R.id.wtf_email_edit);
+        wtf_text_edit = (EditText)rootView.findViewById(R.id.wtf_text_edit);
+        Button send_button = (Button)rootView.findViewById(R.id.send_button);
 
+        send_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Utils.isQuestionCorrect(
+                        wtf_name_edit.getText().toString(),
+                        wtf_email_edit.getText().toString(),
+                        wtf_text_edit.getText().toString())){
+                    sendQuestion();
+                } else {
+                    Utils.ShowInputErrorDialog(getActivity(),
+                            getString(R.string.wtf_fields_title),
+                            getString(R.string.wtf_fields_not_complete),
+                            getString(R.string.wtf_ok));
+                }
+            }
+        });
 
 
 
@@ -59,4 +90,59 @@ public class WTF_P1 extends Fragment {
         return rootView;
     }
 
+    private void sendQuestion(){
+        //sendQuestion-----------------------------------------------
+        Requests question_requests = new Requests(getActivity(), Const.postQuestion, this);
+        HashMap<String, String> question_params = new HashMap<String, String>();
+        question_params.put(Const.method, Const.PostQuestion);
+        question_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+        question_params.put(Const.fio, wtf_name_edit.getText().toString());
+        question_params.put(Const.email, wtf_email_edit.getText().toString());
+        question_params.put(Const.question, wtf_text_edit.getText().toString());
+        question_requests.getHTTP_Responce(question_params);
+    }
+
+    @Override
+    public void http_result(int type, String result) {
+
+        switch (Parser.parseQuestionResponce(result)){
+            case -1:
+                //Parser or unknown error
+                Utils.ShowInputErrorDialog(getActivity(),
+                        getString(R.string.warning_title),
+                        getString(R.string.unknown_error),
+                        getString(R.string.wtf_ok));
+                break;
+            case 0:
+                //All ok - message has been sent
+                Utils.ShowInputErrorDialog(getActivity(),
+                        getString(R.string.warning_title),
+                        getString(R.string.wtf_sent_success),
+                        getString(R.string.wtf_ok));
+                break;
+            case 1:
+                //Session error - need relogin
+                Utils.ShowInputErrorDialog(getActivity(),
+                        getString(R.string.warning_title),
+                        getString(R.string.warning_session_expired),
+                        getString(R.string.wtf_ok));
+
+                break;
+            case 2:
+                //User is not active
+                Utils.ShowInputErrorDialog(getActivity(),
+                        getString(R.string.warning_title),
+                        getString(R.string.warning_user_not_active),
+                        getString(R.string.wtf_ok));
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void http_error(int type, String error) {
+
+    }
 }

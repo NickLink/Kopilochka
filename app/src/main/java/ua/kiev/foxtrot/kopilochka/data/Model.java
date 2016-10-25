@@ -15,6 +15,7 @@ public class Model {
     private String model_group_name;
     private String model_url;
     private int model_action;
+    private int model_days_left;
 
     public int getModel_id() {
         return model_id;
@@ -95,4 +96,13 @@ public class Model {
     public void setModel_action(int model_action) {
         this.model_action = model_action;
     }
+
+    public int getModel_days_left() {
+        return model_days_left;
+    }
+
+    public void setModel_days_left(int model_days_left) {
+        this.model_days_left = model_days_left;
+    }
+
 }

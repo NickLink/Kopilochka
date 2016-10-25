@@ -1,10 +1,17 @@
 package ua.kiev.foxtrot.kopilochka.http;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
@@ -25,12 +32,12 @@ import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
  */
 public class Requests {
     private static String TAG = "Requests";
-    //private Context context;
+    private Context context;
     private HttpRequest request;
     int req_type;
 
-    public Requests(int req_type, HttpRequest request){ //, Context context
-        //this.context = context;
+    public Requests(Context context, int req_type, HttpRequest request){ //, Context context
+        this.context = context;
         this.request = request;
         this.req_type = req_type;
     }
@@ -75,9 +82,26 @@ public class Requests {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
-                            Log.v(TAG, "SSS Error = " + error.getMessage().toString());
-                            request.http_error(req_type, error.getMessage());
+                            String message = null;
+                            if (error instanceof NetworkError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (error instanceof ServerError) {
+                                message = "The server could not be found. Please try again after some time!!";
+                            } else if (error instanceof AuthFailureError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (error instanceof ParseError) {
+                                message = "Parsing error! Please try again after some time!!";
+                            } else if (error instanceof NoConnectionError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (error instanceof TimeoutError) {
+                                message = "Connection TimeOut! Please check your internet connection.";
+                            }
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+//                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
+//                            Log.v(TAG, "SSS Error = " + error.getMessage().toString());
+//                            request.http_error(req_type, error.getMessage());
+
                         }
 
                     }) {

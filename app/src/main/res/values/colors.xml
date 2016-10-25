@@ -24,4 +24,6 @@
     <color name="holo_orange_light">#FFBB33</color>
     <color name="holo_red_light">#FF4444</color>
 
+    <color name="some_red_color">#DF0023</color>
+
 </resources>

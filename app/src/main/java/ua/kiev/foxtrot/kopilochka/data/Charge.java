@@ -5,9 +5,9 @@ package ua.kiev.foxtrot.kopilochka.data;
  */
 public class Charge {
 
-    private String action_charge;
+    private String  action_charge;
     private String date_charge;
-    private String amount_charges;
+    private int amount_charges;
 
     public String getAction_charge() {
         return action_charge;
@@ -25,11 +25,11 @@ public class Charge {
         this.date_charge = date_charge;
     }
 
-    public String getAmount_charges() {
+    public int getAmount_charges() {
         return amount_charges;
     }
 
-    public void setAmount_charges(String amount_charges) {
+    public void setAmount_charges(int amount_charges) {
         this.amount_charges = amount_charges;
     }
 }

@@ -10,8 +10,10 @@ public interface Interfaces {
     void ScannResult(int id, String result);
 
     void LoginSuccess();
+    void ShowDataExtra();
     void LogOut();
     void ActionSelected(int action_id);
     void ModelSelected(int action_id, int model_id);
+    void ProductGroupSelected(int group_id, String group_name, int action_type);
 
 }
