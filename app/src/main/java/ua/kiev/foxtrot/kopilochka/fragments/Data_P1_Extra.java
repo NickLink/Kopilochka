@@ -16,12 +16,14 @@ import java.util.HashMap;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.adapters.FinInfo_ExpList_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
+import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 25.10.2016.
@@ -31,6 +33,9 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
     OnBackPress onBackPress;
     SwipeRefreshLayout swipeRefreshLayout;
     ExpandableListView payment_listview;
+    FinInfo_ExpList_Adapter adapter;
+    View header;
+    TextView fininfo_name, fininfo_contact_e_mail, fininfo_contact_phone, fininfo_bonus;
 
     FinInfo finInfo;
 
@@ -67,8 +72,15 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_data_p1_extra, container,
                 false);
+        //Header part
+        header = inflater.inflate(R.layout.frag_data_p1_extra_header, null);
+        fininfo_name = (TextView)header.findViewById(R.id.fininfo_name);
+        fininfo_contact_e_mail = (TextView)header.findViewById(R.id.fininfo_contact_e_mail);
+        fininfo_contact_phone = (TextView)header.findViewById(R.id.fininfo_contact_phone);
+        fininfo_bonus = (TextView)header.findViewById(R.id.fininfo_bonus);
 
         payment_listview = (ExpandableListView)rootView.findViewById(R.id.payment_listview);
+        payment_listview.addHeaderView(header);
 
         swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,7 +96,7 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
                 R.color.holo_red_light);
 
 
-
+        getFromInternet();
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -113,7 +125,18 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
 
     @Override
     public void http_result(int type, String result) {
-
+        finInfo = new FinInfo();
+        finInfo = Parser.getFinInfo(result);
+        fininfo_name.setText(getString(R.string.data_name_hello) + " " + finInfo.getUser_name());
+        fininfo_contact_e_mail.setText(finInfo.getUser_email());
+        fininfo_contact_phone.setText(finInfo.getUser_phone());
+        fininfo_bonus.setText(getString(R.string.fininfo_bonus_to) + " " + finInfo.getUser_payment());
+        adapter = new FinInfo_ExpList_Adapter(getActivity(), finInfo);
+        payment_listview.setAdapter(adapter);
+        payment_listview.setGroupIndicator(null);
+        payment_listview.expandGroup(0, true);
+        payment_listview.expandGroup(1, true);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

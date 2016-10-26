@@ -109,7 +109,10 @@ public class Const {
     //public static final String model_id = "model_id";
     public static final String data = "data";
     public static final String serials = "serials";
-    public static final String sn = "sn";
+    //public static final String sn = "sn";
+    public static final String reg_date = "reg_date";
+    public static final String reg_status = "reg_status";
+    public static final String fail_reason = "fail_reason";
     //-->out
     //public static final String 0 = "0"
     //public static final String action_id = "action_id";

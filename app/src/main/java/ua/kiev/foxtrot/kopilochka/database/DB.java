@@ -13,6 +13,7 @@ import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 
 /**
@@ -32,6 +33,7 @@ public class DB {
     public static final String COLUMN_URL = "url";
     public static final String COLUMN_URLIMG = "urlToImage";
     public static final String COLUMN_PUBLISH = "publishedAt";
+    public static final String TIME_NOW  = " time('now') ";
 
 
     private Context context;
@@ -65,6 +67,7 @@ public class DB {
         mDB.execSQL("delete from "+ Tables.table_name_notices);
         mDB.execSQL("delete from "+ Tables.table_name_models);
         mDB.execSQL("delete from "+ Tables.table_name_actions);
+        mDB.execSQL("delete from "+ Tables.table_name_postsn);
         this.close();
     }
 
@@ -440,5 +443,31 @@ public class DB {
         this.close();
         return actions;
     }
+
+    //============================POST_SN===========================
+    public long addPostSN(Post_SN data){
+        try {
+            //Put POST_SN data
+            ContentValues cv = new ContentValues();
+            cv.put(Const.action_id, data.getAction_id());
+            cv.put(Const.action_name, data.getAction_name());
+            cv.put(Const.model_id, data.getModel_id());
+            cv.put(Const.model_name, data.getModel_name());
+            cv.put(Const.action_date_to, data.getAction_date_to());
+            cv.put(Const.action_type, data.getAction_type());
+            cv.put(Const.model_points, data.getModel_points());
+            //====SERIALS====
+            cv.put(Const.serials, String.valueOf(data.getSerials().toArray(new String[data.getSerials().size()])));
+
+            cv.put(Const.reg_date, data.getReg_date());
+            cv.put(Const.reg_status, data.getReg_status());
+            cv.put(Const.fail_reason, data.getFail_reason());
+            return mDB.insert(Tables.table_name_postsn, null, cv);
+        } catch (Exception e){
+            Log.v("", "SSS Exception addPostSN= " + e.toString());
+            return -1;
+        }
+    }
+
 
 }

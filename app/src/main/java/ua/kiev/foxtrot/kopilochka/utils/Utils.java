@@ -260,6 +260,19 @@ public class Utils {
         return millis;
     }
 
+    public static String getDateFromMillis(long millis){
+        String date_string = "";
+        try{
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = (new Date(millis));
+            date_string = f.format(date);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return date_string;
+    }
+
     public static boolean isDateInRange(String start_date, String end_date){
         long current_time = System.currentTimeMillis();
         long action_start_time = getMillisFromDate(start_date);

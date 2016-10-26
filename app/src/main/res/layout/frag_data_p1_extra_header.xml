@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/fininfo_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/myTitle_TextStyle" />
+
+    <TextView
+        android:id="@+id/fininfo_contact_e_mail_title"
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fininfo_contact_e_mail" />
+
+    <TextView
+        android:id="@+id/fininfo_contact_e_mail"
+        style="@style/myNormal_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fininfo_contact_phone_title"
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fininfo_contact_phone" />
+
+    <TextView
+        android:id="@+id/fininfo_contact_phone"
+        style="@style/myNormal_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/fininfo_bonus"
+        style="@style/myTitle_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/some_red_color"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

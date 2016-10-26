@@ -126,7 +126,7 @@ public class Start_P2 extends Fragment implements HttpRequest {
                 onBackPress.onBackPressed();
             }
         });
-        menu_item_title.setText(model_group_name + " " + action_type_id);
+        menu_item_title.setText(model_group_name);
         return rootView;
     }
 

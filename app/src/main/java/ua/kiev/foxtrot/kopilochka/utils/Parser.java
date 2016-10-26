@@ -221,15 +221,24 @@ public class Parser {
     }
 
 
+
+
     public static FinInfo getFinInfo(String response){
         FinInfo finInfo = new FinInfo();
         try {
-
-
-
-
-
-
+            JSONObject data = new JSONObject(response);
+            finInfo.setUser_name(data.getString(Const.user_name));
+            finInfo.setUser_phone(data.getString(Const.user_phone));
+            finInfo.setUser_email(data.getString(Const.user_email));
+            finInfo.setUser_payment(data.getString(Const.user_payment));
+            JSONArray charges = data.getJSONArray(Const.charges);
+            for(int i = 0 ; i < charges.length(); i++){
+                finInfo.getCharges().add(getCharge(charges.getJSONObject(i)));
+            }
+            JSONArray payments = data.getJSONArray(Const.payments);
+            for(int i = 0 ; i < payments.length(); i++){
+                finInfo.getPayments().add(getPayment(payments.getJSONObject(i)));
+            }
         } catch (Exception e){
             Log.v("", "SSS getActionsArray Exception=" + e.toString());
             return null;

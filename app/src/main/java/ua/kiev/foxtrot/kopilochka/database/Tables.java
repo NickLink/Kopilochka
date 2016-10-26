@@ -76,4 +76,25 @@ public class Tables {
             + Const.action_date_charge + " text,"
             + Const.action_description + " text"
             + ");";
+
+    //=============================POST_SN==================================
+    public static final String table_name_postsn = "postsn";
+    //=Fields=
+
+    //=Table=
+    public static final String table_postsn = "create table " + table_name_postsn + " ("
+            + "_id integer primary key autoincrement,"
+            + Const.action_id + " integer,"
+            + Const.action_name + " text,"
+            + Const.model_id + " integer,"
+            + Const.model_name + " text,"
+            + Const.action_date_to + " integer,"
+            + Const.action_type_id + " integer,"
+            + Const.model_points + " integer,"
+            + Const.serials + " text,"
+            + Const.reg_date + " integer,"
+            + Const.reg_status + " integer,"
+            + Const.fail_reason + " text"
+            + ");";
+
 }

@@ -16,9 +16,10 @@
         android:layout_height="match_parent">
 
         <ExpandableListView
+            android:id="@+id/payment_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/payment_listview" />
+            android:padding="10dp"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

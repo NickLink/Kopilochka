@@ -66,4 +66,7 @@
     <string name="warning_session_expired">Время токена соединения истекло - перелогиньтесь пожалуйста.</string>
     <string name="warning_user_not_active">Пользователь не активен, обратитесь за разъяснениями к администрации Ф5.</string>
     <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
+    <string name="fininfo_contact_e_mail">Ваш контактный e-mail:</string>
+    <string name="fininfo_contact_phone">Ваш контактный телефон:</string>
+    <string name="fininfo_bonus_to">Бонус будет начисляться </string>
 </resources>
