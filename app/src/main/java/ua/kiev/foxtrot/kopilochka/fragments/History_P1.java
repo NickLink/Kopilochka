@@ -3,20 +3,37 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.adapters.History_ExpList_Adapter;
+import ua.kiev.foxtrot.kopilochka.data.Post_SN;
+import ua.kiev.foxtrot.kopilochka.database.DB;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
+import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
 public class History_P1 extends Fragment {
     Interfaces interfaces;
+    SwipeRefreshLayout swipeRefreshLayout;
+    ExpandableListView history_listview;
+    History_ExpList_Adapter adapter;
+    DB db;
+    List<List<Post_SN>> fullArray;
 
     public static History_P1 newInstance() {
         History_P1 fragment = new History_P1();
@@ -37,13 +54,40 @@ public class History_P1 extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.frag_action_p1, container,
+        View rootView = inflater.inflate(R.layout.frag_history_p1, container,
                 false);
+        getAllData();
+        history_listview = (ExpandableListView)rootView.findViewById(R.id.history_listview);
+        adapter = new History_ExpList_Adapter(getActivity(), fullArray); //complete_list, error_list, await_list
+        history_listview.setAdapter(adapter);
+        history_listview.setGroupIndicator(null);
 
-
-
+        history_listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int group, int item, long l) {
+                String text_to_dialog = fullArray.get(group).get(item).getAction_name() + " "
+                        + fullArray.get(group).get(item).getModel_name() + " "
+                        + StringTools.StringFromList(fullArray.get(group).get(item).getSerials());
+                if(group == 0){
+                    //Dialog to delete item only
+                    Dialogs.ShowDialogDeleteEditItem(getActivity(),
+                            interfaces,
+                            getString(R.string.warning_title),
+                            text_to_dialog,
+                            fullArray.get(group).get(item), false);
+                } else if(group == 1 || group ==2){
+                    //Dialog to edit/delete item
+                    Dialogs.ShowDialogDeleteEditItem(getActivity(),
+                            interfaces,
+                            getString(R.string.warning_title),
+                            text_to_dialog,
+                            fullArray.get(group).get(item), true);
+                }
+                return false;
+            }
+        });
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -56,6 +100,23 @@ public class History_P1 extends Fragment {
         });
         menu_item_title.setText(getString(R.string.menu_history));
         return rootView;
+    }
+
+    public void getAllData(){
+        Toast.makeText(getActivity(), "getAllData event", Toast.LENGTH_SHORT).show();
+        fullArray = new ArrayList<List<Post_SN>>();
+        db = new DB(getActivity());
+        db.open();
+        fullArray.add(db.getPost_SN_List(Const.reg_status_ok));
+        fullArray.add(db.getPost_SN_List(Const.reg_status_error));
+        fullArray.add(db.getPost_SN_List(Const.reg_status_await));
+        db.close();
+    }
+
+    public void NotifyAdapter(){
+        Toast.makeText(getActivity(), "Notify event", Toast.LENGTH_SHORT).show();
+        adapter.setExpListData(fullArray);
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -22,6 +22,7 @@ import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -81,7 +82,7 @@ public class Start_P2 extends Fragment implements HttpRequest {
         action_type_id = getArguments().getInt(Const.action_type_id, -1);
         if(model_group_id == -1 || model_group_name.isEmpty() || action_type_id == -1){
             //Error getting data
-            Utils.ShowInputErrorDialog(getActivity(), "Error", "Start P2  Model group error", "OK");
+            Dialogs.ShowDialog(getActivity(), "Error", "Start P2  Model group error", "OK");
             return null;
         }
         //Go for Data

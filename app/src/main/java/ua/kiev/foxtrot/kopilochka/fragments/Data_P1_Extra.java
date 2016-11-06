@@ -3,10 +3,10 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -31,7 +31,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Parser;
 public class Data_P1_Extra extends Fragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
-    SwipeRefreshLayout swipeRefreshLayout;
+    //SwipeRefreshLayout swipeRefreshLayout;
     ExpandableListView payment_listview;
     FinInfo_ExpList_Adapter adapter;
     View header;
@@ -82,18 +82,18 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
         payment_listview = (ExpandableListView)rootView.findViewById(R.id.payment_listview);
         payment_listview.addHeaderView(header);
 
-        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //Get_From_Database();
-                getFromInternet();
-            }
-        });
-        swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright,
-                R.color.holo_green_light,
-                R.color.holo_orange_light,
-                R.color.holo_red_light);
+//        swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_container);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                //Get_From_Database();
+//                getFromInternet();
+//            }
+//        });
+//        swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright,
+//                R.color.holo_green_light,
+//                R.color.holo_orange_light,
+//                R.color.holo_red_light);
 
 
         getFromInternet();
@@ -134,9 +134,10 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
         adapter = new FinInfo_ExpList_Adapter(getActivity(), finInfo);
         payment_listview.setAdapter(adapter);
         payment_listview.setGroupIndicator(null);
-        payment_listview.expandGroup(0, true);
-        payment_listview.expandGroup(1, true);
-        swipeRefreshLayout.setRefreshing(false);
+        //payment_listview.expandGroup(0, true);
+        //payment_listview.expandGroup(1, true);
+        payment_listview.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_NORMAL);
+        //swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

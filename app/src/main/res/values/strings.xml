@@ -4,6 +4,7 @@
     <string name="JSON_title_error">Ошибка</string>
     <string name="JSON_text_error">Полученые данные повреждены, попробуйте позже</string>
     <string name="JSON_button_error">Ок</string>
+    <string name="internet_error">Отсутствует соединение с интернетом.</string>
 
     <string name="menu_start">Стартовая страница</string>
     <string name="menu_notification">Оповещения</string>
@@ -53,6 +54,8 @@
     <string name="action_p3_info_text">Для регистрации смартфонов, планшетов и ноутбуков – вводи IMEI, для бытовой техники – серийный номер:</string>
     <string name="action_ok">Ок</string>
     <string name="action_scan">Сканировать</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_cancel">Отмена</string>
     <string name="action_delete">Удалить</string>
     <string name="data_extradata_button">Посмотреть личные данные</string>
 
@@ -65,8 +68,18 @@
     <string name="warning_title">Внимание!</string>
     <string name="warning_session_expired">Время токена соединения истекло - перелогиньтесь пожалуйста.</string>
     <string name="warning_user_not_active">Пользователь не активен, обратитесь за разъяснениями к администрации Ф5.</string>
+    <string name="warning_ok">Ок</string>
     <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
     <string name="fininfo_contact_e_mail">Ваш контактный e-mail:</string>
     <string name="fininfo_contact_phone">Ваш контактный телефон:</string>
     <string name="fininfo_bonus_to">Бонус будет начисляться </string>
+
+    <string name="history_title_1">Удачно зарегистрированые</string>
+    <string name="history_title_2">Ошибка регистрации</string>
+    <string name="history_title_3">Ожидание регистрации</string>
+    <string name="edit_title">Редактирование</string>
+    <string name="data_f5_ua_message">Вы можете изменить свои данные на сайте F5.ua</string>
+    <string name="history_model_text">Модель</string>
+    <string name="history_sn_imei_text">SN/IMEI</string>
+
 </resources>

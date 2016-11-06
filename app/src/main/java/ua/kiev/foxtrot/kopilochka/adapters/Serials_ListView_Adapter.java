@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 
 /**
@@ -22,23 +21,33 @@ import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 public class Serials_ListView_Adapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<BBS_News> serials_data;
+    private List<String> serials_data;
     private LayoutInflater inflater;
     private Delete_Serial delete_click = null;
     private Interfaces interfaces;
+    //private int sn_count;
     TextView scan_result;
     Button scan_button;
     Button delete_button;
 
-    public Serials_ListView_Adapter(Context context, ArrayList<BBS_News> serials_data,
-                                    Delete_Serial delete_click, Interfaces interfaces) {
+    public Serials_ListView_Adapter(Context context, int sn_count,
+                                         Delete_Serial delete_click, Interfaces interfaces) {
         this.context = context;
-        this.serials_data = serials_data;
         this.delete_click = delete_click;
         this.interfaces = interfaces;
+        this.serials_data = new ArrayList<String>(sn_count);
+        while(serials_data.size() < sn_count) serials_data.add("");
     }
 
-    public ArrayList<BBS_News> getSerials_data(){
+    public Serials_ListView_Adapter(Context context, List<String> arrayList,
+                                    Delete_Serial delete_click, Interfaces interfaces) {
+        this.context = context;
+        this.delete_click = delete_click;
+        this.interfaces = interfaces;
+        this.serials_data = arrayList;
+    }
+
+    public List<String> getSerials_data(){
         return serials_data;
     }
 
@@ -48,9 +57,12 @@ public class Serials_ListView_Adapter extends BaseAdapter {
     }
 
     @Override
-    public BBS_News getItem(int position) { //Object
-        // TODO Auto-generated method stub
+    public String getItem(int position) { //Object
         return serials_data.get(position);
+    }
+
+    public void setItem(int position, String data){
+        serials_data.set(position, data);
     }
 
     @Override
@@ -113,8 +125,10 @@ public class Serials_ListView_Adapter extends BaseAdapter {
 //            }
 //        });
 //
-        scan_result.setText(getItem(position).getTitle());
-
+        if(getItem(position) == null) {
+            setItem(position, "");
+        }
+        scan_result.setText(getItem(position));
         return convertView;
     }
 }

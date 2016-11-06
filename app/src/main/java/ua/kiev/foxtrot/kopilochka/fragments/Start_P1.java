@@ -28,6 +28,7 @@ import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -100,7 +101,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
             }
 
         } else {
-            Utils.ShowInputErrorDialog(getActivity(), "Ашипка", "Старт П1", "Массив акций пуст/сломан");
+            Dialogs.ShowDialog(getActivity(), "Ашипка", "Старт П1", "Массив акций пуст/сломан");
         }
 
         db = new DB(getActivity());
@@ -135,7 +136,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
         } else {
             //Выводим что бонусирование не проводиться
 
-            Utils.ShowInputErrorDialog(getActivity(), "Ашипка", "Старт П1", "Массив моделей пуст/сломан");
+            Dialogs.ShowDialog(getActivity(), "Ашипка", "Старт П1", "Массив моделей пуст/сломан");
         }
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -218,7 +219,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
 
     @Override
     public void http_error(int type, String error) {
-        Utils.ShowInputErrorDialog(getActivity(), "Error", "HTTP", "OK");
+        Dialogs.ShowDialog(getActivity(), "Error", "HTTP", "OK");
 
     }
 

@@ -20,8 +20,8 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
-import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -75,7 +75,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
                     getToken(login, password);
                 } else {
                     //Data not complete
-                    Utils.ShowInputErrorDialog(getActivity(), getString(R.string.input_error),
+                    Dialogs.ShowDialog(getActivity(), getString(R.string.input_error),
                             getString(R.string.fill_all_fields),
                             getString(R.string.input_ok));
 
@@ -128,11 +128,11 @@ public class Data_P1 extends Fragment implements HttpRequest{
                         interfaces.LoginSuccess();
                     } else {
                         //Error in session
-                        Utils.Error_Dispencer(getActivity(), type, AppContr.userData.getCode());
+                        //Dialogs.Error_Dispencer(getActivity(), type, AppContr.userData.getCode());
                     }
 
                 } else {
-                    Utils.ShowJSONErrorDialog(getActivity());
+                    Dialogs.ShowJSONErrorDialog(getActivity());
                     return;
                 }
 

@@ -19,6 +19,8 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -28,6 +30,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  */
 public class WTF_P1 extends Fragment implements HttpRequest {
     Interfaces interfaces;
+    OnBackPress onBackPress;
     EditText wtf_name_edit, wtf_email_edit, wtf_text_edit;
 
     public static WTF_P1 newInstance() {
@@ -43,6 +46,7 @@ public class WTF_P1 extends Fragment implements HttpRequest {
         super.onAttach(activity);
         try {
             interfaces = (Interfaces) activity;
+            onBackPress  = (OnBackPress) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement Interfaces");
         }
@@ -67,7 +71,7 @@ public class WTF_P1 extends Fragment implements HttpRequest {
                         wtf_text_edit.getText().toString())){
                     sendQuestion();
                 } else {
-                    Utils.ShowInputErrorDialog(getActivity(),
+                    Dialogs.ShowDialog(getActivity(),
                             getString(R.string.wtf_fields_title),
                             getString(R.string.wtf_fields_not_complete),
                             getString(R.string.wtf_ok));
@@ -109,21 +113,24 @@ public class WTF_P1 extends Fragment implements HttpRequest {
         switch (Parser.parseQuestionResponce(result)){
             case -1:
                 //Parser or unknown error
-                Utils.ShowInputErrorDialog(getActivity(),
+                Dialogs.ShowDialog(getActivity(),
                         getString(R.string.warning_title),
                         getString(R.string.unknown_error),
                         getString(R.string.wtf_ok));
                 break;
             case 0:
                 //All ok - message has been sent
-                Utils.ShowInputErrorDialog(getActivity(),
+                Dialogs.ShowDialog(getActivity(),
                         getString(R.string.warning_title),
                         getString(R.string.wtf_sent_success),
                         getString(R.string.wtf_ok));
+                wtf_name_edit.setText("");
+                wtf_email_edit.setText("");
+                wtf_text_edit.setText("");
                 break;
             case 1:
                 //Session error - need relogin
-                Utils.ShowInputErrorDialog(getActivity(),
+                Dialogs.ShowDialog(getActivity(),
                         getString(R.string.warning_title),
                         getString(R.string.warning_session_expired),
                         getString(R.string.wtf_ok));
@@ -131,7 +138,7 @@ public class WTF_P1 extends Fragment implements HttpRequest {
                 break;
             case 2:
                 //User is not active
-                Utils.ShowInputErrorDialog(getActivity(),
+                Dialogs.ShowDialog(getActivity(),
                         getString(R.string.warning_title),
                         getString(R.string.warning_user_not_active),
                         getString(R.string.wtf_ok));
@@ -143,6 +150,9 @@ public class WTF_P1 extends Fragment implements HttpRequest {
 
     @Override
     public void http_error(int type, String error) {
-
+        Dialogs.ShowDialog(getActivity(),
+                getString(R.string.warning_title),
+                getString(R.string.internet_error),
+                getString(R.string.wtf_ok));
     }
 }

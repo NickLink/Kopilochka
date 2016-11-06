@@ -34,10 +34,10 @@ public class Tables {
     //=Table=
     public static final String table_notices = "create table " + table_name_notices + " ("
             + "_id integer primary key autoincrement,"
-            + Const.notice_id + " text,"
-            + Const.notice_name + " text,"
-            + Const.notice_text + " text,"
-            + Const.notice_type_id + " text,"
+            + Const.notice_id + " text, "
+            + Const.notice_name + " text, "
+            + Const.notice_text + " text, "
+            + Const.notice_type_id + " text, "
             + Const.notice_type + " text"
             + ");";
 
@@ -47,17 +47,18 @@ public class Tables {
 
     //=Table=
     public static final String table_models = "create table " + table_name_models + " ("
-            + "_id integer primary key autoincrement,"
-            + Const.model_id + " integer,"
-            + Const.model_name + " text,"
-            + Const.model_points + " integer,"
-            + Const.model_brand_id + " integer,"
-            + Const.model_group_id + " integer,"
-            + Const.model_url + " text,"
-            + Const.model_brand_name + " text,"
-            + Const.model_group_name + " text,"
-            + Const.model_sn_count + " integer,"
-            + Const.model_action + " integer"
+            + Const.model_id + " integer, "
+            + Const.model_name + " text, "
+            + Const.model_points + " integer, "
+            + Const.model_brand_id + " integer, "
+            + Const.model_group_id + " integer, "
+            + Const.model_url + " text, "
+            + Const.model_brand_name + " text, "
+            + Const.model_group_name + " text, "
+            + Const.model_sn_count + " integer, "
+            + Const.model_action + " integer, "
+            + Const.viewed + " integer default 0, "
+            + "PRIMARY KEY (" + Const.model_action + ", " + Const.model_id + ") "
             + ");";
 
     //===========================ACTIONS Part==========================
@@ -66,15 +67,16 @@ public class Tables {
 
     //=Table=
     public static final String table_actions = "create table " + table_name_actions + " ("
-            + "_id integer primary key autoincrement,"
-            + Const.action_id + " integer,"
-            + Const.action_name + " text,"
-            + Const.action_type_id + " integer,"
-            + Const.action_type + " text,"
-            + Const.action_date_from + " text,"
-            + Const.action_date_to + " text,"
-            + Const.action_date_charge + " text,"
-            + Const.action_description + " text"
+            + Const.action_id + " integer, "
+            + Const.action_name + " text, "
+            + Const.action_type_id + " integer, "
+            + Const.action_type + " text, "
+            + Const.action_date_from + " integer, "
+            + Const.action_date_to + " integer, "
+            + Const.action_date_charge + " integer, "
+            + Const.action_description + " text, "
+            + Const.viewed + " integer default 0, "
+            + "PRIMARY KEY (" + Const.action_id + ") "
             + ");";
 
     //=============================POST_SN==================================

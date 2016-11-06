@@ -1,12 +1,14 @@
 package ua.kiev.foxtrot.kopilochka.utils;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -97,148 +99,26 @@ public class Utils {
             return false;
     }
 
-    public static void ShowInputErrorDialog(Context context, String title, String message, String button){
-        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_input_error);
-
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
-
-        Title.setText(title);
-        Message.setText(message);
-        cancelBtn.setText(button);
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public static void ShowExitDialog(final Context context, String title, String message, String cancel, String exit){
-        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_exit);
-
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
-        Button exitBtn = (Button) dialog.findViewById(R.id.exit_button);
-
-        Title.setText(title);
-        Message.setText(message);
-        cancelBtn.setText(cancel);
-        exitBtn.setText(exit);
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((Activity) context).finish();
-            }
-        });
-        dialog.show();
-    }
-
-    public static void ShowJSONErrorDialog(Context context){
-        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_input_error);
-
-        String title = context.getString(R.string.JSON_title_error);
-        String message = context.getString(R.string.JSON_text_error);
-        String button = context.getString(R.string.JSON_button_error);
-
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
-
-        Title.setText(title);
-        Message.setText(message);
-        cancelBtn.setText(button);
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public static void ShowResponceDialog(Context context, String message){
-        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_not_a_member);
-
-        String title = context.getString(R.string.incorrect_login_password);
-        //String message = context.getString(R.string.JSON_text_error);
-        String button = context.getString(R.string.JSON_button_error);
-
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Message.setVisibility(View.GONE);
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
-
-        Title.setText(title);
-        Message.setText(message);
-        cancelBtn.setText(button);
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public static void Error_Dispencer(Context context, int metod, int error_code){
-        switch (metod){
-            case Const.getSession:
-                if(error_code == 1){
-                    //incorrect login/password
-                    ShowResponceDialog(context, context.getString(R.string.incorrect_login_password));
-                } else if (error_code == 2){
-                    //not active
-                    ShowResponceDialog(context, context.getString(R.string.not_active));
-                } else {
-                    ShowResponceDialog(context, context.getString(R.string.unknown_error));
+    public static String CheckError_1_2(Context context, String result){
+        try {
+            JSONObject data = new JSONObject(result);
+            if(data.has(Const.JSON_Error)){
+                if(data.getJSONObject(Const.JSON_Error).getInt(Const.code) == 1) {
+                    Dialogs.Dialog_For_Restart(context,
+                            context.getString(R.string.warning_title),
+                            context.getString(R.string.warning_session_expired),
+                            context.getString(R.string.warning_ok));
+                } else if (data.getJSONObject(Const.JSON_Error).getInt(Const.code) == 2){
+                    Dialogs.Dialog_For_Restart(context,
+                            context.getString(R.string.warning_title),
+                            context.getString(R.string.warning_user_not_active),
+                            context.getString(R.string.warning_ok));
                 }
-                break;
-            case Const.getNotices:
-
-
-                break;
-            case Const.getActions:
-
-
-                break;
-            case Const.postSN:
-
-
-
-                break;
-            case Const.getFinInfo:
-
-
-                break;
-            case Const.postQuestion:
-
-
-
-                break;
+            }
+        } catch (JSONException e){
+            return null;
         }
-
+        return result;
     }
 
     public static boolean notNull_orEmpty(String in){
@@ -253,7 +133,7 @@ public class Utils {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date d = f.parse(date);
-            millis = d.getTime();
+            millis = d.getTime()/1000;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -264,7 +144,7 @@ public class Utils {
         String date_string = "";
         try{
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = (new Date(millis));
+            Date date = (new Date(millis * 1000));
             date_string = f.format(date);
         }
         catch(Exception e){
@@ -273,21 +153,36 @@ public class Utils {
         return date_string;
     }
 
-    public static boolean isDateInRange(String start_date, String end_date){
-        long current_time = System.currentTimeMillis();
-        long action_start_time = getMillisFromDate(start_date);
-        long action_end_time = getMillisFromDate(end_date);
-        if(current_time >= action_start_time && current_time <= action_end_time){
+//    public static boolean isDateInRange(String start_date, String end_date){
+//        long current_time = System.currentTimeMillis();
+//        long action_start_time = getMillisFromDate(start_date);
+//        long action_end_time = getMillisFromDate(end_date);
+//        if(current_time >= action_start_time && current_time <= action_end_time){
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+
+    public static boolean isDateInRange(long start_date, long end_date){
+        long current_time = System.currentTimeMillis() / 1000;
+        if(current_time >= start_date && current_time <= end_date){
             return true;
         } else {
             return false;
         }
     }
 
-    public static int daysLeft(String end_date){
+//    public static int daysLeft(String end_date){
+//        int days = 0;
+//        long action_end_time = getMillisFromDate(end_date);
+//        days = (int)((action_end_time - (System.currentTimeMillis()/1000)) / (24 * 60 * 60));
+//        return days < 0 ? -days: days;
+//    }
+
+    public static int daysLeft(long end_date){
         int days = 0;
-        long action_end_time = getMillisFromDate(end_date);
-        days = (int)((action_end_time - System.currentTimeMillis()) / (24 * 60 * 60 * 1000));
+        days = (int)((end_date - (System.currentTimeMillis()/1000)) / (24 * 60 * 60));
         return days < 0 ? -days: days;
     }
 
@@ -296,6 +191,45 @@ public class Utils {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void doRestart(Context c) {
+        try {
+            //check if the context is given
+            if (c != null) {
+                //fetch the packagemanager so we can get the default launch activity
+                // (you can replace this intent with any other activity if you want
+                PackageManager pm = c.getPackageManager();
+                //check if we got the PackageManager
+                if (pm != null) {
+                    //create the intent with the default start activity for your application
+                    Intent mStartActivity = pm.getLaunchIntentForPackage(
+                            c.getPackageName()
+                    );
+                    if (mStartActivity != null) {
+                        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //create a pending intent so the application is restarted after System.exit(0) was called.
+                        // We use an AlarmManager to call this intent in 100ms
+                        int mPendingIntentId = 223344;
+                        PendingIntent mPendingIntent = PendingIntent
+                                .getActivity(c, mPendingIntentId, mStartActivity,
+                                        PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                        //kill the application
+                        System.exit(0);
+                    } else {
+                        Log.e(TAG, "Was not able to restart application, mStartActivity null");
+                    }
+                } else {
+                    Log.e(TAG, "Was not able to restart application, PM null");
+                }
+            } else {
+                Log.e(TAG, "Was not able to restart application, Context null");
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "Was not able to restart application");
         }
     }
 

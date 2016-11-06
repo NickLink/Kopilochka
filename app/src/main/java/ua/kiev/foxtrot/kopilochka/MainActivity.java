@@ -40,6 +40,7 @@ import ua.kiev.foxtrot.kopilochka.fragments.Start_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -321,6 +322,18 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         TransactionActionStack(Start_P2.newInstance(group_id, group_name, action_type_id), Const.Fr_StP2, true);
     }
 
+    @Override
+    public void EditExistPostSN(int action_id, int model_id, String serials) {
+        TransactionActionStack(Action_P3.newInstance(action_id, model_id, serials), Const.Fr_AcP3, true);
+    }
+
+    @Override
+    public void DeleteExistPostSN() {
+        History_P1 frag = (History_P1) fragmentManager.findFragmentByTag(Const.Fr_HsP1);
+        frag.getAllData();
+        frag.NotifyAdapter();
+    }
+
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -375,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
             fragmentManager.popBackStack();
         else
             //Finnish activity dialog
-            Utils.ShowExitDialog(this, getString(R.string.menu_exit_title), getString(R.string.menu_exit_text),
+            Dialogs.ShowExitDialog(this, getString(R.string.menu_exit_title), getString(R.string.menu_exit_text),
                     getString(R.string.menu_exit_no), getString(R.string.menu_exit_yes));
 
     }

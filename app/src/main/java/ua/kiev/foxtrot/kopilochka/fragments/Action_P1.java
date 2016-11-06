@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,7 +152,8 @@ public class Action_P1 extends Fragment implements HttpRequest {
 
     @Override
     public void http_error(int type, String error) {
-
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void PutActionsInDatabase(ArrayList<Action> actions) {

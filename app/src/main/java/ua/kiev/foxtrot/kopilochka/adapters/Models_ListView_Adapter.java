@@ -62,6 +62,7 @@ public class Models_ListView_Adapter extends BaseAdapter {
 
 
         action_list_item_name.setText(feed.getModel_name());
+        if(feed.getModel_days_left() != 0)
         action_list_item_days.setText(String.valueOf(feed.getModel_days_left()));
         action_list_item_points.setText(String.valueOf(feed.getModel_points()));
 

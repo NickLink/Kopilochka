@@ -158,9 +158,10 @@ public class Parser {
             item.setAction_name(jsonObject.getString(Const.action_name));
             item.setAction_type_id(jsonObject.getInt(Const.action_type_id));
             item.setAction_type(jsonObject.getString(Const.action_type));
-            item.setAction_date_from(jsonObject.getString(Const.action_date_from));
-            item.setAction_date_to(jsonObject.getString(Const.action_date_to));
-            item.setAction_date_charge(jsonObject.getString(Const.action_date_charge));
+            item.setAction_date_from(Utils.getMillisFromDate(jsonObject.getString(Const.action_date_from)));
+            Log.v("", "SSS action_date_from=" + Utils.getMillisFromDate(jsonObject.getString(Const.action_date_from)));
+            item.setAction_date_to(Utils.getMillisFromDate(jsonObject.getString(Const.action_date_to)));
+            item.setAction_date_charge(Utils.getMillisFromDate(jsonObject.getString(Const.action_date_charge)));
             item.setAction_description(jsonObject.getString(Const.action_description));
             //Go for models
             JSONArray models_array = jsonObject.getJSONArray(Const.models);

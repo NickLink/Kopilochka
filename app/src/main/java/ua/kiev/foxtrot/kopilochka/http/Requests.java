@@ -2,7 +2,6 @@ package ua.kiev.foxtrot.kopilochka.http;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -26,6 +25,7 @@ import java.util.Map;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 05.10.2016.
@@ -76,7 +76,8 @@ public class Requests {
                 @Override
                 public void onResponse(String response) {
                     Log.v(TAG, "SSS String responce=" + response);
-                    request.http_result(req_type, response.toString());
+                    Log.v(TAG, "SSS String CheckError_1_2=" + Utils.CheckError_1_2(context, response));
+                    request.http_result(req_type, Utils.CheckError_1_2(context, response));
                 }
             },
                     new Response.ErrorListener() {
@@ -96,11 +97,11 @@ public class Requests {
                             } else if (error instanceof TimeoutError) {
                                 message = "Connection TimeOut! Please check your internet connection.";
                             }
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
 //                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
 //                            Log.v(TAG, "SSS Error = " + error.getMessage().toString());
-//                            request.http_error(req_type, error.getMessage());
+                            request.http_error(req_type, message);
 
                         }
 

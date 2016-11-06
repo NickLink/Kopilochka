@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.data.Action;
@@ -15,6 +16,7 @@ import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
+import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 
 /**
  * Created by NickNb on 30.09.2016.
@@ -299,6 +301,7 @@ public class DB {
             cv.put(Const.action_type_id, data.getAction_type_id());
             cv.put(Const.action_type, data.getAction_type());
             cv.put(Const.action_date_from, data.getAction_date_from());
+            Log.v("", "SSS addAction action_date_from= " + data.getAction_date_from());
             cv.put(Const.action_date_to, data.getAction_date_to());
             cv.put(Const.action_date_charge, data.getAction_date_charge());
             cv.put(Const.action_description, data.getAction_description());
@@ -393,9 +396,10 @@ public class DB {
         item.setAction_name(myCursor.getString(myCursor.getColumnIndex(Const.action_name)));
         item.setAction_type_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_type_id)));
         item.setAction_type(myCursor.getString(myCursor.getColumnIndex(Const.action_type)));
-        item.setAction_date_from(myCursor.getString(myCursor.getColumnIndex(Const.action_date_from)));
-        item.setAction_date_to(myCursor.getString(myCursor.getColumnIndex(Const.action_date_to)));
-        item.setAction_date_charge(myCursor.getString(myCursor.getColumnIndex(Const.action_date_charge)));
+        item.setAction_date_from((long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_from)));
+        Log.v("", "SSS getAction action_date_from = " + (long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_from)));
+        item.setAction_date_to((long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_to)));
+        item.setAction_date_charge((long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_charge)));
         item.setAction_description(myCursor.getString(myCursor.getColumnIndex(Const.action_description)));
         item.setModels(getModelsArray(item.getAction_id()));
         return item;
@@ -445,7 +449,33 @@ public class DB {
     }
 
     //============================POST_SN===========================
+    public Cursor getPostSNbyStatus(int status) {
+        String selection = Const.reg_status + " = ?";
+        String[] selectionArgs = {String.valueOf(status)};
+        return mDB.query(Tables.table_name_postsn, null, selection, selectionArgs, null, null, Const.model_name);
+    }
+
+    private Post_SN getPost_SN(Cursor myCursor){
+        Post_SN item = new Post_SN();
+        item.setAction_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_id)));
+        item.setAction_name(myCursor.getString(myCursor.getColumnIndex(Const.action_name)));
+        item.setModel_id(myCursor.getInt(myCursor.getColumnIndex(Const.model_id)));
+        item.setModel_name(myCursor.getString(myCursor.getColumnIndex(Const.model_name)));
+        item.setAction_date_to(myCursor.getLong(myCursor.getColumnIndex(Const.action_date_to)));
+        item.setAction_type_id(myCursor.getInt(myCursor.getColumnIndex(Const.action_type_id)));
+        item.setModel_points(myCursor.getInt(myCursor.getColumnIndex(Const.model_points)));
+        item.setSerials(StringTools.ListFromString(myCursor.getString(myCursor.getColumnIndex(Const.serials))));
+        item.setReg_date(myCursor.getLong(myCursor.getColumnIndex(Const.reg_date)));
+        item.setReg_status(myCursor.getInt(myCursor.getColumnIndex(Const.reg_status)));
+        item.setFail_reason(myCursor.getString(myCursor.getColumnIndex(Const.fail_reason)));
+        return item;
+    }
+
+
     public long addPostSN(Post_SN data){
+        long code = -1;
+        this.open();
+        this.getDB().beginTransaction();
         try {
             //Put POST_SN data
             ContentValues cv = new ContentValues();
@@ -454,20 +484,142 @@ public class DB {
             cv.put(Const.model_id, data.getModel_id());
             cv.put(Const.model_name, data.getModel_name());
             cv.put(Const.action_date_to, data.getAction_date_to());
-            cv.put(Const.action_type, data.getAction_type());
+            cv.put(Const.action_type_id, data.getAction_type_id());
             cv.put(Const.model_points, data.getModel_points());
             //====SERIALS====
-            cv.put(Const.serials, String.valueOf(data.getSerials().toArray(new String[data.getSerials().size()])));
+            cv.put(Const.serials, StringTools.StringFromList(data.getSerials()));
 
             cv.put(Const.reg_date, data.getReg_date());
             cv.put(Const.reg_status, data.getReg_status());
             cv.put(Const.fail_reason, data.getFail_reason());
-            return mDB.insert(Tables.table_name_postsn, null, cv);
+            code = mDB.insert(Tables.table_name_postsn, null, cv);
+            if (code != -1) this.getDB().setTransactionSuccessful();
         } catch (Exception e){
             Log.v("", "SSS Exception addPostSN= " + e.toString());
-            return -1;
+            code = -1;
+        }finally {
+            this.getDB().endTransaction();
+        }
+        this.close();
+        return code;
+    }
+
+    public boolean deletePostSN(Post_SN data){
+        boolean is_ok = false;
+        this.open();
+        this.getDB().beginTransaction();
+        try {
+            String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
+            String[] selectionArgs = {
+                    String.valueOf(data.getAction_id()),
+                    String.valueOf(data.getModel_id()),
+                    StringTools.StringFromList(data.getSerials())};
+            if(mDB.delete(Tables.table_name_postsn, selection, selectionArgs) == 1){
+                //All ok
+                this.getDB().setTransactionSuccessful();
+                is_ok = true;
+            } else {
+                //No record found
+            }
+        } catch (Exception e){
+            Log.v("", "SSS Exception deletePostSN= " + e.toString());
+        }finally {
+            this.getDB().endTransaction();
+        }
+        this.close();
+        return is_ok;
+    }
+
+
+    public ArrayList<Post_SN> getPost_SN_List(int status){
+        //this.open();
+        ArrayList<Post_SN> arrayList = new ArrayList<>();
+        Cursor myCursor = this.getPostSNbyStatus(status);
+        myCursor.moveToFirst();
+        while (myCursor.isAfterLast() == false) {
+            arrayList.add(getPost_SN(myCursor));
+            myCursor.moveToNext();
+        }
+        //this.close();
+        return arrayList;
+    }
+
+    private Cursor getPostSNbyDataCursor(int action_id, int model_id, String serials){
+        String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(action_id),
+                String.valueOf(model_id),
+                serials};
+        Log.v("", "SSS getPostSNbyData selection= " + selection);
+        Log.v("", "SSS getPostSNbyData selectionArgs= " + Arrays.toString(selectionArgs));
+        return mDB.query(Tables.table_name_postsn, null, selection, selectionArgs, null, null, null);
+    }
+
+    public Post_SN getPostSNbyData(int action_id, int model_id, String serials){
+        this.open();
+        Cursor cursor = this.getPostSNbyDataCursor(action_id, model_id, serials);
+        if(cursor != null && cursor.moveToFirst()){
+            Post_SN item = getPost_SN(cursor);
+            this.close();
+            return item;
+        }
+        this.close();
+        return null;
+    }
+
+    public boolean setStatus_Post_SN_item(Post_SN data){
+        this.open();
+        //Cursor cursor = this.getPostSNbyData(data);
+        //if(cursor.moveToFirst()){
+        String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(data.getAction_id()),
+                String.valueOf(data.getModel_id()),
+                StringTools.StringFromList(data.getSerials())};
+        ContentValues cv = new ContentValues();
+        cv.put(Const.reg_status, data.getReg_status());
+        this.getDB().beginTransaction();
+        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) == 1){
+            //All ok
+            this.getDB().setTransactionSuccessful();
+            this.getDB().endTransaction();
+            this.close();
+            return true;
+        } else {
+            //No record found
+            this.getDB().endTransaction();
+            this.close();
+            return false;
         }
     }
+
+    public boolean setSerials_Post_SN_item(Post_SN data, String old_serials){
+        this.open();
+        //Cursor cursor = this.getPostSNbyData(data);
+        //if(cursor.moveToFirst()){
+        String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(data.getAction_id()),
+                String.valueOf(data.getModel_id()),
+                old_serials};
+        ContentValues cv = new ContentValues();
+        cv.put(Const.serials, StringTools.StringFromList(data.getSerials()));
+        this.getDB().beginTransaction();
+        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) == 1){
+            //All ok
+            this.getDB().setTransactionSuccessful();
+            this.getDB().endTransaction();
+            this.close();
+            return true;
+        } else {
+            //No record found
+            this.getDB().endTransaction();
+            this.close();
+            return false;
+        }
+    }
+
+
 
 
 }

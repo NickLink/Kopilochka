@@ -15,5 +15,7 @@ public interface Interfaces {
     void ActionSelected(int action_id);
     void ModelSelected(int action_id, int model_id);
     void ProductGroupSelected(int group_id, String group_name, int action_type);
+    void EditExistPostSN(int action_id, int model_id, String serials);
+    void DeleteExistPostSN();
 
 }

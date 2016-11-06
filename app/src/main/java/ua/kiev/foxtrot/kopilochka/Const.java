@@ -107,7 +107,7 @@ public class Const {
     //public static final String session = "session";
     //public static final String action_id = "action_id";
     //public static final String model_id = "model_id";
-    public static final String data = "data";
+    public static final String date = "date";
     public static final String serials = "serials";
     //public static final String sn = "sn";
     public static final String reg_date = "reg_date";
@@ -119,6 +119,9 @@ public class Const {
     //public static final String model_id = "model_id";
     //public static final String serials = "serials";
     //public static final String sn = "sn";
+    public static final int reg_status_ok = 1;
+    public static final int reg_status_error = 2;
+    public static final int reg_status_await = 3;
 
     //GetFinInfo
     public static final int getFinInfo = 5;
@@ -150,9 +153,14 @@ public class Const {
     public static final String question = "question";
     //-->out
 
+    public static final String viewed = "viewed";
+
     //==================Errors==========================
+    public static final String ok = "ok";
     public static final String JSON_Error = "error";
     public static final String JSON_Code = "code";
     public static final String JSON_Comment = "comment";
     public static final int JSON_Ok = -1;
+    public static final String code = "code";
+    public static final String comment = "comment";
 }

@@ -11,11 +11,12 @@ public class Action {
     private String action_name;
     private int action_type_id; //ИД типа акции 0 = Накопительная; 1 = Бонусная
     private String action_type;
-    private String action_date_from;
-    private String action_date_to;
-    private String action_date_charge;
+    private long action_date_from;
+    private long action_date_to;
+    private long action_date_charge;
     private String action_description;
     private ArrayList<Model> models = new ArrayList<Model>();
+    private int viewed;
 
     public int getAction_id() {
         return action_id;
@@ -49,27 +50,27 @@ public class Action {
         this.action_type = action_type;
     }
 
-    public String getAction_date_from() {
+    public long getAction_date_from() {
         return action_date_from;
     }
 
-    public void setAction_date_from(String action_date_from) {
+    public void setAction_date_from(long action_date_from) {
         this.action_date_from = action_date_from;
     }
 
-    public String getAction_date_to() {
+    public long getAction_date_to() {
         return action_date_to;
     }
 
-    public void setAction_date_to(String action_date_to) {
+    public void setAction_date_to(long action_date_to) {
         this.action_date_to = action_date_to;
     }
 
-    public String getAction_date_charge() {
+    public long getAction_date_charge() {
         return action_date_charge;
     }
 
-    public void setAction_date_charge(String action_date_charge) {
+    public void setAction_date_charge(long action_date_charge) {
         this.action_date_charge = action_date_charge;
     }
 
@@ -87,5 +88,13 @@ public class Action {
 
     public void setModels(ArrayList<Model> models) {
         this.models = models;
+    }
+
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
     }
 }

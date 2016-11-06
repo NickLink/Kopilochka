@@ -16,6 +16,7 @@ public class Model {
     private String model_url;
     private int model_action;
     private int model_days_left;
+    private int viewed;
 
     public int getModel_id() {
         return model_id;
@@ -105,4 +106,11 @@ public class Model {
         this.model_days_left = model_days_left;
     }
 
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
+    }
 }

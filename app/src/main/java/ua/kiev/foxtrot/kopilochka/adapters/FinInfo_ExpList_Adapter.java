@@ -19,6 +19,7 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
 
     private FinInfo mFinInfo;
     private Context mContext;
+    private LayoutInflater inflater;
 
     public FinInfo_ExpList_Adapter (Context context, FinInfo finInfo){
         mContext = context;
@@ -74,19 +75,29 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
                              ViewGroup parent) {
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (groupPosition == 0)
+            inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        if (groupPosition == 0){
+            if (isExpanded){
+                //Изменяем что-нибудь, если текущая Group раскрыта
+                convertView = inflater.inflate(R.layout.frag_data_p1_extra_h1_exp, null);
+            }
+            else{
+                //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h1, null);
-            else
+            }
+        }
+        else {
+            if (isExpanded){
+                //Изменяем что-нибудь, если текущая Group раскрыта
+                convertView = inflater.inflate(R.layout.frag_data_p1_extra_h2_exp, null);
+            }
+            else{
+                //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h2, null);
+            }
         }
 
-        if (isExpanded){
-            //Изменяем что-нибудь, если текущая Group раскрыта
-        }
-        else{
-            //Изменяем что-нибудь, если текущая Group скрыта
-        }
 
 
         return convertView;

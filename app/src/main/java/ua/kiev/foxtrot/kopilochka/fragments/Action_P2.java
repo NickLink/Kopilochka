@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -23,11 +22,10 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.database.Tables;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -79,7 +77,7 @@ public class Action_P2 extends Fragment {
         action_id = getArguments().getInt(Const.action_id, 0);
         if(action_id == 0){
             //Error getting data
-            Utils.ShowInputErrorDialog(getActivity(), "Error", "Action number error", "OK");
+            Dialogs.ShowDialog(getActivity(), "Error", "Action number error", "OK");
             return null;
         }
         //All ok
@@ -87,10 +85,11 @@ public class Action_P2 extends Fragment {
         //Inflate header
         action_header = inflater.inflate(R.layout.frag_action_p2_list_header, null);
 
-        TextView action_period = (TextView)action_header.findViewById(R.id.action_period);
-        TextView action_type = (TextView)action_header.findViewById(R.id.action_type);
-        TextView action_data = (TextView)action_header.findViewById(R.id.action_data);
-        TextView action_comment = (TextView)action_header.findViewById(R.id.action_comment);
+        TextView action_period_tv = (TextView)action_header.findViewById(R.id.action_period);
+        TextView action_type_tv = (TextView)action_header.findViewById(R.id.action_type);
+        TextView action_data_tv = (TextView)action_header.findViewById(R.id.action_data);
+        TextView action_days_left_tv = (TextView)action_header.findViewById(R.id.action_days_left);
+        TextView action_comment_tv = (TextView)action_header.findViewById(R.id.action_comment);
 
 
         //Inflate main viev
@@ -118,15 +117,14 @@ public class Action_P2 extends Fragment {
         });
 
         //Set info on action
-        action_period.setText(action.getAction_date_from());
-        action_type.setText(action.getAction_type());
-        action_data.setText(action.getAction_date_charge());
-        action_comment.setText(action.getAction_description());
+        action_period_tv.setText("с " + Utils.getDateFromMillis(action.getAction_date_from())
+                + " по " + Utils.getDateFromMillis(action.getAction_date_to()));
+        action_type_tv.setText(action.getAction_type());
+        action_data_tv.setText(Utils.getDateFromMillis(action.getAction_date_charge()));
+        action_days_left_tv.setText(String.valueOf(Utils.daysLeft(action.getAction_date_to())));
+        action_comment_tv.setText(action.getAction_description());
         action_name.setText(action.getAction_name());
         action_models_count.setText(String.valueOf(action.getModels().size()));
-
-        //Send request
-        //Get_From_Database();
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
@@ -142,44 +140,4 @@ public class Action_P2 extends Fragment {
         return rootView;
     }
 
-    private BBS_News getItem_fromBase(int id){
-        DB db = new DB(getActivity());
-        db.open();
-        Cursor myCursor = db.getData_forId(id);
-        if (myCursor.moveToFirst()){
-            BBS_News item = new BBS_News();
-            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
-            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
-            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
-            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
-            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
-            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
-            db.close();
-            return item;
-        } else
-            return null;
-    }
-
-//    private void Get_From_Database() {
-//        Log.v("", "SSS Start = " + models_data.size());
-//        models_data.clear();
-//        DB db = new DB(getActivity());
-//        db.open();
-//        Cursor myCursor = db.getAllData();
-//        myCursor.moveToFirst();
-//        while (myCursor.isAfterLast() == false) {
-//            BBS_News item = new BBS_News();
-//            item.setAuthor(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_author)));
-//            item.setTitle(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_title)));
-//            item.setDescription(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_description)));
-//            item.setUrl(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_url)));
-//            item.setUrlToImage(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_urlToImage)));
-//            item.setPublishedAt(myCursor.getString(myCursor.getColumnIndex(Tables.bbs_publishedAt)));
-//            models_data.add(item);
-//            myCursor.moveToNext();
-//        }
-//        Log.v("", "SSS Finish = " + models_data.size());
-//        db.close();
-//        adapter.notifyDataSetChanged();
-//    }
 }

@@ -1,6 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by NickNb on 26.10.2016.
@@ -12,9 +12,9 @@ public class Post_SN {
     private int model_id;
     private String model_name;
     private long action_date_to;
-    private int action_type;
+    private int action_type_id;
     private int model_points;
-    private ArrayList<String> serials;
+    private List<String> serials;
     private long reg_date;
     private int reg_status;
     private String fail_reason;
@@ -59,12 +59,12 @@ public class Post_SN {
         this.action_date_to = action_date_to;
     }
 
-    public int getAction_type() {
-        return action_type;
+    public int getAction_type_id() {
+        return action_type_id;
     }
 
-    public void setAction_type(int action_type) {
-        this.action_type = action_type;
+    public void setAction_type_id(int action_type_id) {
+        this.action_type_id = action_type_id;
     }
 
     public int getModel_points() {
@@ -75,11 +75,11 @@ public class Post_SN {
         this.model_points = model_points;
     }
 
-    public ArrayList<String> getSerials() {
+    public List<String> getSerials() {
         return serials;
     }
 
-    public void setSerials(ArrayList<String> serials) {
+    public void setSerials(List<String> serials) {
         this.serials = serials;
     }
 

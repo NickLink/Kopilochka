@@ -2,39 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="50dp">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="5dp"
-        android:weightSum="6">
+        android:weightSum="7">
 
         <TextView
             style="@style/myNormal_TextStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/scan_result"
             android:layout_weight="6"
             android:cursorVisible="false"
             android:singleLine="true"/>
 
-<!--        <Button
-            android:id="@+id/scan_button"
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Scan"
-            android:textAllCaps="false"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_edit"
+            android:id="@+id/imageView"
             android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:textAllCaps="false"
-            android:layout_weight="1"/>-->
+        <!--        <Button
+                    android:id="@+id/scan_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Scan"
+                    android:textAllCaps="false"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/delete_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:layout_weight="1"/>-->
     </LinearLayout>
 
     <View
