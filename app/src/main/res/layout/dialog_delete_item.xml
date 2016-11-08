@@ -16,10 +16,61 @@
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/dialog_text"
-        android:layout_width="match_parent"
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:text="Акция"
+        android:id="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/action_name" />
+
+    <TextView
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Модель"
+        android:id="@+id/textView10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/model_name" />
+
+    <TextView
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Серийный номер"
+        android:id="@+id/textView11" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/serial_numbers_list" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/dialog_text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal" />-->
+
+    <TextView
+        style="@style/mySmall_TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Причина ошибки регистрации"
+        android:id="@+id/error_title"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/error_text"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,22 +81,23 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_delete"
+            android:text="@string/act_delete"
             android:textAllCaps="false"
             android:id="@+id/action_delete" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_edit"
+            android:text="@string/act_edit"
             android:textAllCaps="false"
             android:id="@+id/action_edit" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_cancel"
+            android:text="@string/act_cancel"
             android:textAllCaps="false"
             android:id="@+id/action_cancel" />
     </LinearLayout>
+
 </LinearLayout>

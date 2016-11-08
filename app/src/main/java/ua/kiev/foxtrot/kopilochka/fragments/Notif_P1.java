@@ -15,19 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Notif_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.utils.Encryption;
-import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -117,27 +113,34 @@ public class Notif_P1 extends Fragment implements HttpRequest {
 
     private void getFromInternet(){
         //NOTICES----------------------------------------------
-        Requests notice_requests = new Requests(getActivity(), Const.getNotices, this);
-        HashMap<String, String> notice_params = new HashMap<String, String>();
-        notice_params.put(Const.method, Const.GetNotices);
-        notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-        notice_requests.getHTTP_Responce(notice_params);
+
+        Methods.GetNotificationList(getActivity(), this);
+//        Requests notice_requests = new Requests(getActivity(), Const.getNotices, this);
+//        HashMap<String, String> notice_params = new HashMap<String, String>();
+//        notice_params.put(Const.method, Const.GetNotices);
+//        notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+//                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+//        notice_requests.getHTTP_Responce(notice_params);
     }
 
     @Override
     public void http_result(int type, String result) {
+        swipeRefreshLayout.setRefreshing(false);
         switch (type){
             case Const.getNotices:
-                ArrayList<Notice> notices = new ArrayList<>();
-                notices = Parser.getNoticesArray(result);
-                if(notices != null){
-                    //Actions ok
-                    if(PutNoticesInDatabase(notices)) {
-                        adapter.setNotice_data(notices);
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }
+                Methods.PutNotificationInBase(getActivity(), result);
+                db = new DB(getActivity());
+                adapter.setNotice_data(db.getNoticeArray());
+                adapter.notifyDataSetChanged();
+//                ArrayList<Notice> notices = new ArrayList<>();
+//                notices = Parser.getNoticesArray(result);
+//                if(notices != null){
+//                    //Actions ok
+//                    if(PutNoticesInDatabase(notices)) {
+//                        adapter.setNotice_data(notices);
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }
 
         }
     }

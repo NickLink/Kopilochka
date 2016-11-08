@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
@@ -34,6 +36,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
     private EditText data_email_edit, data_password_edit;
     private Button data_login_button;
     private String login, password;
+    ProgressDialog load_data;
 
     public static Data_P1 newInstance() {
         Data_P1 fragment = new Data_P1();
@@ -116,34 +119,56 @@ public class Data_P1 extends Fragment implements HttpRequest{
     @Override
     public void http_result(int type, String result) {
         switch (type){
+
             case Const.getSession:
                 //Parse data
                 AppContr.userData = Parser.getUserData(result);
                 if(AppContr.userData != null){
-                    //HTTP responce OK, now check for internal data
-                    if(AppContr.userData.getCode() == Const.JSON_Ok){
-                        //Session is ok, saving Login&Password
-                        AppContr.userData.setLogin(login);
-                        AppContr.userData.setPassword(password);
-                        interfaces.LoginSuccess();
-                    } else {
-                        //Error in session
-                        //Dialogs.Error_Dispencer(getActivity(), type, AppContr.userData.getCode());
+                    switch (AppContr.userData.getCode()){
+                        case Const.JSON_Ok:
+                            //All ok
+                            AppContr.userData.setLogin(login);
+                            AppContr.userData.setPassword(password);
+                            interfaces.SaveUser();
+                            Load_All_data();
+
+                            break;
+                        case 1:
+                            //No user found
+                            Clear_Input_Fields();
+                            Dialogs.ShowLoginDialog(getActivity(), 1);
+                            break;
+                        case 2:
+                            //Token time expired
+                            Clear_Input_Fields();
+                            Dialogs.ShowLoginDialog(getActivity(), 2);
+                            break;
                     }
 
                 } else {
+                    Clear_Input_Fields();
                     Dialogs.ShowJSONErrorDialog(getActivity());
                     return;
                 }
-
                 break;
 
+            case Const.getActions:
+                Methods.PutActionInBase(getActivity(), result);
+                Methods.GetNotificationList(getActivity(), this);
+                break;
+
+            case Const.getNotices:
+                Methods.PutNotificationInBase(getActivity(), result);
+                load_data.dismiss();
+                interfaces.LoginSuccess();
+                break;
         }
 
     }
 
     @Override
     public void http_error(int type, String error) {
+        load_data.dismiss();
         switch (type){
             case Const.getSession:
 
@@ -151,6 +176,19 @@ public class Data_P1 extends Fragment implements HttpRequest{
 
         }
 
+    }
+
+    private void Load_All_data(){
+        load_data = new ProgressDialog(getActivity());
+        load_data.setTitle("Load database");
+        load_data.show();
+        Methods.GetActionList(getActivity(), this);
+    }
+
+    private void Clear_Input_Fields(){
+        data_email_edit.setText("");
+        data_password_edit.setText("");
+        data_email_edit.requestFocus();
     }
 
 }

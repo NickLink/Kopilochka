@@ -20,14 +20,14 @@
             android:id="@+id/action_list_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_name"
+            android:text="@string/act_list_name"
             android:layout_weight="5" />
 
         <TextView
             android:id="@+id/action_list_item_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_days"
+            android:text="@string/act_list_days"
             android:layout_weight="2"
             android:textAlignment="center" />
 
@@ -35,7 +35,7 @@
             android:id="@+id/action_list_item_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_points"
+            android:text="@string/act_list_points"
             android:layout_weight="1"
             android:textAlignment="center" />
     </LinearLayout>

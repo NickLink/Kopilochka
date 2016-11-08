@@ -578,6 +578,7 @@ public class DB {
                 StringTools.StringFromList(data.getSerials())};
         ContentValues cv = new ContentValues();
         cv.put(Const.reg_status, data.getReg_status());
+        cv.put(Const.fail_reason, data.getFail_reason());
         this.getDB().beginTransaction();
         if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) == 1){
             //All ok

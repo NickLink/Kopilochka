@@ -1,30 +1,102 @@
 <resources>
     <string name="app_name">Kopilochka</string>
 
-    <string name="JSON_title_error">Ошибка</string>
-    <string name="JSON_text_error">Полученые данные повреждены, попробуйте позже</string>
+    <string name="menu_start">Стартова сторінка</string>
+    <string name="menu_notification">Повідомлення F5.ua</string>
+    <string name="menu_action">Акції</string>
+    <string name="menu_history">Історія реєстрацій</string>
+    <string name="menu_data">Особисті дані</string>
+    <string name="menu_wtf">Що я роблю не так?</string>
+
+    <!--Common values-->
+    <string name="ok">Ок</string>
+
+
+    <string name="log_01_work_with">Програма працює лише з зареєстрованими учасниками партнерської програми F5.</string>
+    <string name="log_01_to_manager">Якщо Ви не маєте логіну/паролю або забули, зверніться до відповідального менеджера F5.</string>
+    <string name="log_01_login_text">Логін</string>
+    <string name="log_01_password_text">Пароль</string>
+    <string name="log_01_comin">Увійти</string>
+    <string name="log_01_sorry">Вибачте, але Ви не є учасником партнерської програми F5.</string>
+    <string name="log_01_sorry_expl">Ви можете звернутися за роз\'ясненням до відповідального менеджеру F5, або видалити програму.</string>
+    <string name="log_01_not_active">Вибачте, але Ваш профіль заблоковано.</string>
+    <string name="log_01_not_active_expl">Ви можете звернутися за роз\'ясненням до відповідального менеджеру F5, або видалити програму.</string>
+
+
+
+    <string name="act_01_no_bonuses">На данний момент нарахування бонусів не проводиться. Чекайте повідомлення.</string>
+    <string name="act_list_name">Назва</string>
+    <string name="act_list_points">Балів</string>
+    <string name="act_period_text">Період дії:</string>
+    <string name="act_type_text">Тип акції:</string>
+    <string name="act_data_text">Дата нарахування:</string>
+    <string name="act_list_days">Залишилось днів:</string>
+    <string name="act_register_model_button">Підтвердити реєстрацію</string>
+
+    <string name="act_enter_serial_text">Введіть серійний номер або IMEI</string>
+    <string name="act_p3_info_text">Для реєстрації смартфонів, планшетів и ноутбуків – вводьте IMEI, для побутової техники – серійный номер:</string>
+    <string name="act_scan">Сканувати</string>
+    <string name="act_edit">Редагувати</string>
+    <string name="act_cancel">Відмінити</string>
+    <string name="act_delete">Видалити</string>
+    <string name="act_reg_success_title">Запит на реєстрацію серійного номеру (IMEI) успішно зроблено.</string>
+    <string name="act_reg_success_text">Дізнатися результати реєстрації Ви можете в розділі Історія реєстрацій. Ви можете продовжувати реєструвати моделі.</string>
+    <string name="act_reg_failed">Реєстрація продажу не була проведена через помилку у наведених Вами даних. Щоб дізнатись деталі зверніться до Історії реєстрацій.</string>
+
+    <string name="hist_title_1">Вдало зареєстровано</string>
+    <string name="hist_title_2">Очікують реєстрації</string>
+    <string name="hist_title_3">Невдала спроба реєстрації</string>
+    <string name="hist_model_text">Модель</string>
+    <string name="hist_sn_imei_text">СН/IMEI</string>
+    <string name="hist_reg_with_inet">Реєстрація відбудеться при наявності Інтернету</string>
+
+
+    <!--<string name="fin_contact_e_mail">Ваш контактный e-mail:</string>-->
+    <!--<string name="fin_contact_phone">Ваш контактный телефон:</string>-->
+
+
+    <string name="data_login_button_text">Увійти</string>
+    <string name="data_extradata_button">Подивитися особисті дані</string>
+    <string name="data_f5_ua_message">Змінити свої дані Ви можете на сайті F5.ua</string>
+    <string name="data_name_hello">Добрий день, </string>
+    <string name="data_email_text">Ваш контактний email:</string>
+    <string name="data_email_text_empty">Не вказано</string>
+    <string name="data_phone_text">Ваш контактний телефон:</string>
+    <string name="data_phone_text_empty">Не вказано</string>
+    <string name="data_bonus_to">Бонус буде нараховуватися </string>
+    <string name="data_info_no_inet">Переглянути дані можливо при наявності Інтернету</string>
+
+    <string name="data_bonus_planned">Заплановані нарахування бонусів</string>
+    <string name="data_bonus_history">Історія нарахування бонусів</string>
+    <string name="data_bonus_data">Дата</string>
+    <string name="data_bonus_action">Акція</string>
+    <string name="data_bonus_sum">Сума нарахування</string>
+    <string name="data_bonus_about">Про нарахування</string>
+
+    <string name="data_exit_title">Мобільне застосування kopilochka.f5 працює лише з одним активним користувачем. Якщо Ви вийдете з програми, всі поточні дані будуть видалені.</string>
+    <string name="data_exit_text">УВАГА. Якщоо у Вас залишились серійні номери або імеі у черзі на реєстрацію, вони будуть втрачені без можливості відновлення.</string>
+    <string name="data_exit_agree">Згоден</string>
+    <string name="data_exit_dismiss">Відхилити</string>
+
+    <string name="JSON_title_error">Помилка</string>
+    <string name="JSON_text_error">Отримані дані пошкоджено, спробуйте пізніше.</string>
     <string name="JSON_button_error">Ок</string>
-    <string name="internet_error">Отсутствует соединение с интернетом.</string>
+    <string name="internet_error">Відсутне з\'єднання з Інтернет.</string>
 
-    <string name="menu_start">Стартовая страница</string>
-    <string name="menu_notification">Оповещения</string>
-    <string name="menu_action">Акции</string>
-    <string name="menu_history">История регистраций</string>
-    <string name="menu_data">Личные данные</string>
-    <string name="menu_wtf">Что я делаю не так?</string>
-
-    <string name="start_cumulative_points">Накопительные баллы</string>
-
-    <string name="menu_exit_title">Выход</string>
-    <string name="menu_exit_text">Вы уверены?</string>
-    <string name="menu_exit_yes"> Да </string>
-    <string name="menu_exit_no"> Нет </string>
+    <string name="start_cumulative_points">Накопичувальні бали</string>
 
 
-    <string name="wtf_name_text">ФИО:</string>
-    <string name="wtf_email_text">Email:</string>
-    <string name="wtf_text_text">Вопрос:</string>
-    <string name="wtf_send_button_text">Отправить</string>
+
+
+    <string name="wtf_name_text">ПІБ:</string>
+    <string name="wtf_email_text">email:</string>
+    <string name="wtf_text_text">Питання:</string>
+    <string name="wtf_send_button_text">Відправити</string>
+    <string name="wtf_fields_title">Увага!</string>
+    <string name="wtf_fields_not_complete">Не всі поля вірно заповнені.</string>
+    <string name="wtf_sent_success">Питання успішно відправлено.</string>
+
+
     <string name="cancel_scan">Отменить</string>
     <string name="data_enter_email_text">Введите email</string>
     <string name="data_enter_password_text">Введите пароль</string>
@@ -32,10 +104,7 @@
     <string name="input_error">Ошибка ввода данных</string>
     <string name="fill_all_fields">Заполните все поля</string>
     <string name="input_ok">Ок</string>
-    <string name="data_login_button_text">Вход</string>
-    <string name="data_name_hello">Добрый день, </string>
-    <string name="data_email_text">Ваш контактный email:</string>
-    <string name="data_phone_text">Ваш контактный телефон:</string>
+
 
     <!--Error codes-->
     <string name="incorrect_login_password">Введенные логин/пароль отсутствуют в БД пользователей</string>
@@ -43,25 +112,10 @@
     <string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>
     <string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>
     <string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>
-    <string name="action_period_text">Период действия:</string>
-    <string name="action_type_text">Тип акции:</string>
-    <string name="action_data_text">Дата начисления</string>
-    <string name="action_list_name">Название</string>
-    <string name="action_list_days">Осталось дней</string>
-    <string name="action_list_points">Баллов</string>
-    <string name="action_register_model_button">Зарегистрировать модель</string>
-    <string name="action_enter_serial_text">Введите серийный номер</string>
-    <string name="action_p3_info_text">Для регистрации смартфонов, планшетов и ноутбуков – вводи IMEI, для бытовой техники – серийный номер:</string>
-    <string name="action_ok">Ок</string>
-    <string name="action_scan">Сканировать</string>
-    <string name="action_edit">Редактировать</string>
-    <string name="action_cancel">Отмена</string>
-    <string name="action_delete">Удалить</string>
-    <string name="data_extradata_button">Посмотреть личные данные</string>
 
-    <string name="wtf_fields_title">Внимание!</string>
-    <string name="wtf_fields_not_complete">Не все поля правильно заполнены.</string>
-    <string name="wtf_sent_success">Сообщение успешно отправлено.</string>
+
+
+
 
     <string name="wtf_ok">Ок</string>
 
@@ -70,16 +124,14 @@
     <string name="warning_user_not_active">Пользователь не активен, обратитесь за разъяснениями к администрации Ф5.</string>
     <string name="warning_ok">Ок</string>
     <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
-    <string name="fininfo_contact_e_mail">Ваш контактный e-mail:</string>
-    <string name="fininfo_contact_phone">Ваш контактный телефон:</string>
-    <string name="fininfo_bonus_to">Бонус будет начисляться </string>
 
-    <string name="history_title_1">Удачно зарегистрированые</string>
-    <string name="history_title_2">Ошибка регистрации</string>
-    <string name="history_title_3">Ожидание регистрации</string>
+    <string name="menu_exit_title">Вихід</string>
+    <string name="menu_exit_text">Ви впевнені?</string>
+    <string name="menu_exit_yes"> Так </string>
+    <string name="menu_exit_no"> Ні </string>
+
     <string name="edit_title">Редактирование</string>
-    <string name="data_f5_ua_message">Вы можете изменить свои данные на сайте F5.ua</string>
-    <string name="history_model_text">Модель</string>
-    <string name="history_sn_imei_text">SN/IMEI</string>
+
+
 
 </resources>

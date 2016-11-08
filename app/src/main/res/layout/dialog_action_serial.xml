@@ -10,7 +10,7 @@
         style="@style/myTitle_TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_enter_serial_text"
+        android:text="@string/act_enter_serial_text"
         android:id="@+id/textView12"
         android:layout_gravity="center_horizontal" />
 
@@ -29,21 +29,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_ok"
+            android:text="@string/ok"
             android:textAllCaps="false"
             android:id="@+id/action_ok" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_scan"
+            android:text="@string/act_scan"
             android:textAllCaps="false"
             android:id="@+id/action_scan" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_delete"
+            android:text="@string/act_delete"
             android:textAllCaps="false"
             android:id="@+id/action_delete" />
     </LinearLayout>

@@ -17,19 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Action_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.utils.Encryption;
-import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -126,27 +122,27 @@ public class Action_P1 extends Fragment implements HttpRequest {
 
     private void getFromInternet(){
         //ACTIONS-----------------------------------------------
-        Requests actions_requests = new Requests(getActivity(), Const.getActions, this);
-        HashMap<String, String> actions_params = new HashMap<String, String>();
-        actions_params.put(Const.method, Const.GetActions);
-        actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-        actions_requests.getHTTP_Responce(actions_params);
+        Methods.GetActionList(getActivity(), this);
+
+
+//        Requests actions_requests = new Requests(getActivity(), Const.getActions, this);
+//        HashMap<String, String> actions_params = new HashMap<String, String>();
+//        actions_params.put(Const.method, Const.GetActions);
+//        actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+//                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+//        actions_requests.getHTTP_Responce(actions_params);
     }
 
     @Override
     public void http_result(int type, String result) {
+        swipeRefreshLayout.setRefreshing(false);
         switch (type){
             case Const.getActions:
-                ArrayList<Action> actions = new ArrayList<>();
-                actions = Parser.getActionsArray(result);
-                if(actions != null){
-                    //Actions ok
-                    PutActionsInDatabase(actions);
-                    adapter.setAction_data(actions);
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-
+                Methods.PutActionInBase(getActivity(), result);
+                db = new DB(getActivity());
+                adapter.setAction_data(db.getActionArray());
+                adapter.notifyDataSetChanged();
+            break;
         }
     }
 

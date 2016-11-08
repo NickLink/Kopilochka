@@ -108,8 +108,8 @@ public class History_P1 extends Fragment {
         db = new DB(getActivity());
         db.open();
         fullArray.add(db.getPost_SN_List(Const.reg_status_ok));
-        fullArray.add(db.getPost_SN_List(Const.reg_status_error));
         fullArray.add(db.getPost_SN_List(Const.reg_status_await));
+        fullArray.add(db.getPost_SN_List(Const.reg_status_error));
         db.close();
     }
 

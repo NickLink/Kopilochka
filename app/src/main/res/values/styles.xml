@@ -8,6 +8,62 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Start text Styles-->
+    <style name="myHeader_Red_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/my_red_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="mySub_Black_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/my_sub_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="mySub_Black_18red">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/my_red_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="myBold_21">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">@color/my_grey_color</item>
+    </style>
+
+    <style name="myWhite_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/my_white_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="myRegular_21">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">@color/my_sub_color</item>
+    </style>
+
+    <style name="myRegular_21red">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">@color/my_red_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="myTableH_15">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/my_sub_color</item>
+    </style>
+
+    <style name="myTableH_13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/my_light_grey_color</item>
+    </style>
+
+    <style name="myBold_18menu">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/my_white_color</item>
+    </style>
+
     <style name="myTitle_TextStyle">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#000000</item>

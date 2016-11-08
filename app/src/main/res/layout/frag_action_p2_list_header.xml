@@ -17,7 +17,7 @@
             android:id="@+id/action_period_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_period_text"
+            android:text="@string/act_period_text"
             android:layout_weight="2"
             style="@style/mySmall_TextStyle" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/action_type_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_type_text"
+            android:text="@string/act_type_text"
             android:layout_weight="2"
             style="@style/mySmall_TextStyle" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/action_data_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_data_text"
+            android:text="@string/act_data_text"
             android:layout_weight="2"
             style="@style/mySmall_TextStyle" />
 
@@ -89,7 +89,7 @@
             android:id="@+id/action_days_left_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_days"
+            android:text="@string/act_list_days"
             android:layout_weight="2"
             style="@style/mySmall_TextStyle" />
 
@@ -120,14 +120,14 @@
             android:id="@+id/action_list_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_name"
+            android:text="@string/act_list_name"
             android:layout_weight="5"/>
 
         <TextView
             android:id="@+id/action_list_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_days"
+            android:text="@string/act_list_days"
             android:layout_weight="2"
             android:textAlignment="center" />
 
@@ -135,7 +135,7 @@
             android:id="@+id/action_list_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/action_list_points"
+            android:text="@string/act_list_points"
             android:layout_weight="1"
             android:textAlignment="center" />
     </LinearLayout>

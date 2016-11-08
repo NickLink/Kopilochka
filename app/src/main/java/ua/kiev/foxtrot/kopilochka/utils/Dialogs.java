@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
@@ -19,25 +20,68 @@ import ua.kiev.foxtrot.kopilochka.database.DB;
  */
 public class Dialogs {
 
-    public static void ShowResponceDialog(Context context, String message){
+    public static void ShowLoginDialog(Context context, int code){
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_not_a_member);
+        dialog.setCancelable(false);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        String title = "", message = "";
+        switch (code){
+            case 1:
+                title = context.getString(R.string.log_01_sorry);
+                message = context.getString(R.string.log_01_sorry_expl);
+                break;
 
-        String title = context.getString(R.string.incorrect_login_password);
-        //String message = context.getString(R.string.JSON_text_error);
-        String button = context.getString(R.string.JSON_button_error);
+            case 2:
+                title = context.getString(R.string.log_01_not_active);
+                message = context.getString(R.string.log_01_not_active_expl);
+                break;
+        }
+
 
         TextView Title = (TextView)dialog.findViewById(R.id.title);
         TextView Message = (TextView)dialog.findViewById(R.id.message);
-        Message.setVisibility(View.GONE);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
         Message.setText(message);
-        cancelBtn.setText(button);
+        //cancelBtn.setText(button);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void ShowLogoutDialog(Context context, final Interfaces interfaces){
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.setCancelable(false);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        String title = context.getString(R.string.data_exit_title);
+        String message = context.getString(R.string.data_exit_text);
+
+        TextView Title = (TextView)dialog.findViewById(R.id.title);
+        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        Button exit_button = (Button) dialog.findViewById(R.id.exit_button);
+        Button cancel_button = (Button) dialog.findViewById(R.id.cancel_button);
+
+        Title.setText(title);
+        Message.setText(message);
+        //cancelBtn.setText(button);
+        exit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                interfaces.LogOut();
+                dialog.dismiss();
+            }
+        });
+        cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -163,13 +207,26 @@ public class Dialogs {
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         TextView Title = (TextView)dialog.findViewById(R.id.dialog_title);
-        TextView Message = (TextView)dialog.findViewById(R.id.dialog_text);
+        //TextView Message = (TextView)dialog.findViewById(R.id.dialog_text);
+
+        TextView action_name = (TextView)dialog.findViewById(R.id.action_name);
+        TextView model_name = (TextView)dialog.findViewById(R.id.model_name);
+        TextView serial_numbers_list = (TextView)dialog.findViewById(R.id.serial_numbers_list);
+
+
+
+        TextView error_title = (TextView)dialog.findViewById(R.id.error_title);
+        TextView error_text = (TextView)dialog.findViewById(R.id.error_text);
         Button deleteButoon = (Button) dialog.findViewById(R.id.action_delete);
         Button editButton = (Button) dialog.findViewById(R.id.action_edit);
         Button cancel_Button = (Button) dialog.findViewById(R.id.action_cancel);
 
         Title.setText(title);
-        Message.setText(message);
+        //Message.setText(message);
+        action_name.setText(item.getAction_name());
+        model_name.setText(item.getModel_name());
+        serial_numbers_list.setText(StringTools.StringFromList(item.getSerials()));
+
         deleteButoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,14 +237,23 @@ public class Dialogs {
             }
         });
 
-        if(edit)
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                interfaces.EditExistPostSN(action_id, model_id, serials);
-                dialog.dismiss();
-            }
-        }); else editButton.setVisibility(View.GONE);
+        if(edit){
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    interfaces.EditExistPostSN(action_id, model_id, serials);
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            editButton.setVisibility(View.GONE);
+        }
+
+        if(item.getReg_status() == Const.reg_status_error){
+            error_title.setVisibility(View.VISIBLE);
+            error_text.setVisibility(View.VISIBLE);
+            error_text.setText(item.getFail_reason());
+        }
 
         cancel_Button.setOnClickListener(new View.OnClickListener() {
             @Override

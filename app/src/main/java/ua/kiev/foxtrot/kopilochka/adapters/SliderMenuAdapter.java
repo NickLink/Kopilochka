@@ -52,37 +52,37 @@ public class SliderMenuAdapter extends BaseAdapter {
 
         switch (i){
             case 0:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_start);
+                menu_item_icon.setBackgroundResource(R.drawable.f5_head);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_start);
                 break;
 
             case 1:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_notif);
+                menu_item_icon.setBackgroundResource(R.drawable.letter);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_notification);
                 break;
 
             case 2:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_action);
+                menu_item_icon.setBackgroundResource(R.drawable.promos);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_action);
                 break;
 
             case 3:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_history);
+                menu_item_icon.setBackgroundResource(R.drawable.clock);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_history);
                 break;
 
             case 4:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_data);
+                menu_item_icon.setBackgroundResource(R.drawable.id_card);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_data);
                 break;
 
             case 5:
-                menu_item_icon.setBackgroundResource(R.drawable.icon_menu_wtf);
+                menu_item_icon.setBackgroundResource(R.drawable.help);
                 menu_item_special.setBackgroundResource(0);
                 menu_item_title.setText(R.string.menu_wtf);
                 break;

@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ import ua.kiev.foxtrot.kopilochka.fragments.Start_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     private String start_session, start_login, start_password;
 
     private String TAG = "MainActivity";
+    public Typeface calibri, calibri_bold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         db.close();
 
         encrypt = Encryption.getDefault("Key", "Disabled", new byte[16]);
+        calibri = FontCache.get("fonts/calibri.ttf", getBaseContext());
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getBaseContext());
 
         fragmentManager = getSupportFragmentManager();
 
@@ -267,9 +272,14 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     }
 
     @Override
-    public void LoginSuccess() {
+    public void SaveUser() {
         //Encrypt & Save token
         Utils.Save_User(this, encrypt);
+    }
+
+    @Override
+    public void LoginSuccess() {
+        //Go next page of login
         transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.flip_in, R.anim.flip_out); //, R.anim.slide_left_in, R.anim.slide_left_out
         transaction.add(R.id.fragment_place, Data_P1_Logged.newInstance(), Const.Fr_DtPL);

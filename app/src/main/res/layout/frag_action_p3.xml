@@ -76,7 +76,7 @@
             style="@style/mySmall_TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_p3_info_text"
+            android:text="@string/act_p3_info_text"
             android:layout_margin="10dp"/>
 
         <View

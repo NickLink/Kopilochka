@@ -47,7 +47,7 @@
             android:id="@+id/list_slidermenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/menu_selected"
+            android:background="@color/my_light_blue_color"
             android:choiceMode="singleChoice"
             android:listSelector="@drawable/menu_item_selected"/>
 

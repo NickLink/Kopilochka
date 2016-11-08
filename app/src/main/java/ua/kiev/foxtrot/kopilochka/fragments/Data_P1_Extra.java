@@ -24,6 +24,7 @@ import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 25.10.2016.
@@ -128,9 +129,15 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
         finInfo = new FinInfo();
         finInfo = Parser.getFinInfo(result);
         fininfo_name.setText(getString(R.string.data_name_hello) + " " + finInfo.getUser_name());
-        fininfo_contact_e_mail.setText(finInfo.getUser_email());
-        fininfo_contact_phone.setText(finInfo.getUser_phone());
-        fininfo_bonus.setText(getString(R.string.fininfo_bonus_to) + " " + finInfo.getUser_payment());
+
+        if(Utils.notNull_orEmpty(finInfo.getUser_email()))
+            fininfo_contact_e_mail.setText(finInfo.getUser_email());
+        else fininfo_contact_e_mail.setText(getString(R.string.data_email_text_empty));
+        if(Utils.notNull_orEmpty(finInfo.getUser_phone()))
+            fininfo_contact_phone.setText(finInfo.getUser_phone());
+        else fininfo_contact_phone.setText(getString(R.string.data_phone_text_empty));
+
+        fininfo_bonus.setText(getString(R.string.data_bonus_to) + " " + finInfo.getUser_payment());
         adapter = new FinInfo_ExpList_Adapter(getActivity(), finInfo);
         payment_listview.setAdapter(adapter);
         payment_listview.setGroupIndicator(null);

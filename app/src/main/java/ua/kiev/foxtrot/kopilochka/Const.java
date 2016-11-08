@@ -36,6 +36,8 @@ public class Const {
     public static final String Fr_WtP1 = "Fr_WtP1";
     public static final String Fr_Scan = "Fr_Scan";
 
+    public static final String methodresponse = "methodresponse";
+
     //GetSession
     public static final int getSession = 1;
     public static final String GetSession = "GetToken";
@@ -120,8 +122,8 @@ public class Const {
     //public static final String serials = "serials";
     //public static final String sn = "sn";
     public static final int reg_status_ok = 1;
-    public static final int reg_status_error = 2;
-    public static final int reg_status_await = 3;
+    public static final int reg_status_await = 2;
+    public static final int reg_status_error = 3;
 
     //GetFinInfo
     public static final int getFinInfo = 5;

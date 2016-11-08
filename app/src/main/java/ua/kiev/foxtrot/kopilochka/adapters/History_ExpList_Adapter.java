@@ -116,15 +116,15 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
             switch (groupPosition) {
                 case 0:
                     group_count.setText(String.valueOf(getChildrenCount(groupPosition))); //success_reg.size()
-                    group_title.setText(mContext.getString(R.string.history_title_1));
+                    group_title.setText(mContext.getString(R.string.hist_title_1));
                     break;
                 case 1:
                     group_count.setText(String.valueOf(getChildrenCount(groupPosition))); //error_reg.size()
-                    group_title.setText(mContext.getString(R.string.history_title_2));
+                    group_title.setText(mContext.getString(R.string.hist_title_2));
                     break;
                 case 2:
                     group_count.setText(String.valueOf(getChildrenCount(groupPosition))); //await_reg.size()
-                    group_title.setText(mContext.getString(R.string.history_title_3));
+                    group_title.setText(mContext.getString(R.string.hist_title_3));
                     break;
             }
 
@@ -146,9 +146,7 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
                 itemHolder.model_serial = (TextView) row.findViewById(R.id.model_serial);
                 //itemHolder.models_serial = (LinearLayout)row.findViewById(R.id.serial_numbers_list_layout);
                 row.setTag(itemHolder);
-            }
-            else
-            {
+            } else {
                 itemHolder = (ItemHolder) row.getTag();
             }
 

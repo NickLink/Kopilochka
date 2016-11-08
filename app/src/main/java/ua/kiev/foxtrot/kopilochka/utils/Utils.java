@@ -102,7 +102,10 @@ public class Utils {
     public static String CheckError_1_2(Context context, String result){
         try {
             JSONObject data = new JSONObject(result);
-            if(data.has(Const.JSON_Error)){
+            if(data.has(Const.JSON_Error)
+                    && data.getString(Const.methodresponse).equals(Const.GetSession)) {
+                return result;
+            } else if(data.has(Const.JSON_Error)){
                 if(data.getJSONObject(Const.JSON_Error).getInt(Const.code) == 1) {
                     Dialogs.Dialog_For_Restart(context,
                             context.getString(R.string.warning_title),

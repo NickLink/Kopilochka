@@ -71,13 +71,13 @@ public class Notif_ListView_Adapter extends BaseAdapter {
 
         Notice feed = _notif_data.get(position);
         if(feed.getNotice_type_id() == 1){
-            imageView.setImageResource(R.drawable.icon_priority_1);
+            imageView.setImageResource(R.drawable.f5_head_1);
         } else if(feed.getNotice_type_id() == 2){
-            imageView.setImageResource(R.drawable.icon_priority_2);
+            imageView.setImageResource(R.drawable.f5_head_2);
         } else if(feed.getNotice_type_id() == 3){
-            imageView.setImageResource(R.drawable.icon_priority_3);
+            imageView.setImageResource(R.drawable.f5_head_3);
         } else if(feed.getNotice_type_id() == 4){
-            imageView.setImageResource(R.drawable.icon_priority_4);
+            imageView.setImageResource(R.drawable.f5_head_4);
         }
         title.setText(feed.getNotice_name());
         text.setText(feed.getNotice_text());

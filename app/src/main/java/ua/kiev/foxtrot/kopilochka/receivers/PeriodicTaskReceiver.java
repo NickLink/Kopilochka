@@ -130,7 +130,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 notices = Parser.getNoticesArray(result);
                 if(notices != null){
                     //Notices ok
-                    CreateNotification("getNotices", "Data ok", "");
+                    //CreateNotification("getNotices", "Data ok", "");
                     PutNoticesInDatabase(notices);
                 } else {
                     //Some error happened
@@ -142,7 +142,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 actions = Parser.getActionsArray(result);
                 if(actions != null){
                     //Actions ok
-                    CreateNotification("getActions", "Data ok", "");
+                    //CreateNotification("getActions", "Data ok", "");
                     PutActionsInDatabase(actions);
                 } else {
                     //Some error happened
@@ -243,9 +243,9 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 .setTicker("New news")
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.icon_remind).setContentIntent(pIntent)
-                .addAction(R.drawable.icon_open, "Open", pIntent)
-                .addAction(R.drawable.icon_later, "Later", pIntent)
+                .setSmallIcon(R.drawable.logo_with_stroke).setContentIntent(pIntent)
+                .addAction(R.drawable.pencil, "Open", pIntent)
+                .addAction(R.drawable.del, "Later", pIntent)
                 .setSound(ringURI)
                 //.setVibrate(vibrate)
                 .build();

@@ -21,7 +21,7 @@
     <RelativeLayout
         android:id="@+id/bottom_message_layout"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="42dp"
         android:layout_alignParentBottom="true">
 
         <TextView
@@ -29,14 +29,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/data_f5_ua_message"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:textAlignment="center" />
     </RelativeLayout>
 
     <ExpandableListView
         android:id="@+id/payment_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:padding="20dp"
         android:layout_below="@+id/top_menu_back"
         android:layout_above="@+id/bottom_message_layout"
         android:transcriptMode="normal"/>

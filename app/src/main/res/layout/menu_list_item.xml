@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/menu_top_divider"
+        android:background="@color/my_dark_blue_color"
         android:layout_alignParentTop="true" />
 
     <ImageView
@@ -22,6 +22,7 @@
 
     <TextView
         android:id="@+id/menu_item_title"
+        style="@style/myBold_18menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -37,7 +38,7 @@
         android:id="@+id/menu_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/menu_arrow"
+        android:background="@drawable/arrow_menu"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"/>
@@ -55,7 +56,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/menu_bottom_divider"
+        android:background="@color/my_dark_blue_color"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
