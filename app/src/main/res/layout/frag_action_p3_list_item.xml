@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
 
@@ -22,32 +22,24 @@
             android:cursorVisible="false"
             android:singleLine="true"/>
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/pencil"
-            android:id="@+id/imageView"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
 
-        <!--        <Button
-                    android:id="@+id/scan_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Scan"
-                    android:textAllCaps="false"
-                    android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pencil"
+                android:id="@+id/imageView"
+                android:layout_centerInParent="true" />
 
-                <Button
-                    android:id="@+id/delete_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Delete"
-                    android:textAllCaps="false"
-                    android:layout_weight="1"/>-->
+        </RelativeLayout>
+
     </LinearLayout>
 
     <View
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/my_red_color"/>
 
