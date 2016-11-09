@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_bonus_data"
             android:id="@+id/textView2"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_weight="1"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_bonus_action"
             android:id="@+id/textView3"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_weight="1" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_bonus_sum"
             android:id="@+id/textView4"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_weight="1"/>
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_bonus_about"
             android:id="@+id/textView5"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_weight="1" />
 
     </LinearLayout>

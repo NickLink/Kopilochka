@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -143,7 +142,7 @@ public class Data_P1_Extra extends Fragment implements HttpRequest {
         payment_listview.setGroupIndicator(null);
         //payment_listview.expandGroup(0, true);
         //payment_listview.expandGroup(1, true);
-        payment_listview.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_NORMAL);
+        //payment_listview.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_NORMAL);
         //swipeRefreshLayout.setRefreshing(false);
     }
 

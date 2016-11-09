@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/data_email_text"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/data_email_text"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/data_phone_text"
-            style="@style/myTableH_13"
+            style="@style/myTableH_13Base"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/data_phone_text"

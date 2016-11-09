@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/myLinearLayout"
@@ -19,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/act_period_text"
             android:layout_weight="2"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Base" />
 
         <TextView
             android:id="@+id/action_period"
@@ -27,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="ACTION DATA"
             android:layout_weight="3"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Blue" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/act_type_text"
             android:layout_weight="2"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Base" />
 
         <TextView
             android:id="@+id/action_type"
@@ -51,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="ACTION DATA"
             android:layout_weight="3"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Blue" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/act_data_text"
             android:layout_weight="2"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Base" />
 
         <TextView
             android:id="@+id/action_data"
@@ -75,7 +73,7 @@
             android:layout_height="wrap_content"
             android:text="ACTION DATA"
             android:layout_weight="3"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Blue" />
     </LinearLayout>
 
     <LinearLayout
@@ -91,53 +89,28 @@
             android:layout_height="wrap_content"
             android:text="@string/act_list_days"
             android:layout_weight="2"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Base" />
 
         <TextView
             android:id="@+id/action_days_left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="ACTION DATA"
             android:layout_weight="3"
-            style="@style/mySmall_TextStyle" />
+            style="@style/myTableH_16Blue" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/action_comment"
-        style="@style/mySmall_TextStyle"
+        style="@style/mySub_Black_18Base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"/>
 
-    <LinearLayout
-        style="@style/myLinearLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8">
-
-        <TextView
-            android:id="@+id/action_list_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/act_list_name"
-            android:layout_weight="5"/>
-
-        <TextView
-            android:id="@+id/action_list_days"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/act_list_days"
-            android:layout_weight="2"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/action_list_points"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/act_list_points"
-            android:layout_weight="1"
-            android:textAlignment="center" />
-    </LinearLayout>
+    <include
+        android:id="@+id/header_for_list"
+        layout="@layout/frag_action_p2_list_item" />
 
 </LinearLayout>

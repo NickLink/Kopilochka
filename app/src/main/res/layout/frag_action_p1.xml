@@ -9,14 +9,6 @@
         android:id="@+id/top_menu_open"
         layout="@layout/top_menu_open"/>
 
-    <TextView
-        style="@style/myNormal_TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pull down to refresh data"
-        android:id="@+id/textView12"
-        android:layout_gravity="center_horizontal" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"

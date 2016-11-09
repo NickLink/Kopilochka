@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,22 +63,27 @@ public class Notif_ListView_Adapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.frag_notif_p1_list_item, viewGroup, false);
 
-//        if (imageLoader == null)
-//            imageLoader = AppContr.getInstance().getImageLoader();
-
+        LinearLayout notyLayout = (LinearLayout)convertView.findViewById(R.id.notif_listview_item_layout);
         ImageView imageView = (ImageView)convertView.findViewById(R.id.notif_listview_item_icon);
         TextView title = (TextView)convertView.findViewById(R.id.notif_listview_item_title);
         TextView text = (TextView)convertView.findViewById(R.id.notif_listview_item_text);
 
+        title.setTextColor(context.getResources().getColor(R.color.my_blue_color));
+
         Notice feed = _notif_data.get(position);
         if(feed.getNotice_type_id() == 1){
             imageView.setImageResource(R.drawable.f5_head_1);
+            notyLayout.setBackgroundResource(R.drawable.message_green);
         } else if(feed.getNotice_type_id() == 2){
             imageView.setImageResource(R.drawable.f5_head_2);
+            notyLayout.setBackgroundResource(R.drawable.message_grey);
         } else if(feed.getNotice_type_id() == 3){
             imageView.setImageResource(R.drawable.f5_head_3);
+            notyLayout.setBackgroundResource(R.drawable.message_orange);
         } else if(feed.getNotice_type_id() == 4){
             imageView.setImageResource(R.drawable.f5_head_4);
+            notyLayout.setBackgroundResource(R.drawable.message_red);
+            title.setTextColor(context.getResources().getColor(R.color.my_red_color));
         }
         title.setText(feed.getNotice_name());
         text.setText(feed.getNotice_text());

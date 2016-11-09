@@ -52,14 +52,14 @@
 
                 <TextView
                     android:id="@+id/log_01_login_text"
-                    style="@style/myBold_21"
+                    style="@style/myBold_21Base"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/log_01_login_text" />
 
                 <EditText
                     android:id="@+id/data_email_edit"
-                    style="@style/myBold_21"
+                    style="@style/myBold_21Base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -83,14 +83,14 @@
 
                 <TextView
                     android:id="@+id/log_01_password_text"
-                    style="@style/myBold_21"
+                    style="@style/myBold_21Base"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/log_01_password_text" />
 
                 <EditText
                     android:id="@+id/data_password_edit"
-                    style="@style/myBold_21"
+                    style="@style/myBold_21Base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

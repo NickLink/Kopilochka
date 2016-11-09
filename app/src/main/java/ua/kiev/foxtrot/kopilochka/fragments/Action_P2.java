@@ -12,15 +12,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
@@ -37,7 +34,7 @@ public class Action_P2 extends Fragment {
     OnBackPress onBackPress;
     private int action_id;
     private String title;
-    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
+    //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     ListView models_list;
     Models_ListView_Adapter adapter;
     View action_header;
@@ -93,10 +90,10 @@ public class Action_P2 extends Fragment {
 
 
         //Inflate main viev
-        TextView action_name = (TextView)rootView.findViewById(R.id.action_name);
-        TextView action_models_count = (TextView)rootView.findViewById(R.id.action_models_count);
+        TextView action_name = (TextView)rootView.findViewById(R.id.title);
+        TextView action_models_count = (TextView)rootView.findViewById(R.id.count);
         models_list = (ListView)rootView.findViewById(R.id.models_list);
-        models_list.addHeaderView(action_header);
+        models_list.addHeaderView(action_header, "Header", false);
         //Initializing
 
         db = new DB(getActivity());

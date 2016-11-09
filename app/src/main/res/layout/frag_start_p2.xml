@@ -10,64 +10,17 @@
         android:id="@+id/top_menu_back"
         layout="@layout/top_menu_back" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:weightSum="8">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5">
-
-            <TextView
-                android:id="@+id/name"
-                style="@style/mySmall_TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/act_list_name"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/days"
-                style="@style/mySmall_TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/act_list_days"
-                android:layout_centerInParent="true" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/points"
-            style="@style/mySmall_TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_list_points"
-            android:layout_centerInParent="true"/>
-
-        </RelativeLayout>
-    </LinearLayout>
+    <include
+        android:id="@+id/header_for_list"
+        layout="@layout/frag_action_p1_list_item"/>
 
     <ListView
         android:id="@+id/product_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:divider="@null">
 
     </ListView>
 

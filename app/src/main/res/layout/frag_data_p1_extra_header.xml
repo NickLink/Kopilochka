@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/fininfo_contact_e_mail_title"
-        style="@style/myTableH_13"
+        style="@style/myTableH_13Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/data_email_text"
@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/fininfo_contact_phone_title"
-        style="@style/myTableH_13"
+        style="@style/myTableH_13Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/data_phone_text"

@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/top_menu_open"
-        layout="@layout/top_menu_open"/>
+        layout="@layout/top_menu_open" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView" />
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:layout_below="@+id/top_menu_open"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/no_bonuses_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_menu_open"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_bonuses_envelop"
+            android:src="@drawable/envelope"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/act_01_no_bonuses"
+            android:id="@+id/no_bonuses_text"
+            style="@style/myHeader_Red_24"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/no_bonuses_envelop"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_bonuses_girl"
+            android:src="@drawable/back_with_girl2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

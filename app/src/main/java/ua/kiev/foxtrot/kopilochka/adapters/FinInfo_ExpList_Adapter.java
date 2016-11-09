@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,27 +111,32 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View convertView, ViewGroup parent) {
-        ItemHolder itemHolder;
+        ItemHolder itemHolder = new ItemHolder();
         View row = convertView;
-        if (row == null) {
-            inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            itemHolder = new ItemHolder();
+        if (inflater == null)
+            inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        if (row == null) {
+            //itemHolder = new ItemHolder();
             if (groupPosition == 0) {
+                Log.v("TAG", "!!! groupPosition == 0 = " + groupPosition);
                 row = inflater.inflate(R.layout.frag_data_p1_extra_i1, parent, false);
                 itemHolder.date = (TextView) row.findViewById(R.id.fininfo_charge_data);
                 itemHolder.action = (TextView) row.findViewById(R.id.fininfo_charge_actionname);
                 itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_charge_ammount);
             } else {
+                Log.v("TAG", "!!! groupPosition == 1 = " + groupPosition);
                 row = inflater.inflate(R.layout.frag_data_p1_extra_i2, parent, false);
                 itemHolder.date = (TextView) row.findViewById(R.id.fininfo_payment_data);
                 itemHolder.action = (TextView) row.findViewById(R.id.fininfo_payment_actionname);
                 itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_payment_ammount);
                 itemHolder.about = (TextView) row.findViewById(R.id.fininfo_payment_about);
             }
-            row.setTag(itemHolder);
-        } else {
-            itemHolder = (ItemHolder) row.getTag();
-        }
+            //row.setTag(itemHolder);
+//        }
+//        else {
+//            itemHolder = (ItemHolder) row.getTag();
+//        }
 
         if (groupPosition == 0) {
             Charge charge = (Charge) getChild(groupPosition, childPosition);
@@ -146,16 +152,6 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
                 itemHolder.about.setText(payment.getComment_payment());
             else itemHolder.about.setText("");
         }
-//        TextView fininfo_charge_data = (TextView) convertView.findViewById(R.id.fininfo_charge_data);
-//        TextView fininfo_charge_actionname = (TextView) convertView.findViewById(R.id.fininfo_charge_actionname);
-//        TextView fininfo_charge_ammount = (TextView) convertView.findViewById(R.id.fininfo_charge_ammount);
-//
-//
-//        TextView fininfo_payment_data = (TextView) convertView.findViewById(R.id.fininfo_payment_data);
-//        TextView fininfo_payment_actionname = (TextView) convertView.findViewById(R.id.fininfo_payment_actionname);
-//        TextView fininfo_payment_ammount = (TextView) convertView.findViewById(R.id.fininfo_payment_ammount);
-//        TextView fininfo_payment_about = (TextView) convertView.findViewById(R.id.fininfo_payment_about);
-
 
         return row;
     }

@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,6 +52,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
     private ArrayList<ProductGroup> productList;
     private int cumulative_count = 0;
     ListView start_listview;
+    RelativeLayout no_bonuses_layout;
 
     public static Start_P1 newInstance() {
         Start_P1 fragment = new Start_P1();
@@ -86,6 +87,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
         View rootView = inflater.inflate(R.layout.frag_start_p1, container,
                 false);
         start_listview = (ListView)rootView.findViewById(R.id.listView);
+        no_bonuses_layout = (RelativeLayout)rootView.findViewById(R.id.no_bonuses_layout);
 
         db = new DB(getActivity());
         actionList = db.getActionArray();
@@ -101,15 +103,13 @@ public class Start_P1 extends Fragment implements HttpRequest{
             }
 
         } else {
-            Dialogs.ShowDialog(getActivity(), "Ашипка", "Старт П1", "Массив акций пуст/сломан");
+            //Бонусные акции отсутствуют
         }
 
         db = new DB(getActivity());
-
         productList.addAll(db.getGroupsNamesAndCount());
 
         if(productList != null && productList.size() != 0){
-
             adapter = new Product_ListView_Adapter(getActivity(), productList);
             start_listview.setAdapter(adapter);
 
@@ -127,16 +127,13 @@ public class Start_P1 extends Fragment implements HttpRequest{
                                 productList.get(i).getGroup_name(),
                                 1);
                     }
-                    Toast.makeText(getActivity(), "Product group name = " +
-                            productList.get(i).getGroup_name() + " group_id = " +
-                            productList.get(i).getGroup_id(), Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else {
             //Выводим что бонусирование не проводиться
-
-            Dialogs.ShowDialog(getActivity(), "Ашипка", "Старт П1", "Массив моделей пуст/сломан");
+            no_bonuses_layout.setVisibility(View.VISIBLE);
+            start_listview.setVisibility(View.GONE);
         }
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);

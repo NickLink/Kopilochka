@@ -51,19 +51,15 @@ public class Models_ListView_Adapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.frag_action_p2_list_item, viewGroup, false);
 
-//        if (imageLoader == null)
-//            imageLoader = AppContr.getInstance().getImageLoader();
-
         TextView action_list_item_name = (TextView)convertView.findViewById(R.id.action_list_item_name);
-        TextView action_list_item_days = (TextView)convertView.findViewById(R.id.action_list_item_days);
+        //TextView action_list_item_days = (TextView)convertView.findViewById(R.id.action_list_item_days);
         TextView action_list_item_points = (TextView)convertView.findViewById(R.id.action_list_item_points);
 
         Model feed = models_data.get(position);
 
-
         action_list_item_name.setText(feed.getModel_name());
-        if(feed.getModel_days_left() != 0)
-        action_list_item_days.setText(String.valueOf(feed.getModel_days_left()));
+//        if(feed.getModel_days_left() != 0)
+//        action_list_item_days.setText(String.valueOf(feed.getModel_days_left()));
         action_list_item_points.setText(String.valueOf(feed.getModel_points()));
 
 

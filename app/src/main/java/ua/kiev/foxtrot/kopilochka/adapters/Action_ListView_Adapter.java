@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 
 /**
@@ -23,7 +20,7 @@ public class Action_ListView_Adapter extends BaseAdapter {
     private Context context;
     //private ArrayList<BBS_News> action_data;
     private ArrayList<Action> _action_data;
-    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
+    //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
 
     public Action_ListView_Adapter(Context context, ArrayList<Action> action_data) {
@@ -62,14 +59,14 @@ public class Action_ListView_Adapter extends BaseAdapter {
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.frag_action_p1_list_item, viewGroup, false);
+            convertView = inflater.inflate(R.layout.frag_start_p1_list_item, viewGroup, false); //frag_action_p1_list_item
 
-        if (imageLoader == null)
-            imageLoader = AppContr.getInstance().getImageLoader();
+//        if (imageLoader == null)
+//            imageLoader = AppContr.getInstance().getImageLoader();
 
         //NetworkImageView imageView = (NetworkImageView)convertView.findViewById(R.id.imageView);
-        TextView action_name = (TextView)convertView.findViewById(R.id.action_name);
-        TextView action_count = (TextView)convertView.findViewById(R.id.action_count);
+        TextView action_name = (TextView)convertView.findViewById(R.id.title);
+        TextView action_count = (TextView)convertView.findViewById(R.id.count);
 
         //BBS_News feed = action_data.get(position);
 

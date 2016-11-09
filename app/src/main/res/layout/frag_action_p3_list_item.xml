@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="60dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,7 +14,7 @@
         android:weightSum="7">
 
         <TextView
-            style="@style/myNormal_TextStyle"
+            style="@style/myRegular_21"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/scan_result"
@@ -47,6 +49,6 @@
     <View
         android:layout_width="wrap_content"
         android:layout_height="2dp"
-        android:background="@color/holo_green_light"/>
+        android:background="@color/my_red_color"/>
 
 </LinearLayout>
