@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -89,15 +87,15 @@ public class Data_P1 extends Fragment implements HttpRequest{
 
 
 
-        ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
-        TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
-        menu_item_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                interfaces.OpenClose();
-            }
-        });
-        menu_item_title.setText(getString(R.string.menu_data));
+//        ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
+//        TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
+//        menu_item_icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                interfaces.OpenClose();
+//            }
+//        });
+//        menu_item_title.setText(getString(R.string.menu_data));
         return rootView;
     }
 
@@ -153,6 +151,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
                 break;
 
             case Const.getActions:
+                Methods.PutGroupsInBase(getActivity(), result);
                 Methods.PutActionInBase(getActivity(), result);
                 Methods.GetNotificationList(getActivity(), this);
                 break;

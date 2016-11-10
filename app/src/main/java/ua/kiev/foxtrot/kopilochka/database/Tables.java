@@ -79,6 +79,17 @@ public class Tables {
             + "PRIMARY KEY (" + Const.action_id + ") "
             + ");";
 
+    //========================GROUPS=======================================
+    public static final String table_name_groups = "groups";
+    //=Fields=
+
+    //=Table=
+    public static final String table_groups = "create table " + table_name_groups + " ("
+            + Const.group_id + " integer, "
+            + Const.group_name + " text, "
+            + Const.group_hash + " text"
+            + ");";
+
     //=============================POST_SN==================================
     public static final String table_name_postsn = "postsn";
     //=Fields=

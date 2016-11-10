@@ -70,6 +70,7 @@ public class DB {
         mDB.execSQL("delete from "+ Tables.table_name_models);
         mDB.execSQL("delete from "+ Tables.table_name_actions);
         mDB.execSQL("delete from "+ Tables.table_name_postsn);
+        mDB.execSQL("delete from "+ Tables.table_name_groups);
         this.close();
     }
 
@@ -620,7 +621,65 @@ public class DB {
         }
     }
 
+    //====================================GROUPS=============================
+    public Cursor getGroupsDataCursor() {
+        return mDB.query(Tables.table_name_groups, null, null, null, null, null, null);
+    }
 
+    public long addGroupItem(ProductGroup data){
+        long code = -1;
+        this.getDB().beginTransaction();
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(Const.group_id, data.getGroup_id());
+            cv.put(Const.group_name, data.getGroup_name());
+            cv.put(Const.group_hash, data.getGroup_hash());
+            code = mDB.insert(Tables.table_name_groups, null, cv);
+            if (code != -1) this.getDB().setTransactionSuccessful();
+        } catch (Exception e){
+            Log.v("", "SSS Exception addGroupItem= " + e.toString());
+            code = -1;
+        }finally {
+            this.getDB().endTransaction();
+        }
+        return code;
+    }
+
+    public boolean addGroupArray(ArrayList<ProductGroup> arrayList){
+        try {
+            for(int i=0;i<arrayList.size();i++) {
+                if(this.addGroupItem(arrayList.get(i))==-1){
+                    throw new Exception("FAIL on addGroupArray");
+                };
+            }
+        } catch (Exception e){
+            Log.v("", "SSS addGroupArray Exception = " + e.toString());
+            return false;
+        }
+        return true;
+    }
+
+    public ProductGroup getGroupItem(Cursor cursor){
+        ProductGroup item = new ProductGroup();
+        item.setGroup_id(cursor.getInt(cursor.getColumnIndex(Const.group_id)));
+        item.setGroup_name(cursor.getString(cursor.getColumnIndex(Const.group_name)));
+        item.setGroup_hash(cursor.getString(cursor.getColumnIndex(Const.group_hash)));
+        return item;
+    }
+
+    public ArrayList<ProductGroup> getGroupArray(){
+        ArrayList<ProductGroup> arrayList = new ArrayList<ProductGroup>();
+        Cursor cursor = this.getGroupsDataCursor();
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            arrayList.add(getGroupItem(cursor));
+            cursor.moveToNext();
+        }
+        Log.v("TAG", "SSS getGroupArray OK");
+        return arrayList;
+
+
+    }
 
 
 }

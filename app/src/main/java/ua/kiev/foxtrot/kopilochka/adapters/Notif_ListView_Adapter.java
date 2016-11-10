@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 11.10.2016.
@@ -22,10 +24,13 @@ public class Notif_ListView_Adapter extends BaseAdapter {
     private ArrayList<Notice> _notif_data;
     //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
+    private Typeface calibri, calibri_bold;
 
     public Notif_ListView_Adapter(Context context, ArrayList<Notice> data) {
         this.context = context;
         this._notif_data = data;
+        calibri = FontCache.get("fonts/calibri.ttf", context);
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     public ArrayList<Notice> getNotice_data(){
@@ -79,7 +84,7 @@ public class Notif_ListView_Adapter extends BaseAdapter {
             notyLayout.setBackgroundResource(R.drawable.message_grey);
         } else if(feed.getNotice_type_id() == 3){
             imageView.setImageResource(R.drawable.f5_head_3);
-            notyLayout.setBackgroundResource(R.drawable.message_orange);
+            notyLayout.setBackgroundResource(R.drawable.message_red);
         } else if(feed.getNotice_type_id() == 4){
             imageView.setImageResource(R.drawable.f5_head_4);
             notyLayout.setBackgroundResource(R.drawable.message_red);
@@ -87,6 +92,8 @@ public class Notif_ListView_Adapter extends BaseAdapter {
         }
         title.setText(feed.getNotice_name());
         text.setText(feed.getNotice_text());
+        title.setTypeface(calibri_bold);
+        text.setTypeface(calibri);
 
         return convertView;
     }

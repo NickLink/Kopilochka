@@ -107,7 +107,10 @@ public class Start_P1 extends Fragment implements HttpRequest{
         }
 
         db = new DB(getActivity());
-        productList.addAll(db.getGroupsNamesAndCount());
+        db.open();
+        productList.addAll(db.getGroupArray()); //productList.addAll(db.getGroupsNamesAndCount());
+
+        //
 
         if(productList != null && productList.size() != 0){
             adapter = new Product_ListView_Adapter(getActivity(), productList);

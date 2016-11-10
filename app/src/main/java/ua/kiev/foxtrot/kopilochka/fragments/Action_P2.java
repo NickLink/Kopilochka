@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -41,6 +43,7 @@ public class Action_P2 extends Fragment {
     ArrayList<Model> models_data;
     DB db;
     Action action;
+    private Typeface calibri, calibri_bold;
 
 
     public static Action_P2 newInstance(int action_id) { //
@@ -78,9 +81,16 @@ public class Action_P2 extends Fragment {
             return null;
         }
         //All ok
+        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         //Inflate header
         action_header = inflater.inflate(R.layout.frag_action_p2_list_header, null);
+
+        TextView action_period_text = (TextView)action_header.findViewById(R.id.action_period_text);
+        TextView action_type_text = (TextView)action_header.findViewById(R.id.action_type_text);
+        TextView action_data_text = (TextView)action_header.findViewById(R.id.action_data_text);
+        TextView action_days_left_text = (TextView)action_header.findViewById(R.id.action_days_left_text);
 
         TextView action_period_tv = (TextView)action_header.findViewById(R.id.action_period);
         TextView action_type_tv = (TextView)action_header.findViewById(R.id.action_type);
@@ -114,15 +124,26 @@ public class Action_P2 extends Fragment {
         });
 
         //Set info on action
+        action_name.setText(action.getAction_name());
+        action_models_count.setText(String.valueOf(action.getModels().size()));
         action_period_tv.setText("с " + Utils.getDateFromMillis(action.getAction_date_from())
                 + " по " + Utils.getDateFromMillis(action.getAction_date_to()));
         action_type_tv.setText(action.getAction_type());
         action_data_tv.setText(Utils.getDateFromMillis(action.getAction_date_charge()));
         action_days_left_tv.setText(String.valueOf(Utils.daysLeft(action.getAction_date_to())));
         action_comment_tv.setText(action.getAction_description());
-        action_name.setText(action.getAction_name());
-        action_models_count.setText(String.valueOf(action.getModels().size()));
 
+        action_name.setTypeface(calibri_bold);
+        action_models_count.setTypeface(calibri_bold);
+        action_period_tv.setTypeface(calibri_bold);
+        action_type_tv.setTypeface(calibri_bold);
+        action_data_tv.setTypeface(calibri_bold);
+        action_days_left_tv.setTypeface(calibri_bold);
+        action_comment_tv.setTypeface(calibri);
+        action_period_text.setTypeface(calibri);
+        action_type_text.setTypeface(calibri);
+        action_data_text.setTypeface(calibri);
+        action_days_left_text.setTypeface(calibri);
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -134,6 +155,7 @@ public class Action_P2 extends Fragment {
             }
         });
         menu_item_title.setText(getString(R.string.menu_action));
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 

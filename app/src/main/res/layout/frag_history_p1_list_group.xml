@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/group_title"
-            style="@style/myTitle_TextStyle"
+            style="@style/myRegular_21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/group_count"
-            style="@style/myTitle_TextStyle"
+            style="@style/myWhite_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

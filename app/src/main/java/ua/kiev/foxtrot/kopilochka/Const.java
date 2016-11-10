@@ -101,6 +101,12 @@ public class Const {
     public static final String model_sn_count = "model_sn_count";
     public static final String model_action = "model_action";
     public static final String models_count = "models_count";
+    //--- groups
+    public static final String groups = "groups";
+    public static final String group_id = "group_id";
+    public static final String group_name = "group_name";
+    public static final String group_hash = "group_hash";
+    public static final String group_count = "group_count";
 
     //PostSN
     public static final int postSN = 4;

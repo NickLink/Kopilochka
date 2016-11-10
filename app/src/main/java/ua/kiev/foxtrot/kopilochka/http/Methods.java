@@ -10,6 +10,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
@@ -66,6 +67,23 @@ public class Methods {
             }
         } else {
             Log.v("Error", "SSS Methods Parser.getNoticesArray error");
+        }
+    }
+
+    public static void PutGroupsInBase(Context context, String result){
+        ArrayList<ProductGroup> arrayList = Parser.getProductGroupArray(result);
+        if(arrayList != null) {
+            //Actions ok
+            DB db = new DB(context);
+            db.open();
+            if (db.addGroupArray(arrayList)) {
+                //Data to base added successfully
+            } else {
+                Log.v("Error", "SSS Methods PutGroupsInBase error");
+            }
+            db.close();
+        } else {
+            Log.v("Error", "SSS Methods Parser.PutGroupsInBase error");
         }
     }
 

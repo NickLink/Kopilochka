@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 
 /**
@@ -27,6 +29,7 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
 //    List<Post_SN> await_reg;
     List<List<Post_SN>> fullArray = new ArrayList<List<Post_SN>>();
     LayoutInflater inflater;
+    private Typeface calibri, calibri_bold;
 
     public History_ExpList_Adapter(Context context, List<List<Post_SN>> fullArray){
 //                                   List<Post_SN> success_reg,
@@ -37,6 +40,8 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
 //        this.error_reg = error_reg;
 //        this.await_reg = await_reg;
         this.fullArray = fullArray;
+        calibri = FontCache.get("fonts/calibri.ttf", context);
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     private static class ItemHolder
@@ -127,7 +132,8 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
                     group_title.setText(mContext.getString(R.string.hist_title_3));
                     break;
             }
-
+        group_count.setTypeface(calibri_bold);
+        group_title.setTypeface(calibri_bold);
             return convertView;
         }
 
@@ -155,15 +161,19 @@ public class History_ExpList_Adapter extends BaseExpandableListAdapter {
             StringBuilder sb = new StringBuilder();
             for (int i = 0 ; i < post_sn.getSerials().size(); i++){
                 sb.append(post_sn.getSerials().get(i));
-                if(post_sn.getSerials().size() - i > 1) sb.append("\\n");
+                if(post_sn.getSerials().size() - i > 1) sb.append(System.getProperty ("line.separator"));
             }
 
             itemHolder.model_serial.setText(sb.toString());
+            itemHolder.model_serial.setSingleLine(false);
+            itemHolder.model_serial.setLines(post_sn.getSerials().size());
 //            for (int i = 0 ; i < post_sn.getSerials().size(); i++){
 //                TextView temp = new TextView(mContext);
 //                itemHolder.models_serial.addView(temp);
 //                temp.setText(post_sn.getSerials().get(i));
 //            }
+            itemHolder.model_name.setTypeface(calibri_bold);
+            itemHolder.model_serial.setTypeface(calibri);
 
             return row;
         }

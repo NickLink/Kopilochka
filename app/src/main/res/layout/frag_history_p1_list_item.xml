@@ -2,29 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:weightSum="9"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/model_name"
+        style="@style/mySub_Black_18"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:layout_weight="4"/>
+        android:layout_weight="4"
+        android:gravity="left" />
 
     <LinearLayout
         android:id="@+id/serial_numbers_list_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:paddingLeft="10dp">
 
         <TextView
+            android:id="@+id/model_serial"
+            style="@style/mySub_Black_18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/model_serial" />
+            android:text="New Text" />
     </LinearLayout>
 
     <RelativeLayout

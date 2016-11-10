@@ -4,21 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_grey_border_empty"
-    android:padding="10dp">
+    android:padding="20dp">
 
     <TextView
-        style="@style/myTitle_TextStyle"
+        style="@style/mySub_Black_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/act_enter_serial_text"
-        android:id="@+id/textView12"
+        android:id="@+id/dialog_title"
         android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -27,24 +28,33 @@
         android:layout_gravity="center_horizontal">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/action_ok"
+            style="@style/myWhite_24"
+            android:layout_width="75dp"
+            android:layout_height="49dp"
             android:text="@string/ok"
-            android:textAllCaps="false"
-            android:id="@+id/action_ok" />
+            android:background="@drawable/blue_button_selector"
+            android:textAllCaps="false" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_scan"
+            android:id="@+id/action_scan"
+            style="@style/myWhite_24"
+            android:layout_width="75dp"
+            android:layout_height="49dp"
+            android:background="@drawable/photo_button_selector"
             android:textAllCaps="false"
-            android:id="@+id/action_scan" />
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp" />
+        <!--android:text="@string/act_scan"-->
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_delete"
-            android:textAllCaps="false"
-            android:id="@+id/action_delete" />
+            android:id="@+id/action_delete"
+            style="@style/myWhite_24"
+            android:layout_width="75dp"
+            android:layout_height="49dp"
+
+            android:background="@drawable/bin_button_selector"
+            android:textAllCaps="false" />
+        <!--android:text="@string/act_delete"-->
     </LinearLayout>
 </LinearLayout>

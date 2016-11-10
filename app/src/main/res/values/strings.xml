@@ -34,22 +34,26 @@
     <string name="act_register_model_button">Підтвердити реєстрацію</string>
 
     <string name="act_enter_serial_text">Введіть серійний номер або IMEI</string>
-    <string name="act_p3_info_text">Для реєстрації смартфонів, планшетів и ноутбуків – вводьте IMEI, для побутової техники – серійный номер:</string>
+    <string name="act_p3_info_text">Для реєстрації смартфонів, планшетів и ноутбуків – вводьте IMEI, для побутової техники – серійний номер:</string>
     <string name="act_scan">Сканувати</string>
     <string name="act_edit">Редагувати</string>
     <string name="act_cancel">Відмінити</string>
     <string name="act_delete">Видалити</string>
     <string name="act_reg_success_title">Запит на реєстрацію серійного номеру (IMEI) успішно зроблено.</string>
     <string name="act_reg_success_text">Дізнатися результати реєстрації Ви можете в розділі Історія реєстрацій. Ви можете продовжувати реєструвати моделі.</string>
-    <string name="act_reg_failed">Реєстрація продажу не була проведена через помилку у наведених Вами даних. Щоб дізнатись деталі зверніться до Історії реєстрацій.</string>
+    <string name="act_reg_failed_title">Реєстрація продажу не була проведена через помилку у наведених Вами даних.</string>
+    <string name="act_reg_failed_text">Щоб дізнатись деталі зверніться до Історії реєстрацій.</string>
 
     <string name="hist_title_1">Вдало зареєстровано</string>
     <string name="hist_title_2">Очікують реєстрації</string>
     <string name="hist_title_3">Невдала спроба реєстрації</string>
+    <string name="hist_action_text">Акція</string>
     <string name="hist_model_text">Модель</string>
     <string name="hist_sn_imei_text">СН/IMEI</string>
+    <string name="hist_sn_imei_hint">IMEI/Серійний номер</string>
     <string name="hist_reg_with_inet">Реєстрація відбудеться при наявності Інтернету</string>
-
+    <string name="hist_imei_sn_text">Серійний номер/імеі</string>
+    <string name="hist_explan_text">Пояснення</string>
 
     <!--<string name="fin_contact_e_mail">Ваш контактный e-mail:</string>-->
     <!--<string name="fin_contact_phone">Ваш контактный телефон:</string>-->

@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Tables.table_models);
         db.execSQL(Tables.table_actions);
         db.execSQL(Tables.table_postsn);
+        db.execSQL(Tables.table_groups);
     }
 
     @Override

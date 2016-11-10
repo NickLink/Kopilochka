@@ -16,6 +16,7 @@ import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.data.Payment;
+import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.data.UserData;
 
 /**
@@ -72,6 +73,44 @@ public class Parser {
         }
         return true;
     }
+
+    //==============================PRODUCT GROUP===============================
+    public static ProductGroup getProductGroup(JSONObject jsonObject){
+        ProductGroup item = new ProductGroup();
+        try {
+            item.setGroup_id(jsonObject.getInt(Const.group_id));
+            item.setGroup_name(jsonObject.getString(Const.group_name));
+            item.setGroup_hash(jsonObject.getString(Const.group_hash));
+            Log.v("", "SSS getProductGroup setGroup_name=" + jsonObject.getString(Const.group_name));
+        } catch (JSONException e) {
+            Log.v("", "SSS getProductGroup JSONException=" + e.toString());
+            return null;
+        }
+        return item;
+    }
+
+    public static ArrayList<ProductGroup> getProductGroupArray(String result){
+        ArrayList<ProductGroup> arrayList = new ArrayList<ProductGroup>();
+        try{
+            JSONObject data = new JSONObject(result);
+            JSONArray jsonArray = data.getJSONArray(Const.groups);
+            for (int i = 0;i<jsonArray.length();i++){
+                ProductGroup item = getProductGroup(jsonArray.getJSONObject(i));
+                arrayList.add(item);
+            }
+            Log.v("", "SSS getProductGroupArray OK");
+            return arrayList;
+        }
+        catch (Exception e){
+            Log.v("", "SSS getProductGroupArray Exception=" + e.toString());
+            return null;
+        }
+
+    }
+
+
+
+
 
     public static UserData getUserData(String result){
         UserData item = new UserData();
@@ -140,7 +179,7 @@ public class Parser {
             item.setModel_group_id(jsonObject.getInt(Const.model_group_id));
             item.setModel_url(jsonObject.getString(Const.model_url));
             item.setModel_brand_name(jsonObject.getString(Const.model_brand_name));
-            item.setModel_group_name(jsonObject.getString(Const.model_group_name));
+            //item.setModel_group_name(jsonObject.getString(Const.model_group_name));
             item.setModel_sn_count(jsonObject.getInt(Const.model_sn_count));
             item.setModel_action(model_action);
         } catch (JSONException e) {

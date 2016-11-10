@@ -3,9 +3,11 @@ package ua.kiev.foxtrot.kopilochka.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 02.11.2016.
@@ -146,6 +149,41 @@ public class Dialogs {
         dialog.show();
     }
 
+    public static void ShowRegDialog(final Context context, boolean success){
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_success_reg);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ImageView icon = (ImageView)dialog.findViewById(R.id.reg_icon);
+        TextView Title = (TextView)dialog.findViewById(R.id.title);
+        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
+
+        if(success){
+            icon.setImageResource(R.drawable.book_opened);
+            Title.setText(context.getString(R.string.act_reg_success_title));
+            Message.setText(context.getString(R.string.act_reg_success_text));
+        } else {
+            icon.setImageResource(R.drawable.bug);
+            Title.setText(context.getString(R.string.act_reg_failed_title));
+            Message.setText(context.getString(R.string.act_reg_failed_text));
+        }
+
+        Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
+        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        Title.setTypeface(calibri_bold);
+        Message.setTypeface(calibri);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     public static void Dialog_For_Restart(final Context context, String title, String message, String button){
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -206,22 +244,19 @@ public class Dialogs {
         dialog.setContentView(R.layout.dialog_delete_item);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.dialog_title);
+        //TextView Title = (TextView)dialog.findViewById(R.id.dialog_title);
         //TextView Message = (TextView)dialog.findViewById(R.id.dialog_text);
 
         TextView action_name = (TextView)dialog.findViewById(R.id.action_name);
         TextView model_name = (TextView)dialog.findViewById(R.id.model_name);
         TextView serial_numbers_list = (TextView)dialog.findViewById(R.id.serial_numbers_list);
-
-
-
         TextView error_title = (TextView)dialog.findViewById(R.id.error_title);
         TextView error_text = (TextView)dialog.findViewById(R.id.error_text);
         Button deleteButoon = (Button) dialog.findViewById(R.id.action_delete);
         Button editButton = (Button) dialog.findViewById(R.id.action_edit);
         Button cancel_Button = (Button) dialog.findViewById(R.id.action_cancel);
 
-        Title.setText(title);
+        //Title.setText(title);
         //Message.setText(message);
         action_name.setText(item.getAction_name());
         model_name.setText(item.getModel_name());
@@ -236,6 +271,7 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
+
 
         if(edit){
             editButton.setOnClickListener(new View.OnClickListener() {
@@ -254,13 +290,22 @@ public class Dialogs {
             error_text.setVisibility(View.VISIBLE);
             error_text.setText(item.getFail_reason());
         }
-
         cancel_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+
+        Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
+        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+
+        action_name.setTypeface(calibri_bold);
+        model_name.setTypeface(calibri_bold);
+        serial_numbers_list.setTypeface(calibri_bold);
+
+
+
         dialog.show();
     }
 

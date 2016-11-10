@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Action;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 06.10.2016.
@@ -22,10 +24,12 @@ public class Action_ListView_Adapter extends BaseAdapter {
     private ArrayList<Action> _action_data;
     //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
+    private Typeface calibri_bold;
 
     public Action_ListView_Adapter(Context context, ArrayList<Action> action_data) {
         this.context = context;
         this._action_data = action_data;
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     public ArrayList<Action> getAction_data(){
@@ -73,7 +77,8 @@ public class Action_ListView_Adapter extends BaseAdapter {
         //imageView.setImageUrl(feed.getUrlToImage(), imageLoader);
         action_name.setText(getItem(position).getAction_name());
         action_count.setText(String.valueOf(getItem(position).getModels().size()));
-
+        action_name.setTypeface(calibri_bold);
+        action_count.setTypeface(calibri_bold);
 
         return convertView;
     }

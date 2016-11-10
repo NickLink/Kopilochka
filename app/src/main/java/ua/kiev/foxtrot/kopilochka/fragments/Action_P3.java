@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -41,6 +42,7 @@ import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.StringTools;
@@ -67,6 +69,7 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
     Button action_register_model_button;
     ProgressDialog pDialog;
     boolean edit_mode = false;
+    private Typeface calibri, calibri_bold;
 
     public static Action_P3 newInstance(int action_id, int model_id) {
         Action_P3 fragment = new Action_P3();
@@ -119,6 +122,10 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
             Dialogs.ShowDialog(getActivity(), "Error", "Action & model error", "OK");
             return null;
         }
+
+        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+
         serials = getArguments().getString(Const.serials, null);
         if(serials != null){
             edited_serials = serials;
@@ -152,6 +159,7 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
         TextView action_name_tv = (TextView)rootView.findViewById(R.id.action_name);
         TextView model_name_tv = (TextView)rootView.findViewById(R.id.model_name);
         TextView bonus_points_tv = (TextView)rootView.findViewById(R.id.action_p3_bonus_points);
+        TextView action_p3_info_text = (TextView)rootView.findViewById(R.id.action_p3_info_text);
 
         add_footer = inflater.inflate(R.layout.frag_action_p3_list_footer, null);
         //Button add_new_serial = (Button)add_footer.findViewById(R.id.add_serial_field);
@@ -175,6 +183,12 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
         model_name_tv.setText(model.getModel_name());
         bonus_points_tv.setText(String.valueOf(model.getModel_points()));
 
+        action_name_tv.setTypeface(calibri_bold);
+        model_name_tv.setTypeface(calibri_bold);
+        bonus_points_tv.setTypeface(calibri_bold);
+        action_p3_info_text.setTypeface(calibri);
+        action_register_model_button.setTypeface(calibri_bold);
+
         action_register_model_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,6 +206,7 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
             }
         });
         menu_item_title.setText(title);
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 
@@ -200,24 +215,29 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_action_serial);
 
+        TextView dialog_title = (TextView)dialog.findViewById(R.id.dialog_title);
         final EditText serial = (EditText)dialog.findViewById(R.id.editText);
         final Button ok = (Button) dialog.findViewById(R.id.action_ok);
-        Button scan = (Button) dialog.findViewById(R.id.action_scan);
-        Button delete = (Button) dialog.findViewById(R.id.action_delete);
+        final Button scan = (Button) dialog.findViewById(R.id.action_scan);
+        final Button delete = (Button) dialog.findViewById(R.id.action_delete);
 
         serial.setText(adapter.getSerials_data().get(position));
         if(serial.getText().toString().length() != 0) {
             ok.setEnabled(true);
+            delete.setEnabled(true);
         } else {
             ok.setEnabled(false);
+            delete.setEnabled(false);
         }
 
         serial.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable s) {
                 if(serial.getText().toString().length() != 0) {
                     ok.setEnabled(true);
+                    delete.setEnabled(true);
                 } else {
                     ok.setEnabled(false);
+                    delete.setEnabled(false);
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -245,13 +265,18 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
                 serial.setText("");
             }
         });
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 checkData();
             }
         });
+
+        serial.setHint(getString(R.string.hist_sn_imei_hint));
+        dialog_title.setTypeface(calibri_bold);
+        serial.setTypeface(calibri_bold);
+        ok.setTypeface(calibri_bold);
 
         dialog.show();
 
@@ -365,16 +390,16 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
 
                         break;
                     case 3:
-                        Dialogs.ShowDialog(getActivity(), getString(R.string.warning_title), "Памилка входных данных!", "ОК");
+                        Dialogs.ShowRegDialog(getActivity(), false);
                         break;
                     case 4:
-                        Dialogs.ShowDialog(getActivity(), getString(R.string.warning_title), "Памилка серийника!", "ОК");
+                        Dialogs.ShowRegDialog(getActivity(), false);
                         break;
                     case 5:
-                        Dialogs.ShowDialog(getActivity(), getString(R.string.warning_title), "Памилка ужо зарегано!", "ОК");
+                        Dialogs.ShowRegDialog(getActivity(), false);
                         break;
                     case 6:
-                        Dialogs.ShowDialog(getActivity(), getString(R.string.warning_title), "Памилка каличиство ниправильно!", "ОК");
+                        Dialogs.ShowRegDialog(getActivity(), false);
                         break;
                 }
                 Post_SN error_item = createItem();
@@ -395,7 +420,7 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
                     db = new DB(getActivity());
                     if(db.setStatus_Post_SN_item(received)){
                         //model successfully registered
-                        Dialogs.ShowDialog(getActivity(), getString(R.string.warning_title), "Модель успешно зарегистрирована", "ОК");
+                        Dialogs.ShowRegDialog(getActivity(), true);
                         ClearOrFinish();
                         //adapter.getSerials_data().clear();
                     } else {

@@ -7,97 +7,103 @@
     android:padding="10dp"
     android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/dialog_title"
-        style="@style/myTitle_TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/warning_title"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        style="@style/mySmall_TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Акция"
-        android:id="@+id/textView9" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/action_name" />
-
-    <TextView
-        style="@style/mySmall_TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Модель"
-        android:id="@+id/textView10" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/model_name" />
-
-    <TextView
-        style="@style/mySmall_TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Серийный номер"
-        android:id="@+id/textView11" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/serial_numbers_list" />
-
     <!--<TextView-->
-        <!--android:id="@+id/dialog_text"-->
-        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/dialog_title"-->
+        <!--style="@style/myTitle_TextStyle"-->
+        <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/warning_title"-->
         <!--android:layout_gravity="center_horizontal" />-->
 
     <TextView
-        style="@style/mySmall_TextStyle"
+        android:id="@+id/textView9"
+        style="@style/mySub_Black_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Причина ошибки регистрации"
-        android:id="@+id/error_title"
-        android:visibility="gone"/>
+        android:text="@string/hist_action_text" />
 
     <TextView
+        android:id="@+id/action_name"
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/mySub_Black_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/hist_model_text" />
+
+    <TextView
+        android:id="@+id/model_name"
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hist_imei_sn_text" />
+
+    <TextView
+        android:id="@+id/serial_numbers_list"
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/my_light_grey_color"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/error_title"
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hist_explan_text"
+        android:visibility="visible"/>
+
+    <TextView
         android:id="@+id/error_text"
-        android:visibility="gone"/>
+        style="@style/mySub_Black_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вдало зареєстровано"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_delete"
-            android:textAllCaps="false"
-            android:id="@+id/action_delete" />
+            android:background="@drawable/revert_button_selector"
+            android:id="@+id/action_cancel"
+            android:layout_marginRight="13dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_edit"
-            android:textAllCaps="false"
+            android:background="@drawable/edit_button_selector"
             android:id="@+id/action_edit" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_cancel"
-            android:textAllCaps="false"
-            android:id="@+id/action_cancel" />
+            android:background="@drawable/bin_button_selector"
+            android:id="@+id/action_delete"
+            android:layout_marginLeft="13dp" />
     </LinearLayout>
 
 </LinearLayout>

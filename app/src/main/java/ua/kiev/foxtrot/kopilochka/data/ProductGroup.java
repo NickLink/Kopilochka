@@ -4,9 +4,10 @@ package ua.kiev.foxtrot.kopilochka.data;
  * Created by NickNb on 24.10.2016.
  */
 public class ProductGroup {
-    int group_id;
-    String group_name;
-    int models_count;
+    private int group_id;
+    private String group_name;
+    private int models_count;
+    private String group_hash;
 
     public int getGroup_id() {
         return group_id;
@@ -30,5 +31,13 @@ public class ProductGroup {
 
     public void setModels_count(int models_count) {
         this.models_count = models_count;
+    }
+
+    public String getGroup_hash() {
+        return group_hash;
+    }
+
+    public void setGroup_hash(String group_hash) {
+        this.group_hash = group_hash;
     }
 }
