@@ -2,14 +2,15 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -20,13 +21,14 @@ import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Data_P1 extends Fragment implements HttpRequest{
+public class Data_P1 extends BaseFragment implements HttpRequest{
     Interfaces interfaces;
     private LinearLayout login_layout, loged_layout;
     private boolean logged;
@@ -35,6 +37,7 @@ public class Data_P1 extends Fragment implements HttpRequest{
     private Button data_login_button;
     private String login, password;
     ProgressDialog load_data;
+    private Typeface calibri, calibri_bold;
 
     public static Data_P1 newInstance() {
         Data_P1 fragment = new Data_P1();
@@ -59,8 +62,14 @@ public class Data_P1 extends Fragment implements HttpRequest{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_data_p1, container,
                 false);
-//        login_layout = (LinearLayout)rootView.findViewById(R.id.login_layout);
-//        loged_layout = (LinearLayout)rootView.findViewById(R.id.loged_layout);
+
+        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+
+        TextView log_01_work_with = (TextView) rootView.findViewById(R.id.log_01_work_with);
+        TextView log_01_to_manager = (TextView) rootView.findViewById(R.id.log_01_to_manager);
+        TextView log_01_login_text = (TextView) rootView.findViewById(R.id.log_01_login_text);
+        TextView log_01_password_text = (TextView) rootView.findViewById(R.id.log_01_password_text);
 
         data_email_edit = (EditText)rootView.findViewById(R.id.data_email_edit);
         data_password_edit = (EditText)rootView.findViewById(R.id.data_password_edit);
@@ -84,8 +93,14 @@ public class Data_P1 extends Fragment implements HttpRequest{
             }
         });
 
+        log_01_work_with.setTypeface(calibri_bold);
+        log_01_to_manager.setTypeface(calibri);
+        log_01_login_text.setTypeface(calibri_bold);
+        log_01_password_text.setTypeface(calibri_bold);
 
-
+        data_email_edit.setTypeface(calibri_bold);
+        data_password_edit.setTypeface(calibri_bold);
+        data_login_button.setTypeface(calibri_bold);
 
 //        ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
 //        TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -158,7 +173,8 @@ public class Data_P1 extends Fragment implements HttpRequest{
 
             case Const.getNotices:
                 Methods.PutNotificationInBase(getActivity(), result);
-                load_data.dismiss();
+                if(load_data != null)
+                    load_data.dismiss();
                 interfaces.LoginSuccess();
                 break;
         }
@@ -167,7 +183,8 @@ public class Data_P1 extends Fragment implements HttpRequest{
 
     @Override
     public void http_error(int type, String error) {
-        load_data.dismiss();
+        if(load_data != null)
+            load_data.dismiss();
         switch (type){
             case Const.getSession:
 

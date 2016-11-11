@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +49,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 /**
  * Created by NickNb on 07.10.2016.
  */
-public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
+public class Action_P3 extends BaseFragment implements Delete_Serial, HttpRequest {
 
     Interfaces interfaces;
     OnBackPress onBackPress;
@@ -325,7 +323,7 @@ public class Action_P3 extends Fragment implements Delete_Serial, HttpRequest {
             }
             requests.getHTTP_Responce(post_params);
         } else {
-            Toast.makeText(getActivity(), "Интернет соединение отсутствует, запись сохранена", Toast.LENGTH_SHORT).show();
+            Dialogs.ShowInternetDialog(getActivity(), getString(R.string.hist_reg_with_inet));
             ClearOrFinish();
             //adapter.getSerials_data().clear();
         }

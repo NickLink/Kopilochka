@@ -250,6 +250,12 @@ public class DB {
         return mDB.query(Tables.table_name_models, null, selection, selectionArgs, null, null, null);
     }
 
+    public Cursor getModelByGroupIdCursor(int group) {
+        String selection = Const.model_group_id + " = ?";
+        String[] selectionArgs = {String.valueOf(group)};
+        return mDB.query(Tables.table_name_models, null, selection, selectionArgs, null, null, null);
+    }
+
     public Cursor getModelByIdsCursor(int action, int model) {
         String selection = Const.model_action + " = ?"  +" AND " + Const.model_id + " = ?";
         String[] selectionArgs = {String.valueOf(action), String.valueOf(model)};
@@ -389,6 +395,11 @@ public class DB {
         }
         Log.v("", "SSS getModelsArray = " + models.size());
         return models;
+    }
+
+    public int getModelsCount(int group){
+        Cursor cursor = this.getModelByGroupIdCursor(group);
+        return cursor.getCount();
     }
 
     public Action getAction(Cursor myCursor){
@@ -664,6 +675,7 @@ public class DB {
         item.setGroup_id(cursor.getInt(cursor.getColumnIndex(Const.group_id)));
         item.setGroup_name(cursor.getString(cursor.getColumnIndex(Const.group_name)));
         item.setGroup_hash(cursor.getString(cursor.getColumnIndex(Const.group_hash)));
+        item.setModels_count(getModelsCount(item.getGroup_id()));
         return item;
     }
 

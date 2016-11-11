@@ -1,8 +1,8 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,29 +15,31 @@ import java.util.ArrayList;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
-import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.adapters.GroupModels_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 25.10.2016.
  */
-public class Start_P2 extends Fragment implements HttpRequest {
+public class Start_P2 extends BaseFragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
     private int model_group_id, action_type_id;
     private String model_group_name;
     ListView product_listview;
+    View header;
     ArrayList<Model> modelArrayList;
-    Models_ListView_Adapter adapter;
+    GroupModels_ListView_Adapter adapter;
     ArrayList<Action> actionArrayList;
     DB db;
+    private Typeface calibri_bold;
 
     public static Start_P2 newInstance(int group_id, String group_name, int action_type_id) {
         Start_P2 fragment = new Start_P2();
@@ -64,19 +66,12 @@ public class Start_P2 extends Fragment implements HttpRequest {
     }
 
     @Override
-    public void onStop () {
-        super.onStop();
-        //Cancel HTTP requests
-        if (AppContr.getInstance() != null) {
-            AppContr.getInstance().cancelAllRequests();
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_start_p2, container,
                 false);
+
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         model_group_id = getArguments().getInt(Const.model_group_id, -1);
         model_group_name = getArguments().getString(Const.model_group_name);
         action_type_id = getArguments().getInt(Const.action_type_id, -1);
@@ -111,8 +106,12 @@ public class Start_P2 extends Fragment implements HttpRequest {
         }
 
         //All ok
+
+        //Inflate header
         product_listview = (ListView)rootView.findViewById(R.id.product_listview);
-        adapter = new Models_ListView_Adapter(getActivity(), modelArrayList);
+        header = inflater.inflate(R.layout.frag_start_p2_list_item, null);
+        product_listview.addHeaderView(header, "Header", false);
+        adapter = new GroupModels_ListView_Adapter(getActivity(), modelArrayList);
         product_listview.setAdapter(adapter);
 
 
@@ -128,6 +127,7 @@ public class Start_P2 extends Fragment implements HttpRequest {
             }
         });
         menu_item_title.setText(model_group_name);
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 

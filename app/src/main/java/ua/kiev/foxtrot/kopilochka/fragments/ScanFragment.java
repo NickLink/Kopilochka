@@ -3,7 +3,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import ua.kiev.foxtrot.kopilochka.R;
 /**
  * Created by NickNb on 04.10.2016.
  */
-public class ScanFragment extends Fragment implements ZBarScannerView.ResultHandler {
+public class ScanFragment extends BaseFragment implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
     Interfaces interfaces;
     int id;

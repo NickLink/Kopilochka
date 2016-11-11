@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/action_list_item_name"
+            style="@style/myTableH_13Base"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/act_list_name"
+            android:layout_weight="6"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+        android:id="@+id/action_list_item_days"
+        style="@style/myTableH_13Base"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/act_list_days"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/action_list_item_points"
+            style="@style/myTableH_13Base"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/act_list_points"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/my_light_grey_color"/>
+
+</LinearLayout>

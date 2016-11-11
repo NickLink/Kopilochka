@@ -21,7 +21,6 @@ public class Models_ListView_Adapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Model> models_data;
-//    ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
     private Typeface calibri_bold;
 

@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/my_dark_blue_color"
+        android:background="@color/my_blue_color_pressed"
         android:layout_alignParentTop="true" />
 
     <ImageView
@@ -56,7 +56,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/my_dark_blue_color"
+        android:background="@color/my_blue_color_pressed"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

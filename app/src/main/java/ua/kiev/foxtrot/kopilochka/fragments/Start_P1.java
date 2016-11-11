@@ -2,8 +2,8 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Product_ListView_Adapter;
-import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
@@ -28,13 +27,14 @@ import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Start_P1 extends Fragment implements HttpRequest{
+public class Start_P1 extends BaseFragment implements HttpRequest{
     Interfaces interfaces;
 
     Product_ListView_Adapter adapter;
@@ -53,6 +53,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
     private int cumulative_count = 0;
     ListView start_listview;
     RelativeLayout no_bonuses_layout;
+    private Typeface calibri_bold;
 
     public static Start_P1 newInstance() {
         Start_P1 fragment = new Start_P1();
@@ -73,19 +74,12 @@ public class Start_P1 extends Fragment implements HttpRequest{
     }
 
     @Override
-    public void onStop () {
-        super.onStop();
-        //Cancel HTTP requests
-        if (AppContr.getInstance() != null) {
-            AppContr.getInstance().cancelAllRequests();
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_start_p1, container,
                 false);
+
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         start_listview = (ListView)rootView.findViewById(R.id.listView);
         no_bonuses_layout = (RelativeLayout)rootView.findViewById(R.id.no_bonuses_layout);
 
@@ -109,7 +103,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
         db = new DB(getActivity());
         db.open();
         productList.addAll(db.getGroupArray()); //productList.addAll(db.getGroupsNamesAndCount());
-
+        db.close();
         //
 
         if(productList != null && productList.size() != 0){
@@ -148,6 +142,7 @@ public class Start_P1 extends Fragment implements HttpRequest{
             }
         });
         menu_item_title.setText(getString(R.string.menu_start));
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 
@@ -222,6 +217,5 @@ public class Start_P1 extends Fragment implements HttpRequest{
         Dialogs.ShowDialog(getActivity(), "Error", "HTTP", "OK");
 
     }
-
 
 }

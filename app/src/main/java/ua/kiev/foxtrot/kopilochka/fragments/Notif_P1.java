@@ -1,9 +1,9 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,11 +23,12 @@ import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Notif_P1 extends Fragment implements HttpRequest {
+public class Notif_P1 extends BaseFragment implements HttpRequest {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -37,6 +37,7 @@ public class Notif_P1 extends Fragment implements HttpRequest {
     Notif_ListView_Adapter adapter;
     //ArrayList<Notice> notif_data;
     DB db;
+    private Typeface calibri_bold;
 
     public static Notif_P1 newInstance() {
         Notif_P1 fragment = new Notif_P1();
@@ -62,6 +63,7 @@ public class Notif_P1 extends Fragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_notif_p1, container,
                 false);
 
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         //notif_data = new ArrayList<Notice>();
         db = new DB(getActivity());
         //notif_data = db.getNoticeArray();
@@ -108,6 +110,7 @@ public class Notif_P1 extends Fragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_notification));
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 
@@ -147,7 +150,7 @@ public class Notif_P1 extends Fragment implements HttpRequest {
 
     @Override
     public void http_error(int type, String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 

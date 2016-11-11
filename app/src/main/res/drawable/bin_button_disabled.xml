@@ -12,8 +12,9 @@
             </corners>
         </shape>
     </item>
-    <item
-        android:drawable="@drawable/trashcan_gray"
-        android:gravity="center"
-        />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/trashcan" />
+    </item>
 </layer-list>

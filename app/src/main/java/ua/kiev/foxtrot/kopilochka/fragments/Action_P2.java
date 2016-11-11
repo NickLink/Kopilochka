@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 /**
  * Created by NickNb on 06.10.2016.
  */
-public class Action_P2 extends Fragment {
+public class Action_P2 extends BaseFragment {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;

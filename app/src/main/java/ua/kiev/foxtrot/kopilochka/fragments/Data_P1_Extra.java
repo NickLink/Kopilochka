@@ -2,7 +2,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 /**
  * Created by NickNb on 25.10.2016.
  */
-public class Data_P1_Extra extends Fragment implements HttpRequest {
+public class Data_P1_Extra extends BaseFragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
     //SwipeRefreshLayout swipeRefreshLayout;

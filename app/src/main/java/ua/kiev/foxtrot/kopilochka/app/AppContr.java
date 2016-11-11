@@ -2,7 +2,6 @@ package ua.kiev.foxtrot.kopilochka.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
@@ -12,8 +11,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import ua.kiev.foxtrot.kopilochka.Const;
+import ua.kiev.foxtrot.kopilochka.MyLifecycleHandler;
 import ua.kiev.foxtrot.kopilochka.data.UserData;
-import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
 import ua.kiev.foxtrot.kopilochka.utils.LruBitmapCache;
 
 /**
@@ -39,8 +38,9 @@ public class AppContr extends Application {
         sPref = context.getSharedPreferences(Const.myAppPrefs, Context.MODE_PRIVATE);
         // Initialize the singletons so their instances
         // are bound to the application process.
-        Intent startServiceIntent = new Intent(context, BackgroundService.class);
-        startService(startServiceIntent);
+        registerActivityLifecycleCallbacks(new MyLifecycleHandler());
+//        Intent startServiceIntent = new Intent(context, BackgroundService.class);
+//        startService(startServiceIntent);
     }
 
     public static synchronized AppContr getInstance() {

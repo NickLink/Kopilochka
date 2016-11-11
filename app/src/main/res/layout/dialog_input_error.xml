@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_grey_border_empty"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp" >
+    style="@style/myDialogLayout" >
 
     <TextView
         android:id="@+id/title"
@@ -13,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:background="@null"
         android:textColor="@color/black"
         android:textSize="18sp"/>

@@ -14,8 +14,9 @@
             </corners>
         </shape>
     </item>
-    <item
-        android:drawable="@drawable/icon_edit"
-        android:gravity="center"
-        />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/icon_edit" />
+    </item>
 </layer-list>

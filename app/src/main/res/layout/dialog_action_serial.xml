@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_grey_border_empty"
-    android:padding="20dp">
+    style="@style/myDialogLayout">
 
     <TextView
         style="@style/mySub_Black_18"

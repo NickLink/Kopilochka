@@ -23,6 +23,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/no_bonuses_girl"
+            android:src="@drawable/back_with_girl"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/no_bonuses_envelop"
             android:src="@drawable/envelope"
             android:layout_centerHorizontal="true"
@@ -40,13 +48,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/no_bonuses_girl"
-            android:src="@drawable/back_with_girl2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
 </RelativeLayout>

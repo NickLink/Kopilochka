@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,7 +30,7 @@ import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Action_P1 extends Fragment implements HttpRequest {
+public class Action_P1 extends BaseFragment implements HttpRequest {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     TextView result_test;
@@ -153,7 +151,7 @@ public class Action_P1 extends Fragment implements HttpRequest {
 
     @Override
     public void http_error(int type, String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 

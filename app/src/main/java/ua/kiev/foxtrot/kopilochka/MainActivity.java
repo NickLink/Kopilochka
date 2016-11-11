@@ -46,7 +46,7 @@ import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
-public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress{
+public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -219,22 +219,22 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     protected void onStart() {
         super.onStart();
         Log.v(Const.TAG, "SSS MainActivity: onStart() Stop service");
-        if(isMyServiceRunning(BackgroundService.class)){
-            service_running = false;
+        //if(isMyServiceRunning(BackgroundService.class)){
+        //    service_running = false;
             Intent stopServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
             stopService(stopServiceIntent);
-        }
+        //}
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.v(Const.TAG, "SSS MainActivity: onStop() Start service");
-        if(!isMyServiceRunning(BackgroundService.class)) {
-            service_running = true;
+        //if(!isMyServiceRunning(BackgroundService.class)) {
+         //   service_running = true;
             Intent startServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
             startService(startServiceIntent);
-        }
+        //}
     }
 
     @Override
@@ -354,24 +354,6 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         return false;
     }
 
-//    void TransactionAction(Fragment fragment_in, Fragment fragment_out,
-//                           String tag_in, String tag_out, boolean forward) {
-//        transaction = fragmentManager.beginTransaction();
-//        Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
-//        if(fragment_out != null && fragment_in != null){
-//            if(forward) {
-//                //transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out);
-//                transaction.add(R.id.fragment_place, fragment_in, tag_in);
-//                transaction.hide(fragment_out);
-//            } else {
-//                //transaction.setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out);
-//                transaction.remove(fragment_out);
-//                transaction.show(fragment_in);
-//            }
-//            transaction.commit();
-//        }
-//    }
-
     void TransactionActionStack(Fragment fragment_in, String tag_in, boolean forward) {
         transaction = fragmentManager.beginTransaction();
         //Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
@@ -402,4 +384,5 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
                     getString(R.string.menu_exit_no), getString(R.string.menu_exit_yes));
 
     }
+
 }

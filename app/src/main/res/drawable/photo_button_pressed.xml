@@ -5,15 +5,16 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
             <solid
-                android:color="#2A3A80">
+                android:color="@color/my_blue_color_pressed">
             </solid>
             <corners
                 android:radius="4dp">
             </corners>
         </shape>
     </item>
-    <item
-        android:drawable="@drawable/photo_camera"
-        android:gravity="center"
-        />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/photo_camera" />
+    </item>
 </layer-list>

@@ -23,14 +23,36 @@ import ua.kiev.foxtrot.kopilochka.ui.FontCache;
  */
 public class Dialogs {
 
-    public static void ShowLoginDialog(Context context, int code){
+    public static void ShowInternetDialog(Context context, String title) {
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_not_a_member);
+        dialog.setCancelable(false);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
+        cancelBtn.setTypeface(calibri_bold);
+        Title.setText(title);
+        Title.setTypeface(calibri_bold);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void ShowLoginDialog(Context context, int code) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_not_a_member);
         dialog.setCancelable(false);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         String title = "", message = "";
-        switch (code){
+        switch (code) {
             case 1:
                 title = context.getString(R.string.log_01_sorry);
                 message = context.getString(R.string.log_01_sorry_expl);
@@ -41,10 +63,8 @@ public class Dialogs {
                 message = context.getString(R.string.log_01_not_active_expl);
                 break;
         }
-
-
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
@@ -60,7 +80,7 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void ShowLogoutDialog(Context context, final Interfaces interfaces){
+    public static void ShowLogoutDialog(Context context, final Interfaces interfaces) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_logout);
@@ -69,8 +89,8 @@ public class Dialogs {
         String title = context.getString(R.string.data_exit_title);
         String message = context.getString(R.string.data_exit_text);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button exit_button = (Button) dialog.findViewById(R.id.exit_button);
         Button cancel_button = (Button) dialog.findViewById(R.id.cancel_button);
 
@@ -93,17 +113,18 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void ShowJSONErrorDialog(Context context){
+    public static void ShowJSONErrorDialog(Context context) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_input_error);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         String title = context.getString(R.string.JSON_title_error);
         String message = context.getString(R.string.JSON_text_error);
         String button = context.getString(R.string.JSON_button_error);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
@@ -119,13 +140,14 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void ShowExitDialog(final Context context, String title, String message, String cancel, String exit){
+    public static void ShowExitDialog(final Context context, String title, String message, String cancel, String exit) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_exit);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
         Button exitBtn = (Button) dialog.findViewById(R.id.exit_button);
 
@@ -149,18 +171,18 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void ShowRegDialog(final Context context, boolean success){
+    public static void ShowRegDialog(final Context context, boolean success) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_success_reg);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ImageView icon = (ImageView)dialog.findViewById(R.id.reg_icon);
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        ImageView icon = (ImageView) dialog.findViewById(R.id.reg_icon);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
-        if(success){
+        if (success) {
             icon.setImageResource(R.drawable.book_opened);
             Title.setText(context.getString(R.string.act_reg_success_title));
             Message.setText(context.getString(R.string.act_reg_success_text));
@@ -184,14 +206,15 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void Dialog_For_Restart(final Context context, String title, String message, String button){
+    public static void Dialog_For_Restart(final Context context, String title, String message, String button) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_input_error);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
@@ -209,14 +232,15 @@ public class Dialogs {
         dialog.show();
     }
 
-    public static void ShowDialog(Context context, String title, String message, String button){
+    public static void ShowDialog(Context context, String title, String message, String button) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_input_error);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView Title = (TextView)dialog.findViewById(R.id.title);
-        TextView Message = (TextView)dialog.findViewById(R.id.message);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
 
         Title.setText(title);
@@ -233,7 +257,7 @@ public class Dialogs {
     }
 
     public static void ShowDialogDeleteEditItem(final Context context, final Interfaces interfaces,
-                                            String title, String message, final Post_SN item, boolean edit){
+                                                String title, String message, final Post_SN item, boolean edit) {
         final int action_id = item.getAction_id();
         final int model_id = item.getModel_id();
         final String serials = StringTools.StringFromList(item.getSerials());
@@ -247,11 +271,11 @@ public class Dialogs {
         //TextView Title = (TextView)dialog.findViewById(R.id.dialog_title);
         //TextView Message = (TextView)dialog.findViewById(R.id.dialog_text);
 
-        TextView action_name = (TextView)dialog.findViewById(R.id.action_name);
-        TextView model_name = (TextView)dialog.findViewById(R.id.model_name);
-        TextView serial_numbers_list = (TextView)dialog.findViewById(R.id.serial_numbers_list);
-        TextView error_title = (TextView)dialog.findViewById(R.id.error_title);
-        TextView error_text = (TextView)dialog.findViewById(R.id.error_text);
+        TextView action_name = (TextView) dialog.findViewById(R.id.action_name);
+        TextView model_name = (TextView) dialog.findViewById(R.id.model_name);
+        TextView serial_numbers_list = (TextView) dialog.findViewById(R.id.serial_numbers_list);
+        TextView error_title = (TextView) dialog.findViewById(R.id.error_title);
+        TextView error_text = (TextView) dialog.findViewById(R.id.error_text);
         Button deleteButoon = (Button) dialog.findViewById(R.id.action_delete);
         Button editButton = (Button) dialog.findViewById(R.id.action_edit);
         Button cancel_Button = (Button) dialog.findViewById(R.id.action_cancel);
@@ -273,7 +297,7 @@ public class Dialogs {
         });
 
 
-        if(edit){
+        if (edit) {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -285,7 +309,7 @@ public class Dialogs {
             editButton.setVisibility(View.GONE);
         }
 
-        if(item.getReg_status() == Const.reg_status_error){
+        if (item.getReg_status() == Const.reg_status_error) {
             error_title.setVisibility(View.VISIBLE);
             error_text.setVisibility(View.VISIBLE);
             error_text.setText(item.getFail_reason());
@@ -303,9 +327,6 @@ public class Dialogs {
         action_name.setTypeface(calibri_bold);
         model_name.setTypeface(calibri_bold);
         serial_numbers_list.setTypeface(calibri_bold);
-
-
-
         dialog.show();
     }
 

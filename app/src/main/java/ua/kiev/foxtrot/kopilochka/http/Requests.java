@@ -23,8 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ua.kiev.foxtrot.kopilochka.Const;
+import ua.kiev.foxtrot.kopilochka.MyLifecycleHandler;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
+import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -97,7 +99,14 @@ public class Requests {
                             } else if (error instanceof TimeoutError) {
                                 message = "Connection TimeOut! Please check your internet connection.";
                             }
-                            //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            try{
+                                if(MyLifecycleHandler.isApplicationInForeground()){
+                                    Dialogs.ShowInternetDialog(context, "Перевірте наявність Інтернету.");
+                                }
+                            } catch (Exception e){
+
+                            }
+
 
 //                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
 //                            Log.v(TAG, "SSS Error = " + error.getMessage().toString());

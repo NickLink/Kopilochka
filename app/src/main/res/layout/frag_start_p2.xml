@@ -10,10 +10,6 @@
         android:id="@+id/top_menu_back"
         layout="@layout/top_menu_back" />
 
-    <include
-        android:id="@+id/header_for_list"
-        layout="@layout/frag_action_p1_list_item"/>
-
     <ListView
         android:id="@+id/product_listview"
         android:layout_width="match_parent"

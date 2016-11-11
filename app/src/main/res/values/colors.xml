@@ -3,6 +3,7 @@
 
 
     <color name="my_red_color">#DF0023</color>
+    <color name="my_red_color_pressed">#AD001C</color>
     <color name="my_light_red_color">#E7543F</color>
     <color name="my_sub_color">#013557</color>
     <color name="my_grey_color">#9B9FA3</color>
@@ -10,7 +11,7 @@
     <color name="my_blue_color">#114A8C</color>
     <color name="my_light_grey_color">#4A5F80</color>
     <color name="my_light_blue_color">#1F5A9E</color>
-    <color name="my_dark_blue_color">#2A3A80</color>
+    <color name="my_blue_color_pressed">#2A3A80</color>
     <color name="my_grey2_color">#4A5F80</color>
 
 

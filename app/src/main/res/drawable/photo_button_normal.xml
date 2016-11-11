@@ -14,8 +14,9 @@
         </corners>
     </shape>
     </item>
-    <item
-        android:drawable="@drawable/photo_camera"
-        android:gravity="center"
-    />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/photo_camera" />
+    </item>
 </layer-list>
