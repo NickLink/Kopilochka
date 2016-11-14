@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -30,7 +32,9 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 public class Data_P1_Extra extends BaseFragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
-    //SwipeRefreshLayout swipeRefreshLayout;
+
+    private Typeface calibri, calibri_bold;
+
     ExpandableListView payment_listview;
     FinInfo_ExpList_Adapter adapter;
     View header;
@@ -58,25 +62,22 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
     }
 
     @Override
-    public void onStop () {
-        super.onStop();
-        //Cancel HTTP requests
-        if (AppContr.getInstance() != null) {
-            AppContr.getInstance().cancelAllRequests();
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_data_p1_extra, container,
                 false);
+
+        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         //Header part
         header = inflater.inflate(R.layout.frag_data_p1_extra_header, null);
         fininfo_name = (TextView)header.findViewById(R.id.fininfo_name);
         fininfo_contact_e_mail = (TextView)header.findViewById(R.id.fininfo_contact_e_mail);
+        TextView fininfo_contact_e_mail_title = (TextView)header.findViewById(R.id.fininfo_contact_e_mail_title);
         fininfo_contact_phone = (TextView)header.findViewById(R.id.fininfo_contact_phone);
+        TextView fininfo_contact_phone_title = (TextView)header.findViewById(R.id.fininfo_contact_phone_title);
         fininfo_bonus = (TextView)header.findViewById(R.id.fininfo_bonus);
+        TextView data_f5_ua_message = (TextView)rootView.findViewById(R.id.data_f5_ua_message);
 
         payment_listview = (ExpandableListView)rootView.findViewById(R.id.payment_listview);
         payment_listview.addHeaderView(header);
@@ -93,10 +94,15 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
 //                R.color.holo_green_light,
 //                R.color.holo_orange_light,
 //                R.color.holo_red_light);
-
+        fininfo_name.setTypeface(calibri_bold);
+        fininfo_contact_e_mail.setTypeface(calibri);
+        fininfo_contact_e_mail_title.setTypeface(calibri);
+        fininfo_contact_phone.setTypeface(calibri);
+        fininfo_contact_phone_title.setTypeface(calibri);
+        fininfo_bonus.setTypeface(calibri_bold);
+        data_f5_ua_message.setTypeface(calibri);
 
         getFromInternet();
-
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -108,6 +114,7 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_data));
+        menu_item_title.setTypeface(calibri_bold);
         return rootView;
     }
 

@@ -12,14 +12,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Models_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
@@ -30,17 +28,17 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  * Created by NickNb on 06.10.2016.
  */
 public class Action_P2 extends BaseFragment {
+
     private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
     private int action_id;
-    private String title;
-    //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
+
     ListView models_list;
     Models_ListView_Adapter adapter;
     View action_header;
-    ArrayList<Model> models_data;
-    DB db;
+    //ArrayList<Model> models_data;
+    DB db = AppContr.db;
     Action action;
     private Typeface calibri, calibri_bold;
 
@@ -105,7 +103,6 @@ public class Action_P2 extends BaseFragment {
         models_list.addHeaderView(action_header, "Header", false);
         //Initializing
 
-        db = new DB(getActivity());
         action = db.getActionById(action_id);
         //models_data = new ArrayList<Model>();
         adapter = new Models_ListView_Adapter(getActivity(), action.getModels());
@@ -125,7 +122,7 @@ public class Action_P2 extends BaseFragment {
         //Set info on action
         action_name.setText(action.getAction_name());
         action_models_count.setText(String.valueOf(action.getModels().size()));
-        action_period_tv.setText("с " + Utils.getDateFromMillis(action.getAction_date_from())
+        action_period_tv.setText("з " + Utils.getDateFromMillis(action.getAction_date_from())
                 + " по " + Utils.getDateFromMillis(action.getAction_date_to()));
         action_type_tv.setText(action.getAction_type());
         action_data_tv.setText(Utils.getDateFromMillis(action.getAction_date_charge()));

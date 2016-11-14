@@ -39,7 +39,7 @@
 
     <RelativeLayout
         android:id="@+id/drawerView"
-        android:layout_width="240dp"
+        android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start" >
 

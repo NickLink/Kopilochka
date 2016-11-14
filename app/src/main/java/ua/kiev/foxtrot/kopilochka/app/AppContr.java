@@ -13,6 +13,7 @@ import com.android.volley.toolbox.Volley;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.MyLifecycleHandler;
 import ua.kiev.foxtrot.kopilochka.data.UserData;
+import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.utils.LruBitmapCache;
 
 /**
@@ -26,6 +27,7 @@ public class AppContr extends Application {
     private static SharedPreferences sPref;
     Context context;
     public static UserData userData;
+    public static DB db;
 
     private static AppContr mInstance;
 
@@ -36,6 +38,8 @@ public class AppContr extends Application {
         context = getApplicationContext();
         userData = new UserData();
         sPref = context.getSharedPreferences(Const.myAppPrefs, Context.MODE_PRIVATE);
+        db = new DB(context);
+        db.open();
         // Initialize the singletons so their instances
         // are bound to the application process.
         registerActivityLifecycleCallbacks(new MyLifecycleHandler());

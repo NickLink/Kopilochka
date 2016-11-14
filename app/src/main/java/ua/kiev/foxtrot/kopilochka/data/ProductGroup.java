@@ -7,6 +7,7 @@ public class ProductGroup {
     private int group_id;
     private String group_name;
     private int models_count;
+    private int viewed;
     private String group_hash;
 
     public int getGroup_id() {
@@ -31,6 +32,14 @@ public class ProductGroup {
 
     public void setModels_count(int models_count) {
         this.models_count = models_count;
+    }
+
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
     }
 
     public String getGroup_hash() {

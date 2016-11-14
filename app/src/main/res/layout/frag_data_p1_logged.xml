@@ -8,6 +8,14 @@
         android:id="@+id/top_menu_logout"
         layout="@layout/top_menu_logout"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView5"
+        android:src="@drawable/back_with_girl"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
     <LinearLayout
         android:id="@+id/loged_layout"
         android:layout_below="@+id/top_menu_logout"
@@ -22,13 +30,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/data_name_name"
-            style="@style/myWTF_TextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/data_name_name"-->
+            <!--style="@style/myRegular_21"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
 
         <TextView
             android:id="@+id/data_email_text"
@@ -68,6 +76,24 @@
             android:layout_marginTop="20dp"
             android:textAllCaps="false"
             android:layout_gravity="center_horizontal"/>
+
+        <RelativeLayout
+            android:id="@+id/bottom_message_layout"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/data_f5_ua_message"
+                style="@style/mySub_Black_18grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_f5_ua_message"
+                android:layout_centerInParent="true"
+                android:gravity="center"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

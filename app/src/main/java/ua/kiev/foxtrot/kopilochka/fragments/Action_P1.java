@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Action_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
@@ -33,14 +33,12 @@ import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 public class Action_P1 extends BaseFragment implements HttpRequest {
     private long mLastClickTime = 0;
     Interfaces interfaces;
-    TextView result_test;
-    Button button2;
 
     ListView action_listview;
     SwipeRefreshLayout swipeRefreshLayout;
     Action_ListView_Adapter adapter;
     //private ArrayList<BBS_News> action_data;
-    DB db;
+    DB db = AppContr.db;
     private Typeface calibri_bold;
 
     public static Action_P1 newInstance() {
@@ -82,9 +80,6 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
 
-        //action_data = new ArrayList<BBS_News>();
-        db = new DB(getActivity());
-
         action_listview = (ListView)rootView.findViewById(R.id.action_listview);
         adapter = new Action_ListView_Adapter(getActivity(), db.getActionArray());
         action_listview.setAdapter(adapter);
@@ -95,13 +90,11 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+                adapter.setActionViewed(i);
+                db.setActionViewed(adapter.getAction_data().get(i).getAction_id());
                 interfaces.ActionSelected(adapter.getAction_data().get(i).getAction_id());
             }
         });
-
-
-
-
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -127,13 +120,6 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
         //ACTIONS-----------------------------------------------
         Methods.GetActionList(getActivity(), this);
 
-
-//        Requests actions_requests = new Requests(getActivity(), Const.getActions, this);
-//        HashMap<String, String> actions_params = new HashMap<String, String>();
-//        actions_params.put(Const.method, Const.GetActions);
-//        actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-//                .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-//        actions_requests.getHTTP_Responce(actions_params);
     }
 
     @Override
@@ -142,7 +128,6 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
         switch (type){
             case Const.getActions:
                 Methods.PutActionInBase(getActivity(), result);
-                db = new DB(getActivity());
                 adapter.setAction_data(db.getActionArray());
                 adapter.notifyDataSetChanged();
             break;
@@ -156,7 +141,6 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
     }
 
     private void PutActionsInDatabase(ArrayList<Action> actions) {
-        db = new DB(getActivity());
         if(db.addActionArray(actions)){
             //Data to base added successfully
         } else {
@@ -164,15 +148,4 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
         }
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        result_test.setText(getScanCode());
-//    }
-//
-//    private String getScanCode(){
-//        MainActivity activity = (MainActivity) getActivity();
-//        String code = activity.getScan_code();
-//        return code;
-//    }
 }

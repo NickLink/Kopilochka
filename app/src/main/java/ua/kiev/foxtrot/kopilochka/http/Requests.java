@@ -72,7 +72,6 @@ public class Requests {
                 jsonBody.put(entry.getKey().toString(),entry.getValue().toString());
             }
             final String mRequestBody = jsonBody.toString();
-            Log.v(TAG, "SSS json = " + mRequestBody);
             StringRequest stringObjReq = new StringRequest(Request.Method.POST,
                     Const.API_PATH, new Response.Listener<String>() { //jsonBody
                 @Override
@@ -106,10 +105,6 @@ public class Requests {
                             } catch (Exception e){
 
                             }
-
-
-//                            VolleyLog.d(TAG, "SSS Error: " + error.getMessage());
-//                            Log.v(TAG, "SSS Error = " + error.getMessage().toString());
                             request.http_error(req_type, message);
 
                         }

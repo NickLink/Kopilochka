@@ -20,7 +20,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.v(LOG_TAG, "SSS onCreate database ---");
         // создаем таблицу с полями
-        db.execSQL(Tables.table_bbs_news);
         db.execSQL(Tables.table_notices);
         db.execSQL(Tables.table_models);
         db.execSQL(Tables.table_actions);

@@ -11,7 +11,6 @@ import java.util.Arrays;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
@@ -26,17 +25,6 @@ public class DB {
 
     private static final String DB_NAME = "mydb";
     private static final int DB_VERSION = 1;
-    private static final String DB_TABLE_BBS = Tables.table_name_bbs_news;
-
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_AUTHOR = "author";
-    public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_DESC = "description";
-    public static final String COLUMN_URL = "url";
-    public static final String COLUMN_URLIMG = "urlToImage";
-    public static final String COLUMN_PUBLISH = "publishedAt";
-    public static final String TIME_NOW  = " time('now') ";
-
 
     private Context context;
     boolean transaction_success = false;
@@ -64,76 +52,11 @@ public class DB {
     }
 
     public void erase(){
-        this.open();
-        mDB.execSQL("delete from "+ Tables.table_name_bbs_news);
         mDB.execSQL("delete from "+ Tables.table_name_notices);
         mDB.execSQL("delete from "+ Tables.table_name_models);
         mDB.execSQL("delete from "+ Tables.table_name_actions);
         mDB.execSQL("delete from "+ Tables.table_name_postsn);
         mDB.execSQL("delete from "+ Tables.table_name_groups);
-        this.close();
-    }
-
-    //========================================================================
-
-    public Cursor getAllData() {
-        return mDB.query(DB_TABLE_BBS, null, null, null, null, null, null);
-    }
-
-    public Cursor getData_forTitle(String title) {
-        String selection = COLUMN_TITLE + " = " + title;
-        String[] columns = new String[] { selection };
-        return mDB.query(DB_TABLE_BBS, columns, null, null, null, null, null);
-    }
-
-    public Cursor getData_forId(int id) {
-        long row_id = id + 1;
-        String selection = COLUMN_ID + " = " + row_id;
-        return mDB.query(DB_TABLE_BBS, null, selection, null, null, null, null);
-    }
-
-    public long addRec(BBS_News data) {
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_AUTHOR, data.getAuthor());
-        cv.put(COLUMN_TITLE, data.getTitle());
-        cv.put(COLUMN_DESC, data.getDescription());
-        cv.put(COLUMN_URL, data.getUrl());
-        cv.put(COLUMN_URLIMG, data.getUrlToImage());
-        cv.put(COLUMN_PUBLISH, data.getPublishedAt());
-        return mDB.insert(DB_TABLE_BBS, null, cv);
-    }
-
-    public boolean addNewsArray(ArrayList<BBS_News> news){
-        this.open();
-        this.getDB().beginTransaction();
-        try {
-            for(int i=0;i<news.size();i++) {
-                if(this.addRec(news.get(i))==-1){
-                    throw new Exception("FAIL");
-                };
-            }
-            this.getDB().setTransactionSuccessful();
-            Log.v(TAG, "SSS setTransactionSuccessful");
-        } catch (Exception e){
-            transaction_success = false;
-            Log.v(TAG, "SSS setTransaction Exception");
-        } finally {
-            this.getDB().endTransaction();
-            transaction_success = true;
-            Log.v(TAG, "SSS setTransaction Finally");
-        }
-        this.close();
-        if(transaction_success){
-            //Send ok to server
-            return true;
-        } else {
-            //Try again later
-            return false;
-        }
-    }
-
-    public void delRec(long id) {
-        mDB.delete(DB_TABLE_BBS, COLUMN_ID + " = " + id, null);
     }
 
     public SQLiteDatabase getDB (){
@@ -154,11 +77,13 @@ public class DB {
         cv.put(Const.notice_text, data.getNotice_text());
         cv.put(Const.notice_type_id, data.getNotice_type_id());
         cv.put(Const.notice_type, data.getNotice_type());
+        cv.put(Const.viewed, data.getViewed());
+        cv.put(Const.notice_hash, data.getNotice_hash());
         return mDB.insert(Tables.table_name_notices, null, cv);
     }
 
     public boolean addNoticeArray(ArrayList<Notice> news){
-        this.open();
+        //this.open();
         this.getDB().beginTransaction();
         try {
             mDB.execSQL("delete from "+ Tables.table_name_notices);
@@ -174,7 +99,7 @@ public class DB {
         } finally {
             this.getDB().endTransaction();
         }
-        this.close();
+        //this.close();
         if(transaction_success){
             return true;
         } else {
@@ -182,23 +107,30 @@ public class DB {
         }
     }
 
+    public Notice getNotice(Cursor cursor){
+        Notice item = new Notice();
+        item.setNotice_id(cursor.getInt(cursor.getColumnIndex(Const.notice_id)));
+        item.setNotice_name(cursor.getString(cursor.getColumnIndex(Const.notice_name)));
+        item.setNotice_text(cursor.getString(cursor.getColumnIndex(Const.notice_text)));
+        item.setNotice_type_id(cursor.getInt(cursor.getColumnIndex(Const.notice_type_id)));
+        item.setNotice_type(cursor.getString(cursor.getColumnIndex(Const.notice_type)));
+        item.setViewed(cursor.getInt(cursor.getColumnIndex(Const.viewed)));
+        item.setNotice_hash(cursor.getString(cursor.getColumnIndex(Const.notice_hash)));
+        return item;
+    }
+
     public ArrayList<Notice> getNoticeArray(){
         ArrayList<Notice> notif_data = new ArrayList<Notice>();
-        this.open();
+        //this.open();
         Cursor myCursor = this.getNoticeData();
         myCursor.moveToFirst();
         while (myCursor.isAfterLast() == false) {
-            Notice item = new Notice();
-            item.setNotice_id(myCursor.getInt(myCursor.getColumnIndex(Const.notice_id)));
-            item.setNotice_name(myCursor.getString(myCursor.getColumnIndex(Const.notice_name)));
-            item.setNotice_text(myCursor.getString(myCursor.getColumnIndex(Const.notice_text)));
-            item.setNotice_type_id(myCursor.getInt(myCursor.getColumnIndex(Const.notice_type_id)));
-            item.setNotice_type(myCursor.getString(myCursor.getColumnIndex(Const.notice_type)));
+            Notice item = getNotice(myCursor);
             notif_data.add(item);
             myCursor.moveToNext();
         }
         Log.v("", "SSS Finish = " + notif_data.size());
-        this.close();
+        //this.close();
         return notif_data;
     }
     //==================================MODELS DATA====================================
@@ -220,7 +152,7 @@ public class DB {
 
     public ArrayList<ProductGroup> getGroupsNamesAndCount(){
         ArrayList<ProductGroup> arrayList = new ArrayList<ProductGroup>();
-        this.open();
+        //this.open();
         Cursor myCursor = getModelsForPGroup();
         myCursor.moveToFirst();
         while (!myCursor.isAfterLast()){
@@ -235,7 +167,7 @@ public class DB {
             Log.v("TAG", "SSSS groupName =" + groupName + " modelsCount =" + modelsCount + " group_id =" + group_id);
             myCursor.moveToNext();
         }
-        this.close();
+        //this.close();
         return arrayList;
     }
 
@@ -312,6 +244,8 @@ public class DB {
             cv.put(Const.action_date_to, data.getAction_date_to());
             cv.put(Const.action_date_charge, data.getAction_date_charge());
             cv.put(Const.action_description, data.getAction_description());
+            cv.put(Const.viewed, data.getViewed());
+            cv.put(Const.action_hash, data.getAction_hash());
             return mDB.insert(Tables.table_name_actions, null, cv);
         } catch (Exception e){
             Log.v("", "SSS Exception addAction= " + e.toString());
@@ -321,7 +255,7 @@ public class DB {
     }
 
     public boolean addActionArray(ArrayList<Action> news){
-        this.open();
+        //this.open();
         this.getDB().beginTransaction();
         try {
             mDB.execSQL("delete from "+ Tables.table_name_models);
@@ -339,7 +273,7 @@ public class DB {
         } finally {
             this.getDB().endTransaction();
         }
-        this.close();
+        //this.close();
         if(transaction_success){
             return true;
         } else {
@@ -364,12 +298,12 @@ public class DB {
 
     public Model getModelByIds(int action, int model){
         Model item = new Model();
-        this.open();
+        //this.open();
         Cursor myCursor = this.getModelByIdsCursor(action, model);
         if(myCursor.moveToFirst()) {
             item = getModel(myCursor);
         } else item =  null;
-        this.close();
+        //this.close();
         return item;
     }
 
@@ -397,7 +331,7 @@ public class DB {
         return models;
     }
 
-    public int getModelsCount(int group){
+    public int getModelsInGroupCount(int group){
         Cursor cursor = this.getModelByGroupIdCursor(group);
         return cursor.getCount();
     }
@@ -413,24 +347,26 @@ public class DB {
         item.setAction_date_to((long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_to)));
         item.setAction_date_charge((long) myCursor.getInt(myCursor.getColumnIndex(Const.action_date_charge)));
         item.setAction_description(myCursor.getString(myCursor.getColumnIndex(Const.action_description)));
+        item.setAction_hash(myCursor.getString(myCursor.getColumnIndex(Const.action_hash)));
+        item.setViewed(myCursor.getInt(myCursor.getColumnIndex(Const.viewed)));
         item.setModels(getModelsArray(item.getAction_id()));
         return item;
     }
 
     public Action getActionById(int id){
         Action item = new Action();
-        this.open();
+        //this.open();
         Cursor myCursor = this.getActionByIdCursor(id);
         if(myCursor.moveToFirst()) {
             item = getAction(myCursor);
         } else item =  null;
-        this.close();
+        //this.close();
         return item;
     }
 
     public ArrayList<Action> getActionByTypeArray(int action_type_id){
         ArrayList<Action> actions = new ArrayList<Action>();
-        this.open();
+        //this.open();
         Cursor myCursor = this.getActionByTypeCursor(action_type_id);
         myCursor.moveToFirst();
         //if(myCursor.moveToFirst()) {
@@ -440,13 +376,13 @@ public class DB {
             }
        // } else actions = null;
         Log.v("", "SSS getActionByTypeArray = " + actions.size());
-        this.close();
+        //this.close();
         return actions;
     }
 
     public ArrayList<Action> getActionArray(){
         ArrayList<Action> actions = new ArrayList<Action>();
-        this.open();
+        //this.open();
         Cursor myCursor = this.getActionsCursor();
         myCursor.moveToFirst();
         //if(myCursor.moveToFirst()) {
@@ -456,7 +392,7 @@ public class DB {
             }
         //} else actions = null;
         //Log.v("", "SSS getActionArray = " + actions.size());
-        this.close();
+        //this.close();
         return actions;
     }
 
@@ -486,7 +422,7 @@ public class DB {
 
     public long addPostSN(Post_SN data){
         long code = -1;
-        this.open();
+        //this.open();
         this.getDB().beginTransaction();
         try {
             //Put POST_SN data
@@ -512,13 +448,13 @@ public class DB {
         }finally {
             this.getDB().endTransaction();
         }
-        this.close();
+        //this.close();
         return code;
     }
 
     public boolean deletePostSN(Post_SN data){
         boolean is_ok = false;
-        this.open();
+        //this.open();
         this.getDB().beginTransaction();
         try {
             String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
@@ -538,7 +474,7 @@ public class DB {
         }finally {
             this.getDB().endTransaction();
         }
-        this.close();
+        //this.close();
         return is_ok;
     }
 
@@ -568,19 +504,18 @@ public class DB {
     }
 
     public Post_SN getPostSNbyData(int action_id, int model_id, String serials){
-        this.open();
+        //this.open();
         Cursor cursor = this.getPostSNbyDataCursor(action_id, model_id, serials);
         if(cursor != null && cursor.moveToFirst()){
             Post_SN item = getPost_SN(cursor);
-            this.close();
             return item;
         }
-        this.close();
+        //this.close();
         return null;
     }
 
     public boolean setStatus_Post_SN_item(Post_SN data){
-        this.open();
+        //this.open();
         //Cursor cursor = this.getPostSNbyData(data);
         //if(cursor.moveToFirst()){
         String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
@@ -592,22 +527,22 @@ public class DB {
         cv.put(Const.reg_status, data.getReg_status());
         cv.put(Const.fail_reason, data.getFail_reason());
         this.getDB().beginTransaction();
-        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) == 1){
+        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) > 0){
             //All ok
             this.getDB().setTransactionSuccessful();
             this.getDB().endTransaction();
-            this.close();
+            //this.close();
             return true;
         } else {
             //No record found
             this.getDB().endTransaction();
-            this.close();
+            //this.close();
             return false;
         }
     }
 
     public boolean setSerials_Post_SN_item(Post_SN data, String old_serials){
-        this.open();
+        //this.open();
         //Cursor cursor = this.getPostSNbyData(data);
         //if(cursor.moveToFirst()){
         String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
@@ -618,16 +553,16 @@ public class DB {
         ContentValues cv = new ContentValues();
         cv.put(Const.serials, StringTools.StringFromList(data.getSerials()));
         this.getDB().beginTransaction();
-        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) == 1){
+        if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) > 0){
             //All ok
             this.getDB().setTransactionSuccessful();
             this.getDB().endTransaction();
-            this.close();
+            //this.close();
             return true;
         } else {
             //No record found
             this.getDB().endTransaction();
-            this.close();
+            //this.close();
             return false;
         }
     }
@@ -635,6 +570,12 @@ public class DB {
     //====================================GROUPS=============================
     public Cursor getGroupsDataCursor() {
         return mDB.query(Tables.table_name_groups, null, null, null, null, null, null);
+    }
+
+    public Cursor getGroupByIdCursor(int id) {
+        String selection = Const.group_id + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        return mDB.query(Tables.table_name_groups, null, selection, selectionArgs, null, null, null);
     }
 
     public long addGroupItem(ProductGroup data){
@@ -645,6 +586,7 @@ public class DB {
             cv.put(Const.group_id, data.getGroup_id());
             cv.put(Const.group_name, data.getGroup_name());
             cv.put(Const.group_hash, data.getGroup_hash());
+            cv.put(Const.viewed, data.getViewed());
             code = mDB.insert(Tables.table_name_groups, null, cv);
             if (code != -1) this.getDB().setTransactionSuccessful();
         } catch (Exception e){
@@ -657,6 +599,7 @@ public class DB {
     }
 
     public boolean addGroupArray(ArrayList<ProductGroup> arrayList){
+        mDB.execSQL("delete from "+ Tables.table_name_groups);
         try {
             for(int i=0;i<arrayList.size();i++) {
                 if(this.addGroupItem(arrayList.get(i))==-1){
@@ -675,7 +618,8 @@ public class DB {
         item.setGroup_id(cursor.getInt(cursor.getColumnIndex(Const.group_id)));
         item.setGroup_name(cursor.getString(cursor.getColumnIndex(Const.group_name)));
         item.setGroup_hash(cursor.getString(cursor.getColumnIndex(Const.group_hash)));
-        item.setModels_count(getModelsCount(item.getGroup_id()));
+        item.setViewed(cursor.getInt(cursor.getColumnIndex(Const.viewed)));
+        item.setModels_count(getModelsInGroupCount(item.getGroup_id()));
         return item;
     }
 
@@ -689,9 +633,52 @@ public class DB {
         }
         Log.v("TAG", "SSS getGroupArray OK");
         return arrayList;
-
-
     }
 
+    public ProductGroup getGroupById(int id){
+        Cursor cursor = this.getGroupByIdCursor(id);
+        if(cursor != null && cursor.moveToFirst()){
+            ProductGroup item = getGroupItem(cursor);
+            return item;
+        }
+        return null;
+    }
+
+    //==========================SET VIEWED STATUS=============================
+    public boolean setActionViewed(int id){
+        String selection = Const.action_id + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        ContentValues cv = new ContentValues();
+        cv.put(Const.viewed, Const.viewed_yes);
+        if(mDB.update(Tables.table_name_actions, cv, selection, selectionArgs) > 0){
+            Log.v("TAG", "SSS setActionViewed OK");
+            return true;
+        } else {
+            Log.v("TAG", "SSS setActionViewed NOT OK");
+        }
+        return false;
+    }
+
+    public boolean setGroupViewed(int id){
+        String selection = Const.group_id + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        ContentValues cv = new ContentValues();
+        cv.put(Const.viewed, Const.viewed_yes);
+        if(mDB.update(Tables.table_name_groups, cv, selection, selectionArgs) > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setNotificationViewed(int id){
+        String selection = Const.notice_id + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        ContentValues cv = new ContentValues();
+        cv.put(Const.viewed, Const.viewed_yes);
+        if(mDB.update(Tables.table_name_notices, cv, selection, selectionArgs) > 0){
+            return true;
+        }
+        return false;
+    }
 
 }

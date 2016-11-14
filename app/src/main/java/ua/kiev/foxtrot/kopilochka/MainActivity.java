@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     FragmentManager fragmentManager;
     FrameLayout fragment_place;
     boolean service_running;
-    DB db;
+    DB db = AppContr.db;
 
     ScanFragment scanner;
     private String scan_code;
@@ -77,9 +77,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DB(this);
         db.create();
-        db.close();
 
         encrypt = Encryption.getDefault("Key", "Disabled", new byte[16]);
         calibri = FontCache.get("fonts/calibri.ttf", getBaseContext());
@@ -302,7 +300,6 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         //Clear user data
         Utils.Clear_User();
         AppContr.userData = null;
-        DB db = new DB(this);
         db.erase();
         transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.flip_in, R.anim.flip_out); //, R.anim.slide_left_in, R.anim.slide_left_out

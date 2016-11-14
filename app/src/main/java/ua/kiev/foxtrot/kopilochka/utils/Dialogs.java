@@ -14,6 +14,7 @@ import android.widget.TextView;
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
@@ -289,7 +290,7 @@ public class Dialogs {
         deleteButoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB db = new DB(context);
+                DB db = AppContr.db;
                 db.deletePostSN(item);
                 interfaces.DeleteExistPostSN();
                 dialog.dismiss();

@@ -37,8 +37,10 @@ public class Tables {
             + Const.notice_id + " text, "
             + Const.notice_name + " text, "
             + Const.notice_text + " text, "
-            + Const.notice_type_id + " text, "
-            + Const.notice_type + " text"
+            + Const.notice_type_id + " integer, "
+            + Const.notice_type + " text, "
+            + Const.viewed + " integer, "
+            + Const.notice_hash + " text"
             + ");";
 
     //===========================MODELS Part==========================
@@ -75,7 +77,8 @@ public class Tables {
             + Const.action_date_to + " integer, "
             + Const.action_date_charge + " integer, "
             + Const.action_description + " text, "
-            + Const.viewed + " integer default 0, "
+            + Const.viewed + " integer, "
+            + Const.action_hash + " text, "
             + "PRIMARY KEY (" + Const.action_id + ") "
             + ");";
 
@@ -87,6 +90,7 @@ public class Tables {
     public static final String table_groups = "create table " + table_name_groups + " ("
             + Const.group_id + " integer, "
             + Const.group_name + " text, "
+            + Const.viewed + " integer default 0, "
             + Const.group_hash + " text"
             + ");";
 

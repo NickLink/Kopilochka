@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Charge;
 import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.data.Model;
@@ -25,7 +24,7 @@ import ua.kiev.foxtrot.kopilochka.data.UserData;
 public class Parser {
     private static String TAG = "Parser";
 
-    public static ArrayList<BBS_News> getNewsArray(String response){
+/*    public static ArrayList<BBS_News> getNewsArray(String response){
         ArrayList<BBS_News> arrayList = new ArrayList<BBS_News>();
         try{
             JSONObject data = new JSONObject(response);
@@ -51,7 +50,7 @@ public class Parser {
         item.setUrlToImage(jsonObject.optString("urlToImage"));
         item.setPublishedAt(jsonObject.optString("publishedAt"));
         return item;
-    }
+    }*/
 
     //================CHECK FOR VALID SESSION==============
     public static boolean IsSessionOk(String result){
@@ -109,9 +108,7 @@ public class Parser {
     }
 
 
-
-
-
+    //===========================USER DATA========================
     public static UserData getUserData(String result){
         UserData item = new UserData();
         try {
@@ -202,6 +199,8 @@ public class Parser {
             item.setAction_date_to(Utils.getMillisFromDate(jsonObject.getString(Const.action_date_to)));
             item.setAction_date_charge(Utils.getMillisFromDate(jsonObject.getString(Const.action_date_charge)));
             item.setAction_description(jsonObject.getString(Const.action_description));
+            item.setViewed(Const.viewed_no);
+            item.setAction_hash(jsonObject.getString(Const.action_hash));
             //Go for models
             JSONArray models_array = jsonObject.getJSONArray(Const.models);
             for( int i = 0 ; i < models_array.length() ; i++){

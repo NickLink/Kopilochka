@@ -3,7 +3,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:weightSum="8">
 
     <TextView
@@ -14,17 +17,39 @@
         android:layout_weight="6"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
-    <TextView
-        android:id="@+id/count"
-        style="@style/myWhite_24"
-        android:background="@drawable/bg_grey_corners"
+    <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_vertical"
-        android:gravity="center" />
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/count"
+            style="@style/myWhite_24"
+            android:background="@drawable/bg_grey_corners"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/red_dot"
+            android:background="@drawable/red_dot"
+            android:visibility="gone"
+            android:layout_marginTop="-5dp"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/count" />
+
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -38,7 +63,6 @@
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

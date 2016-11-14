@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Charge;
 import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.data.Payment;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -22,10 +24,13 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
     private FinInfo mFinInfo;
     private Context mContext;
     private LayoutInflater inflater;
+    private Typeface calibri, calibri_bold;
 
     public FinInfo_ExpList_Adapter(Context context, FinInfo finInfo) {
         mContext = context;
         mFinInfo = finInfo;
+        calibri = FontCache.get("fonts/calibri.ttf", context);
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     private static class ItemHolder {
@@ -90,6 +95,12 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
             if (isExpanded) {
                 //Изменяем что-нибудь, если текущая Group раскрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h1_exp, null);
+                TextView textView2 = (TextView) convertView.findViewById(R.id.textView2);
+                TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
+                TextView textView4 = (TextView) convertView.findViewById(R.id.textView4);
+                textView2.setTypeface(calibri);
+                textView3.setTypeface(calibri);
+                textView4.setTypeface(calibri);
             } else {
                 //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h1, null);
@@ -98,12 +109,21 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
             if (isExpanded) {
                 //Изменяем что-нибудь, если текущая Group раскрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h2_exp, null);
+                TextView textView2 = (TextView) convertView.findViewById(R.id.textView2);
+                TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
+                TextView textView4 = (TextView) convertView.findViewById(R.id.textView4);
+                TextView textView5 = (TextView) convertView.findViewById(R.id.textView5);
+                textView2.setTypeface(calibri);
+                textView3.setTypeface(calibri);
+                textView4.setTypeface(calibri);
+                textView5.setTypeface(calibri);
             } else {
                 //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h2, null);
             }
         }
-
+        TextView title = (TextView) convertView.findViewById(R.id.title);
+        title.setTypeface(calibri_bold);
 
         return convertView;
     }
@@ -117,22 +137,26 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
             inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        if (row == null) {
-            //itemHolder = new ItemHolder();
-            if (groupPosition == 0) {
-                Log.v("TAG", "!!! groupPosition == 0 = " + groupPosition);
-                row = inflater.inflate(R.layout.frag_data_p1_extra_i1, parent, false);
-                itemHolder.date = (TextView) row.findViewById(R.id.fininfo_charge_data);
-                itemHolder.action = (TextView) row.findViewById(R.id.fininfo_charge_actionname);
-                itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_charge_ammount);
-            } else {
-                Log.v("TAG", "!!! groupPosition == 1 = " + groupPosition);
-                row = inflater.inflate(R.layout.frag_data_p1_extra_i2, parent, false);
-                itemHolder.date = (TextView) row.findViewById(R.id.fininfo_payment_data);
-                itemHolder.action = (TextView) row.findViewById(R.id.fininfo_payment_actionname);
-                itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_payment_ammount);
-                itemHolder.about = (TextView) row.findViewById(R.id.fininfo_payment_about);
-            }
-            //row.setTag(itemHolder);
+        //itemHolder = new ItemHolder();
+        if (groupPosition == 0) {
+            Log.v("TAG", "!!! groupPosition == 0 = " + groupPosition);
+            row = inflater.inflate(R.layout.frag_data_p1_extra_i1, parent, false);
+            itemHolder.date = (TextView) row.findViewById(R.id.fininfo_charge_data);
+            itemHolder.action = (TextView) row.findViewById(R.id.fininfo_charge_actionname);
+            itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_charge_ammount);
+        } else {
+            Log.v("TAG", "!!! groupPosition == 1 = " + groupPosition);
+            row = inflater.inflate(R.layout.frag_data_p1_extra_i2, parent, false);
+            itemHolder.date = (TextView) row.findViewById(R.id.fininfo_payment_data);
+            itemHolder.action = (TextView) row.findViewById(R.id.fininfo_payment_actionname);
+            itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_payment_ammount);
+            itemHolder.about = (TextView) row.findViewById(R.id.fininfo_payment_about);
+            itemHolder.about.setTypeface(calibri);
+        }
+        itemHolder.date.setTypeface(calibri);
+        itemHolder.action.setTypeface(calibri);
+        itemHolder.sum.setTypeface(calibri);
+        //row.setTag(itemHolder);
 //        }
 //        else {
 //            itemHolder = (ItemHolder) row.getTag();
@@ -148,7 +172,7 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
             itemHolder.date.setText(payment.getDate_payment());
             itemHolder.action.setText(payment.getAction_payment());
             itemHolder.sum.setText(String.valueOf(payment.getAmount_payment()));
-            if(Utils.notNull_orEmpty(payment.getComment_payment()))
+            if (Utils.notNull_orEmpty(payment.getComment_payment()))
                 itemHolder.about.setText(payment.getComment_payment());
             else itemHolder.about.setText("");
         }

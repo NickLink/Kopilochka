@@ -71,6 +71,7 @@ public class Const {
     //public static final String notice_image = "notice_image";
     public static final String notice_type_id = "notice_type_id";
     public static final String notice_type = "notice_type";
+    public static final String notice_hash = "notice_hash";
 
 
     //GetActions
@@ -88,6 +89,8 @@ public class Const {
     public static final String action_date_to = "action_date_to";
     public static final String action_date_charge = "action_date_charge";
     public static final String action_description = "action_description";
+    public static final String action_hash = "action_hash";
+
     //--- models
     public static final String models = "models";
     public static final String model_id = "model_id";
@@ -162,6 +165,8 @@ public class Const {
     //-->out
 
     public static final String viewed = "viewed";
+    public static final int viewed_no = 0;
+    public static final int viewed_yes = 1;
 
     //==================Errors==========================
     public static final String ok = "ok";

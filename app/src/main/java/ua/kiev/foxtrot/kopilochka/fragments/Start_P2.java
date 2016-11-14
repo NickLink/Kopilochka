@@ -3,9 +3,11 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.GroupModels_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
@@ -31,6 +34,8 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 public class Start_P2 extends BaseFragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
+
+    private long mLastClickTime = 0;
     private int model_group_id, action_type_id;
     private String model_group_name;
     ListView product_listview;
@@ -38,7 +43,7 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
     ArrayList<Model> modelArrayList;
     GroupModels_ListView_Adapter adapter;
     ArrayList<Action> actionArrayList;
-    DB db;
+    DB db = AppContr.db;
     private Typeface calibri_bold;
 
     public static Start_P2 newInstance(int group_id, String group_name, int action_type_id) {
@@ -81,7 +86,6 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
             return null;
         }
         //Go for Data
-        db = new DB(getActivity());
         actionArrayList = db.getActionByTypeArray(action_type_id);
         modelArrayList = new ArrayList<>();
 
@@ -114,7 +118,17 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
         adapter = new GroupModels_ListView_Adapter(getActivity(), modelArrayList);
         product_listview.setAdapter(adapter);
 
-
+        product_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                i -= product_listview.getHeaderViewsCount();
+                interfaces.ModelSelected(modelArrayList.get(i).getModel_action(), modelArrayList.get(i).getModel_id());
+            }
+        });
 
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);

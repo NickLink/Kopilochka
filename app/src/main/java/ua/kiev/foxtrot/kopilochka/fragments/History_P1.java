@@ -18,6 +18,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.History_ExpList_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
@@ -32,7 +33,7 @@ public class History_P1 extends BaseFragment {
     SwipeRefreshLayout swipeRefreshLayout;
     ExpandableListView history_listview;
     History_ExpList_Adapter adapter;
-    DB db;
+    DB db = AppContr.db;
     List<List<Post_SN>> fullArray;
     private Typeface calibri_bold;
 
@@ -108,12 +109,9 @@ public class History_P1 extends BaseFragment {
     public void getAllData(){
         //Toast.makeText(getActivity(), "getAllData event", Toast.LENGTH_SHORT).show();
         fullArray = new ArrayList<List<Post_SN>>();
-        db = new DB(getActivity());
-        db.open();
         fullArray.add(db.getPost_SN_List(Const.reg_status_ok));
         fullArray.add(db.getPost_SN_List(Const.reg_status_await));
         fullArray.add(db.getPost_SN_List(Const.reg_status_error));
-        db.close();
     }
 
     public void NotifyAdapter(){

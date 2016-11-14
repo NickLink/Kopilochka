@@ -1,6 +1,7 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -17,9 +19,11 @@ public class SliderMenuAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
+    private Typeface calibri_bold;
 
     public SliderMenuAdapter(Context context){
         this.context = context;
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
 
@@ -100,11 +104,9 @@ public class SliderMenuAdapter extends BaseAdapter {
 //                break;
 
 
-
-
         }
 
-
+        menu_item_title.setTypeface(calibri_bold);
         return convertView;
     }
 }

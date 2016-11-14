@@ -50,20 +50,18 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  * Created by NickNb on 07.10.2016.
  */
 public class Action_P3 extends BaseFragment implements Delete_Serial, HttpRequest {
-
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
 
     ListView serial_numbers_list;
     Serials_ListView_Adapter adapter;
     View add_footer;
-    //private ArrayList<BBS_News> serials_data;
     private int action_id, model_id;
     private String serials, title, edited_serials;
-    DB db;
+    DB db = AppContr.db;
     Model model;
     Action action;
-    long item_position;
     Button action_register_model_button;
     ProgressDialog pDialog;
     boolean edit_mode = false;
@@ -102,12 +100,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         }
     }
 
-//    @Override
-//    public void onPause(){
-//        if( pDialog != null && pDialog.isShowing() )
-//            pDialog.dismiss();
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,7 +119,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         serials = getArguments().getString(Const.serials, null);
         if(serials != null){
             edited_serials = serials;
-            db = new DB(getActivity());
             Post_SN edit = db.getPostSNbyData(action_id, model_id, serials);
             model = new Model();
             model.setModel_name(edit.getModel_name());
@@ -145,9 +136,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
             title = getString(R.string.edit_title);
 
         } else {
-            db = new DB(getActivity());
             action = db.getActionById(action_id);
-            db = new DB(getActivity());
             model = db.getModelByIds(action_id, model_id);
             adapter = new Serials_ListView_Adapter(getActivity(), model.getModel_sn_count(), Action_P3.this, interfaces);
             title = getString(R.string.menu_action);
@@ -348,12 +337,11 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
     }
 
     private long savePostSN_toBase(Post_SN item){
-        db = new DB(getActivity());
-        return db.addPostSN(item);
+        long position = db.addPostSN(item);
+        return position;
     }
 
     private boolean editPostSN_toBase(Post_SN item, String old_serials){
-        db = new DB(getActivity());
         return db.setSerials_Post_SN_item(item, old_serials);
     }
 
@@ -403,7 +391,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                 Post_SN error_item = createItem();
                 error_item.setReg_status(Const.reg_status_error);
                 error_item.setFail_reason(data.getJSONObject(Const.JSON_Error).getString(Const.comment));
-                db = new DB(getActivity());
                 db.setStatus_Post_SN_item(error_item);
                 ClearOrFinish();
 
@@ -415,7 +402,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                     received.setReg_date(Utils.getMillisFromDate(data.getString(Const.date)));
                     received.setReg_status(Const.reg_status_ok);
                     received.setSerials(StringTools.ListFromString(data.getString(Const.serials)));
-                    db = new DB(getActivity());
                     if(db.setStatus_Post_SN_item(received)){
                         //model successfully registered
                         Dialogs.ShowRegDialog(getActivity(), true);
@@ -425,7 +411,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                         //something wrong with DB
 
                     }
-
 
                 }
 

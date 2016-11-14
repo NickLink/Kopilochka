@@ -17,6 +17,7 @@ public class Action {
     private String action_description;
     private ArrayList<Model> models = new ArrayList<Model>();
     private int viewed;
+    private String action_hash;
 
     public int getAction_id() {
         return action_id;
@@ -96,5 +97,13 @@ public class Action {
 
     public void setViewed(int viewed) {
         this.viewed = viewed;
+    }
+
+    public String getAction_hash() {
+        return action_hash;
+    }
+
+    public void setAction_hash(String action_hash) {
+        this.action_hash = action_hash;
     }
 }

@@ -10,6 +10,9 @@ public class Notice {
     private String notice_text;
     private int notice_type_id;
     private String notice_type;
+    private int viewed;
+    private String notice_hash;
+
 
     public int getNotice_id() {
         return notice_id;
@@ -49,5 +52,21 @@ public class Notice {
 
     public void setNotice_type(String notice_type) {
         this.notice_type = notice_type;
+    }
+
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
+    }
+
+    public String getNotice_hash() {
+        return notice_hash;
+    }
+
+    public void setNotice_hash(String notice_hash) {
+        this.notice_hash = notice_hash;
     }
 }

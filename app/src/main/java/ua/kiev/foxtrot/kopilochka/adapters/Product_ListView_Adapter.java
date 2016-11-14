@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
@@ -33,6 +34,12 @@ public class Product_ListView_Adapter extends BaseAdapter {
     public ArrayList<ProductGroup> getProduct_data(){
         return arrayList;
     }
+
+    public void setGroupViewed(int position){
+        this.arrayList.get(position).setViewed(Const.viewed_yes);
+        notifyDataSetChanged();
+    }
+
 
     public void setNotice_data(ArrayList<ProductGroup> arrayList){
         this.arrayList = arrayList;
@@ -67,6 +74,7 @@ public class Product_ListView_Adapter extends BaseAdapter {
 
         TextView title = (TextView)convertView.findViewById(R.id.title);
         TextView count = (TextView)convertView.findViewById(R.id.count);
+        View red_dot  = (View)convertView.findViewById(R.id.red_dot);
 
         ProductGroup feed = arrayList.get(position);
 
@@ -75,6 +83,10 @@ public class Product_ListView_Adapter extends BaseAdapter {
 
         title.setTypeface(calibri_bold);
         count.setTypeface(calibri_bold);
+
+        if(getItem(position).getViewed() == Const.viewed_no){
+            red_dot.setVisibility(View.VISIBLE);
+        } else red_dot.setVisibility(View.GONE);
 
         return convertView;
     }

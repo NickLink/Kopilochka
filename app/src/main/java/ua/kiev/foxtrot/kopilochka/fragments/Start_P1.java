@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Product_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Model;
@@ -39,7 +40,7 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
 
     Product_ListView_Adapter adapter;
     private ArrayList<BBS_News> news_data;
-    DB db;
+    DB db = AppContr.db;
     Cursor myCursor;
     TextView counter;
 
@@ -83,7 +84,6 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
         start_listview = (ListView)rootView.findViewById(R.id.listView);
         no_bonuses_layout = (RelativeLayout)rootView.findViewById(R.id.no_bonuses_layout);
 
-        db = new DB(getActivity());
         actionList = db.getActionArray();
 
         productList = new ArrayList<>();
@@ -100,10 +100,7 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
             //Бонусные акции отсутствуют
         }
 
-        db = new DB(getActivity());
-        db.open();
         productList.addAll(db.getGroupArray()); //productList.addAll(db.getGroupsNamesAndCount());
-        db.close();
         //
 
         if(productList != null && productList.size() != 0){
@@ -119,6 +116,9 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
                                 productList.get(i).getGroup_name(),
                                 0);
                     } else {
+                        adapter.setGroupViewed(i);
+                        db.setGroupViewed(adapter.getProduct_data().get(i).getGroup_id());
+
                         interfaces.ProductGroupSelected(
                                 productList.get(i).getGroup_id(),
                                 productList.get(i).getGroup_name(),

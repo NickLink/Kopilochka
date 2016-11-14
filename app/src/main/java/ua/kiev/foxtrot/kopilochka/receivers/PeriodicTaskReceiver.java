@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.MainActivity;
@@ -25,10 +24,8 @@ import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.utils.Encryption;
-import ua.kiev.foxtrot.kopilochka.utils.Parser;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -41,7 +38,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
     ArrayList<Notice> notices;
     ArrayList<Action> actions;
     Context context;
-    DB db;
+    DB db = AppContr.db;
     private static int notif_id;
 
 
@@ -93,29 +90,23 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         if(AppContr.getSharPref().getString(Const.SAVED_SES, null) != null) {
             Log.v("TAG", "SSS doPeriodicTask");
 
-            //BBS-------------------------------------------------
-//            Requests BBC_requests = new Requests(9, this);
-//            BBC_requests.getNewsData();
-
             //NOTICES----------------------------------------------
-            Requests notice_requests = new Requests(context, Const.getNotices, this);
-            HashMap<String, String> notice_params = new HashMap<String, String>();
-            notice_params.put(Const.method, Const.GetNotices);
-            notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-            notice_requests.getHTTP_Responce(notice_params);
+            Methods.GetNotificationList(context, this);
+//            Requests notice_requests = new Requests(context, Const.getNotices, this);
+//            HashMap<String, String> notice_params = new HashMap<String, String>();
+//            notice_params.put(Const.method, Const.GetNotices);
+//            notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+//                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+//            notice_requests.getHTTP_Responce(notice_params);
 
             //ACTIONS-----------------------------------------------
-            Requests actions_requests = new Requests(context, Const.getActions, this);
-            HashMap<String, String> actions_params = new HashMap<String, String>();
-            actions_params.put(Const.method, Const.GetActions);
-            actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-            actions_requests.getHTTP_Responce(actions_params);
-
-
-
-
+            Methods.GetActionList(context, this);
+//            Requests actions_requests = new Requests(context, Const.getActions, this);
+//            HashMap<String, String> actions_params = new HashMap<String, String>();
+//            actions_params.put(Const.method, Const.GetActions);
+//            actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
+//                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
+//            actions_requests.getHTTP_Responce(actions_params);
 
         } else {
             //do nothing
@@ -127,44 +118,27 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
     public void http_result(int type, String result) {
         switch (type){
             case Const.getNotices:
-                notices = Parser.getNoticesArray(result);
-                if(notices != null){
-                    //Notices ok
-                    //CreateNotification("getNotices", "Data ok", "");
-                    PutNoticesInDatabase(notices);
-                } else {
-                    //Some error happened
-                    CreateNotification("Error", "getNotices Data structure corrupted", "");
+                if(Methods.PutNotificationInBase(context, result)){
+                    //Create notification for new Action
+                    CreateNotification("Повідомлення", "Отримано нові повідомлення", "");
                 }
 
                 break;
+
             case Const.getActions:
-                actions = Parser.getActionsArray(result);
-                if(actions != null){
-                    //Actions ok
-                    //CreateNotification("getActions", "Data ok", "");
-                    PutActionsInDatabase(actions);
-                } else {
-                    //Some error happened
-                    CreateNotification("Error", "getActions Data structure corrupted", "");
+                if(Methods.PutActionInBase(context, result)){
+                    //Create notification for new Action
+                    CreateNotification("Повідомлення", "Отримано нові акції", "");
                 }
 
-
-
-                break;
-            case 9:
-
-                news = Parser.getNewsArray(result);
-                if(news!=null){
-                    CreateNotification("News", "Data ok", "");
-                    PutNewsInDatabase(news);
-                } else {
-                    CreateNotification("Error", "News Data structure corrupted", "");
+                if(Methods.PutGroupsInBase(context, result)){
+                    //Create notofication for new Group
+                    CreateNotification("Повідомлення", "Отримано нові групи товарів", "");
                 }
 
                 break;
+
         }
-
 
     }
 
@@ -173,20 +147,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         CreateNotification("Error", "Download data error", error);
     }
 
-
-    private void PutNewsInDatabase(ArrayList<BBS_News> news) {
-        db = new DB(context);
-        //db.open();
-        if(db.addNewsArray(news)){
-            //Data to base added successfully
-        } else {
-            CreateNotification("Error", "Database Transaction FAIL", "");
-        }
-        //db.close();
-    }
-
     private void PutNoticesInDatabase(ArrayList<Notice> notices) {
-        db = new DB(context);
         if(db.addNoticeArray(notices)){
             //Data to base added successfully
         } else {
@@ -195,7 +156,6 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
     }
 
     private void PutActionsInDatabase(ArrayList<Action> actions) {
-        db = new DB(context);
         if(db.addActionArray(actions)){
             //Data to base added successfully
         } else {

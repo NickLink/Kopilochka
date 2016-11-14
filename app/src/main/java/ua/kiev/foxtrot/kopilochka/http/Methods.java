@@ -29,11 +29,23 @@ public class Methods {
         actions_requests.getHTTP_Responce(actions_params);
     }
 
-    public static void PutActionInBase(Context context, String result){
+    public static boolean PutActionInBase(Context context, String result){
+        boolean new_actions = false;
         ArrayList<Action> actions = new ArrayList<>();
         actions = Parser.getActionsArray(result);
         if(actions != null) {
-            DB db = new DB(context);
+            DB db = AppContr.db;
+            //Go to check existing base
+            for(int i = 0 ; i < actions.size() ; i++){
+                //Action item_new = actions.get(i);
+                Action item_old = db.getActionById(actions.get(i).getAction_id());
+                if(item_old != null && actions.get(i).getAction_hash().equals(item_old.getAction_hash())){
+                    actions.get(i).setViewed(item_old.getViewed());
+                } else {
+                    new_actions = true;
+                }
+
+            }
             if (db.addActionArray(actions)) {
                 //Data to base added successfully
             } else {
@@ -42,7 +54,7 @@ public class Methods {
         } else {
             Log.v("Error", "SSS Methods Parser.getActionsArray error");
         }
-
+        return new_actions;
     }
 
     public static void GetNotificationList(Context context, HttpRequest request) {
@@ -54,12 +66,16 @@ public class Methods {
         notice_requests.getHTTP_Responce(notice_params);
     }
 
-    public static void PutNotificationInBase(Context context, String result){
+    public static boolean PutNotificationInBase(Context context, String result){
+        boolean new_notification = false;
         ArrayList<Notice> notices = new ArrayList<>();
         notices = Parser.getNoticesArray(result);
         if(notices != null) {
-            //Actions ok
-            DB db = new DB(context);
+            //Notifications ok
+            DB db = AppContr.db;
+            //Check for new Notifications
+
+
             if (db.addNoticeArray(notices)) {
                 //Data to base added successfully
             } else {
@@ -68,23 +84,35 @@ public class Methods {
         } else {
             Log.v("Error", "SSS Methods Parser.getNoticesArray error");
         }
+        return new_notification;
     }
 
-    public static void PutGroupsInBase(Context context, String result){
+    public static boolean PutGroupsInBase(Context context, String result){
+        boolean new_groups = false;
         ArrayList<ProductGroup> arrayList = Parser.getProductGroupArray(result);
         if(arrayList != null) {
             //Actions ok
-            DB db = new DB(context);
-            db.open();
+            DB db = AppContr.db;
+            //Go to check existing base
+            for(int i = 0 ; i < arrayList.size() ; i++){
+                //Action item_new = actions.get(i);
+                ProductGroup item_old = db.getGroupById(arrayList.get(i).getGroup_id());
+                if(item_old != null && arrayList.get(i).getGroup_hash().equals(item_old.getGroup_hash())){
+                    arrayList.get(i).setViewed(item_old.getViewed());
+                } else {
+                    new_groups = true;
+                }
+            }
+
             if (db.addGroupArray(arrayList)) {
                 //Data to base added successfully
             } else {
                 Log.v("Error", "SSS Methods PutGroupsInBase error");
             }
-            db.close();
         } else {
             Log.v("Error", "SSS Methods Parser.PutGroupsInBase error");
         }
+        return new_groups;
     }
 
 }

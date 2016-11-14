@@ -19,6 +19,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.adapters.Notif_ListView_Adapter;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
@@ -36,7 +37,7 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
     ListView notif_listview;
     Notif_ListView_Adapter adapter;
     //ArrayList<Notice> notif_data;
-    DB db;
+    DB db = AppContr.db;
     private Typeface calibri_bold;
 
     public static Notif_P1 newInstance() {
@@ -64,9 +65,6 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
                 false);
 
         calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
-        //notif_data = new ArrayList<Notice>();
-        db = new DB(getActivity());
-        //notif_data = db.getNoticeArray();
 
         notif_listview = (ListView) rootView.findViewById(R.id.notif_listview);
         adapter = new Notif_ListView_Adapter(getActivity(), db.getNoticeArray());
@@ -132,7 +130,6 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
         switch (type){
             case Const.getNotices:
                 Methods.PutNotificationInBase(getActivity(), result);
-                db = new DB(getActivity());
                 adapter.setNotice_data(db.getNoticeArray());
                 adapter.notifyDataSetChanged();
 //                ArrayList<Notice> notices = new ArrayList<>();
@@ -155,7 +152,6 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
     }
 
     private boolean PutNoticesInDatabase(ArrayList<Notice> notices) {
-        db = new DB(getActivity());
         if(db.addNoticeArray(notices)){
             //Data to base added successfully
             return true;

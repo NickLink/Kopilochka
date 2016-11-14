@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
@@ -30,6 +31,11 @@ public class Action_ListView_Adapter extends BaseAdapter {
         this.context = context;
         this._action_data = action_data;
         calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+    }
+
+    public void setActionViewed(int position){
+        this._action_data.get(position).setViewed(Const.viewed_yes);
+        notifyDataSetChanged();
     }
 
     public ArrayList<Action> getAction_data(){
@@ -71,7 +77,7 @@ public class Action_ListView_Adapter extends BaseAdapter {
         //NetworkImageView imageView = (NetworkImageView)convertView.findViewById(R.id.imageView);
         TextView action_name = (TextView)convertView.findViewById(R.id.title);
         TextView action_count = (TextView)convertView.findViewById(R.id.count);
-
+        View red_dot  = (View)convertView.findViewById(R.id.red_dot);
         //BBS_News feed = action_data.get(position);
 
         //imageView.setImageUrl(feed.getUrlToImage(), imageLoader);
@@ -79,6 +85,10 @@ public class Action_ListView_Adapter extends BaseAdapter {
         action_count.setText(String.valueOf(getItem(position).getModels().size()));
         action_name.setTypeface(calibri_bold);
         action_count.setTypeface(calibri_bold);
+
+        if(getItem(position).getViewed() == Const.viewed_no){
+            red_dot.setVisibility(View.VISIBLE);
+        } else red_dot.setVisibility(View.GONE);
 
         return convertView;
     }

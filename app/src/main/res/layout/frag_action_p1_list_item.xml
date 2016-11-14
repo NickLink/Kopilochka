@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/action_name"
-        style="@style/myTitle_TextStyle"
+        style="@style/myRegular_21"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="6"
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/action_count"
-            style="@style/myTitle_TextStyle"
+            style="@style/myWhite_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />

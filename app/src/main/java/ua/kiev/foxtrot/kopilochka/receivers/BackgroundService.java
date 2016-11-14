@@ -60,7 +60,6 @@ public class BackgroundService extends Service {
         super.onCreate();
         Log.v("", "SSS onCreate Service Started");
         es = Executors.newFixedThreadPool(1);
-
     }
 
     @Override
@@ -69,8 +68,6 @@ public class BackgroundService extends Service {
         Log.v("", "SSS Service stopped");
         mPeriodicTaskReceiver.stopPeriodicTaskHeartBeat(BackgroundService.this);
     }
-
-
 
     @Nullable
     @Override
