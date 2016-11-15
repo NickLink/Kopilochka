@@ -24,6 +24,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import test.com.pstat.PstatProvider;
 import ua.kiev.foxtrot.kopilochka.adapters.SliderMenuAdapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.database.DB;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         setContentView(R.layout.activity_main);
 
         db.create();
+
+        PstatProvider item = new PstatProvider();
+        item.init(getBaseContext());
+        item.addEvent("Kopilka", null);
 
         encrypt = Encryption.getDefault("Key", "Disabled", new byte[16]);
         calibri = FontCache.get("fonts/calibri.ttf", getBaseContext());

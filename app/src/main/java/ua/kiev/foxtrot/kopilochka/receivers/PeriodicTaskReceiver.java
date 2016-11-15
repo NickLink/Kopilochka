@@ -15,15 +15,17 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.MainActivity;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
-import ua.kiev.foxtrot.kopilochka.data.BBS_News;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
+import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
+import ua.kiev.foxtrot.kopilochka.http.Connect;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 
@@ -33,13 +35,17 @@ import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpRequest{
 
     private static final String TAG = "PeriodicTaskReceiver";
-    private static final String INTENT_ACTION = "com.example.app.PERIODIC_TASK_HEART_BEAT";
-    ArrayList<BBS_News> news;
-    ArrayList<Notice> notices;
-    ArrayList<Action> actions;
+    private static final String INTENT_ACTION = "ua.kiev.foxtrot.kopilochka.app.PERIODIC_TASK_HEART_BEAT";
+    List<Post_SN> arrayList;
+//    ArrayList<BBS_News> news;
+//    ArrayList<Notice> notices;
+//    ArrayList<Action> actions;
     Context context;
     DB db = AppContr.db;
     private static int notif_id;
+    private Post_SN register_item;
+
+    private static int succes_count = 0, error_count = 0;
 
 
     @Override
@@ -87,26 +93,11 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
 
     private void doPeriodicTask(Context context, AppContr appContr) {
         // Periodic task(s) go here ...
-        if(AppContr.getSharPref().getString(Const.SAVED_SES, null) != null) {
+        if(AppContr.getSharPref().getString(Const.SAVED_SES, null) != null && Connect.isOnline(context)) {
             Log.v("TAG", "SSS doPeriodicTask");
-
+            //Start from notices & continue after it
             //NOTICES----------------------------------------------
             Methods.GetNotificationList(context, this);
-//            Requests notice_requests = new Requests(context, Const.getNotices, this);
-//            HashMap<String, String> notice_params = new HashMap<String, String>();
-//            notice_params.put(Const.method, Const.GetNotices);
-//            notice_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-//                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-//            notice_requests.getHTTP_Responce(notice_params);
-
-            //ACTIONS-----------------------------------------------
-            Methods.GetActionList(context, this);
-//            Requests actions_requests = new Requests(context, Const.getActions, this);
-//            HashMap<String, String> actions_params = new HashMap<String, String>();
-//            actions_params.put(Const.method, Const.GetActions);
-//            actions_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-//                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-//            actions_requests.getHTTP_Responce(actions_params);
 
         } else {
             //do nothing
@@ -122,7 +113,8 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                     //Create notification for new Action
                     CreateNotification("Повідомлення", "Отримано нові повідомлення", "");
                 }
-
+                //ACTIONS-----------------------------------------------
+                Methods.GetActionList(context, this);
                 break;
 
             case Const.getActions:
@@ -135,16 +127,39 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                     //Create notofication for new Group
                     CreateNotification("Повідомлення", "Отримано нові групи товарів", "");
                 }
-
+                //POST_SN------------------------------------------------
+                arrayList = db.getPost_SN_List(Const.reg_status_await);
+                doSerialsRegister();
                 break;
-
+            case Const.postSN:
+                if(Methods.RegisterReceive(context, result, register_item)){
+                    succes_count++;
+                } else {
+                    error_count++;
+                }
+                if(arrayList !=null && arrayList.size() > 0) doSerialsRegister();
+                break;
         }
+    }
 
+    void doSerialsRegister(){
+        if(arrayList !=null && arrayList.size() > 0) {
+            register_item = arrayList.get(0);
+            Methods.post_SN(context, register_item, this);
+            arrayList.remove(0);
+            Log.v("TAG", "DDD Send " + "new " + " item");
+        }
+        if(arrayList !=null && arrayList.size() == 0 && (succes_count > 0 || error_count > 0)){
+            CreateNotification("Повідомлення", "Вдало зареєстровано - " + String.valueOf(succes_count)
+                    + " невдалих реєстрацій - " + String.valueOf(error_count) , "");
+            succes_count = 0;
+            error_count = 0;
+        }
     }
 
     @Override
     public void http_error(int type, String error) {
-        CreateNotification("Error", "Download data error", error);
+        CreateNotification("Повідомлення", "Помилка інтернет з\'єднання", error);
     }
 
     private void PutNoticesInDatabase(ArrayList<Notice> notices) {
@@ -200,12 +215,13 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         long[] vibrate = new long[] { 1000, 1000, 1000 };
 
         Notification builder = new Notification.Builder(context)
-                .setTicker("New news")
+                .setTicker("Повідомлення")
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.logo_with_stroke).setContentIntent(pIntent)
-                .addAction(R.drawable.pencil, "Open", pIntent)
-                .addAction(R.drawable.del, "Later", pIntent)
+                .setSmallIcon(R.drawable.bug)
+                .setContentIntent(pIntent)
+                //.addAction(R.drawable.pencil, "Open", pIntent)
+                //.addAction(R.drawable.del, "Later", pIntent)
                 .setSound(ringURI)
                 //.setVibrate(vibrate)
                 .build();

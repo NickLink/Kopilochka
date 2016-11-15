@@ -142,6 +142,7 @@ public class Parser {
             item.setNotice_text(jsonObject.getString(Const.notice_text));
             item.setNotice_type_id(jsonObject.getInt(Const.notice_type_id));
             item.setNotice_type(jsonObject.getString(Const.notice_type));
+            item.setNotice_hash(jsonObject.getString(Const.notice_hash));
         } catch (JSONException e) {
             Log.v("", "SSS get_Notice JSONException=" + e.toString());
             return null;

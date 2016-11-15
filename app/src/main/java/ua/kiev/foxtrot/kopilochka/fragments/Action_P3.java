@@ -23,9 +23,6 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
@@ -36,13 +33,12 @@ import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Connect;
-import ua.kiev.foxtrot.kopilochka.http.Requests;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
-import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -296,27 +292,13 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
 
             pDialog = new ProgressDialog(getActivity());
             pDialog.show();
+            Methods.post_SN(getActivity(), item, this);
 
-            Requests requests = new Requests(getActivity(), Const.postSN, this);
-            HashMap<String, String> post_params = new HashMap<String, String>();
-            post_params.put(Const.method, Const.PostSN);
-            post_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
-                    .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));
-            post_params.put(Const.action_id, String.valueOf(item.getAction_id()));
-            post_params.put(Const.model_id, String.valueOf(item.getModel_id()));
-            post_params.put(Const.date, Utils.getDateFromMillis(item.getReg_date()));
-            post_params.put(Const.serials, StringTools.StringFromList(item.getSerials()));
-            Log.v("", "2121 serials = " + item.getSerials().toString());
-            for (Map.Entry<String, String> entry: post_params.entrySet()) {
-                Log.v("", "2121 " + entry.getKey() + " = " + entry.getValue());
-            }
-            requests.getHTTP_Responce(post_params);
         } else {
             Dialogs.ShowInternetDialog(getActivity(), getString(R.string.hist_reg_with_inet));
             ClearOrFinish();
             //adapter.getSerials_data().clear();
         }
-
 
     }
 

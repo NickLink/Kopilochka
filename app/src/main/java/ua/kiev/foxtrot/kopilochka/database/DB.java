@@ -70,6 +70,12 @@ public class DB {
         return mDB.query(Tables.table_name_notices, null, null, null, null, null, null);
     }
 
+    public Cursor getNoticeByIdCursor(int id) {
+        String selection = Const.notice_id + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        return mDB.query(Tables.table_name_notices, null, selection, selectionArgs, null, null, null);
+    }
+
     public long addNotice(Notice data) {
         ContentValues cv = new ContentValues();
         cv.put(Const.notice_id, data.getNotice_id());
@@ -117,6 +123,15 @@ public class DB {
         item.setViewed(cursor.getInt(cursor.getColumnIndex(Const.viewed)));
         item.setNotice_hash(cursor.getString(cursor.getColumnIndex(Const.notice_hash)));
         return item;
+    }
+
+    public Notice getNoticeById(int id){
+        Cursor cursor = this.getNoticeByIdCursor(id);
+        if (cursor.moveToFirst()){
+            Notice item = this.getNotice(cursor);
+            return item;
+        } else
+            return null;
     }
 
     public ArrayList<Notice> getNoticeArray(){
