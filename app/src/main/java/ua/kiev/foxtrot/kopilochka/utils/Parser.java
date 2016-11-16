@@ -1,5 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.Const;
+import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.Charge;
 import ua.kiev.foxtrot.kopilochka.data.FinInfo;
@@ -88,10 +90,18 @@ public class Parser {
         return item;
     }
 
-    public static ArrayList<ProductGroup> getProductGroupArray(String result){
+    public static ArrayList<ProductGroup> getProductGroupArray(Context context, String result){
         ArrayList<ProductGroup> arrayList = new ArrayList<ProductGroup>();
         try{
             JSONObject data = new JSONObject(result);
+            //Check for accumulating_actions_hash
+            if(data.has(Const.accumulating_actions_hash)){
+                ProductGroup item = new ProductGroup();
+                item.setGroup_id(-1);
+                item.setGroup_name(context.getString(R.string.start_cumulative_points));
+                item.setGroup_hash(data.getString(Const.accumulating_actions_hash));
+                arrayList.add(item);
+            }
             JSONArray jsonArray = data.getJSONArray(Const.groups);
             for (int i = 0;i<jsonArray.length();i++){
                 ProductGroup item = getProductGroup(jsonArray.getJSONObject(i));

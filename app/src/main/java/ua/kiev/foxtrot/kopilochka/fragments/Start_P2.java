@@ -77,10 +77,10 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
                 false);
 
         calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
-        model_group_id = getArguments().getInt(Const.model_group_id, -1);
+        model_group_id = getArguments().getInt(Const.model_group_id, -2);
         model_group_name = getArguments().getString(Const.model_group_name);
-        action_type_id = getArguments().getInt(Const.action_type_id, -1);
-        if(model_group_id == -1 || model_group_name.isEmpty() || action_type_id == -1){
+        action_type_id = getArguments().getInt(Const.action_type_id, -2);
+        if(model_group_id == -2 || model_group_name.isEmpty() || action_type_id == -2){
             //Error getting data
             Dialogs.ShowDialog(getActivity(), "Error", "Start P2  Model group error", "OK");
             return null;

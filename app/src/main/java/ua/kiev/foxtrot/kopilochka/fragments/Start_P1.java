@@ -23,7 +23,6 @@ import ua.kiev.foxtrot.kopilochka.adapters.Product_ListView_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.BBS_News;
-import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
@@ -49,7 +48,7 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
 
     //ACTIONS WORKING
     private ArrayList<Action> actionList;
-    private ArrayList<Model> modelList;
+    //private ArrayList<Model> modelList;
     private ArrayList<ProductGroup> productList;
     private int cumulative_count = 0;
     ListView start_listview;
@@ -85,40 +84,56 @@ public class Start_P1 extends BaseFragment implements HttpRequest{
         no_bonuses_layout = (RelativeLayout)rootView.findViewById(R.id.no_bonuses_layout);
 
         actionList = db.getActionArray();
+        productList = db.getGroupArray();
 
-        productList = new ArrayList<>();
-        if(actionList != null){
+//        productList = new ArrayList<>();
+//        productList.addAll(db.getGroupArray());
+//        if(actionList != null){
+//            cumulative_count = LookForCumulativeActions(actionList);
+//            if(cumulative_count > 0){
+//                ProductGroup item = new ProductGroup();
+//                item.setGroup_name(getString(R.string.start_cumulative_points));
+//                item.setModels_count(cumulative_count);
+//                productList.add(item);
+//            }
+//
+//        } else {
+//            //Бонусные акции отсутствуют
+//        }
+
+        if(actionList != null && actionList.size() > 0) {
             cumulative_count = LookForCumulativeActions(actionList);
-            if(cumulative_count > 0){
-                ProductGroup item = new ProductGroup();
-                item.setGroup_name(getString(R.string.start_cumulative_points));
-                item.setModels_count(cumulative_count);
-                productList.add(item);
+            if (cumulative_count != 0) {
+                productList.get(0).setModels_count(cumulative_count);
+            } else {
+                productList.remove(0);
             }
 
-        } else {
-            //Бонусные акции отсутствуют
-        }
 
-        productList.addAll(db.getGroupArray()); //productList.addAll(db.getGroupsNamesAndCount());
-        //
+//        if(productList != null && productList.size() != 0){
+//            for(ProductGroup d : productList){
+//                if(d.getGroup_id() != 0 && d.getGroup_id() == -1){
+//                    cumulative_count = LookForCumulativeActions(actionList);
+//                        productList.get(productList.indexOf(d)).setModels_count(cumulative_count);
+//                        productList.remove(productList.indexOf(d));
+//
+//                }
+//            }
 
-        if(productList != null && productList.size() != 0){
             adapter = new Product_ListView_Adapter(getActivity(), productList);
             start_listview.setAdapter(adapter);
 
             start_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    adapter.setGroupViewed(i);
+                    db.setGroupViewed(adapter.getProduct_data().get(i).getGroup_id());
                     if(cumulative_count > 0 && i == 0) {
                         interfaces.ProductGroupSelected(
                                 productList.get(i).getGroup_id(),
                                 productList.get(i).getGroup_name(),
                                 0);
                     } else {
-                        adapter.setGroupViewed(i);
-                        db.setGroupViewed(adapter.getProduct_data().get(i).getGroup_id());
-
                         interfaces.ProductGroupSelected(
                                 productList.get(i).getGroup_id(),
                                 productList.get(i).getGroup_name(),

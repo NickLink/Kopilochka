@@ -110,6 +110,7 @@ public class Const {
     public static final String group_name = "group_name";
     public static final String group_hash = "group_hash";
     public static final String group_count = "group_count";
+    public static final String accumulating_actions_hash = "accumulating_actions_hash";
 
     //PostSN
     public static final int postSN = 4;

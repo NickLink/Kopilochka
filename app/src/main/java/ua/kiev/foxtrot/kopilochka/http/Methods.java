@@ -104,7 +104,7 @@ public class Methods {
 
     public static boolean PutGroupsInBase(Context context, String result) {
         boolean new_groups = false;
-        ArrayList<ProductGroup> arrayList = Parser.getProductGroupArray(result);
+        ArrayList<ProductGroup> arrayList = Parser.getProductGroupArray(context, result);
         if (arrayList != null) {
             //Actions ok
             DB db = AppContr.db;

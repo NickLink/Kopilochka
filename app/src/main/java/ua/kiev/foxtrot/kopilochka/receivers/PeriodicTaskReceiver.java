@@ -137,23 +137,26 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 } else {
                     error_count++;
                 }
-                if(arrayList !=null && arrayList.size() > 0) doSerialsRegister();
+                if(arrayList !=null && arrayList.size() > 0) {
+                    doSerialsRegister();
+                } else {
+                    if(arrayList !=null && arrayList.size() == 0 && (succes_count > 0 || error_count > 0)){
+                        CreateNotification("Повідомлення", "Вдало зареєстровано - " + String.valueOf(succes_count)
+                                + System.getProperty("line.separator") + " невдалих реєстрацій - " + String.valueOf(error_count) , "");
+                        succes_count = 0;
+                        error_count = 0;
+                    }
+                }
                 break;
         }
     }
 
     void doSerialsRegister(){
         if(arrayList !=null && arrayList.size() > 0) {
-            register_item = arrayList.get(0);
+            register_item = arrayList.get(arrayList.size()-1);
             Methods.post_SN(context, register_item, this);
-            arrayList.remove(0);
+            arrayList.remove(arrayList.size()-1);
             Log.v("TAG", "DDD Send " + "new " + " item");
-        }
-        if(arrayList !=null && arrayList.size() == 0 && (succes_count > 0 || error_count > 0)){
-            CreateNotification("Повідомлення", "Вдало зареєстровано - " + String.valueOf(succes_count)
-                    + " невдалих реєстрацій - " + String.valueOf(error_count) , "");
-            succes_count = 0;
-            error_count = 0;
         }
     }
 
@@ -166,7 +169,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         if(db.addNoticeArray(notices)){
             //Data to base added successfully
         } else {
-            CreateNotification("Error", "Database notices Transaction FAIL", "");
+            CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
         }
     }
 
@@ -174,7 +177,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         if(db.addActionArray(actions)){
             //Data to base added successfully
         } else {
-            CreateNotification("Error", "Database actions Transaction FAIL", "");
+            CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
         }
     }
 
@@ -220,6 +223,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 .setContentText(text)
                 .setSmallIcon(R.drawable.bug)
                 .setContentIntent(pIntent)
+                .setStyle(new Notification.BigTextStyle().bigText(text))
                 //.addAction(R.drawable.pencil, "Open", pIntent)
                 //.addAction(R.drawable.del, "Later", pIntent)
                 .setSound(ringURI)

@@ -248,6 +248,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                 serial.setText("");
             }
         });
+        dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
