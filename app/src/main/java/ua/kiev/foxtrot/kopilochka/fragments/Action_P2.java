@@ -32,12 +32,12 @@ public class Action_P2 extends BaseFragment {
     private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
+
     private int action_id;
 
     ListView models_list;
     Models_ListView_Adapter adapter;
     View action_header;
-    //ArrayList<Model> models_data;
     DB db = AppContr.db;
     Action action;
     private Typeface calibri, calibri_bold;

@@ -37,13 +37,12 @@
             android:layout_marginRight="5dp" />
 
         <View
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
             android:id="@+id/red_dot"
             android:background="@drawable/red_dot"
             android:visibility="gone"
             android:layout_marginTop="-5dp"
-            android:layout_alignParentTop="false"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/count" />
 

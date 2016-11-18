@@ -11,7 +11,6 @@
     <!--Common values-->
     <string name="ok">Ок</string>
 
-
     <string name="log_01_work_with">Програма працює лише з зареєстрованими учасниками партнерської програми F5.</string>
     <string name="log_01_to_manager">Якщо Ви не маєте логіну/паролю або забули, зверніться до відповідального менеджера F5.</string>
     <string name="log_01_login_text">Логін</string>
@@ -21,8 +20,6 @@
     <string name="log_01_sorry_expl">Ви можете звернутися за роз\'ясненням до відповідального менеджеру F5, або видалити програму.</string>
     <string name="log_01_not_active">Вибачте, але Ваш профіль заблоковано.</string>
     <string name="log_01_not_active_expl">Ви можете звернутися за роз\'ясненням до відповідального менеджеру F5, або видалити програму.</string>
-
-
 
     <string name="act_01_no_bonuses">На данний момент нарахування бонусів не проводиться. Чекайте повідомлення.</string>
     <string name="act_list_name">Назва</string>
@@ -89,9 +86,6 @@
 
     <string name="start_cumulative_points">Накопичувальні бали</string>
 
-
-
-
     <string name="wtf_name_text">ПІБ:</string>
     <string name="wtf_email_text">email:</string>
     <string name="wtf_text_text">Питання:</string>
@@ -101,41 +95,43 @@
     <string name="wtf_sent_success">Питання успішно відправлено.</string>
 
 
-    <string name="cancel_scan">Отменить</string>
-    <string name="data_enter_email_text">Введите email</string>
-    <string name="data_enter_password_text">Введите пароль</string>
+    <string name="cancel_scan">Відмінити</string>
 
-    <string name="input_error">Ошибка ввода данных</string>
-    <string name="fill_all_fields">Заполните все поля</string>
+    <!--<string name="data_enter_email_text">Введите email</string>-->
+    <!--<string name="data_enter_password_text">Введите пароль</string>-->
+
+    <string name="input_error">Помилка вводу даних.</string>
+    <string name="fill_all_fields">Заповніть будь ласка всі поля вірно.</string>
     <string name="input_ok">Ок</string>
 
-
-    <!--Error codes-->
-    <string name="incorrect_login_password">Введенные логин/пароль отсутствуют в БД пользователей</string>
-    <string name="not_active">Пользователю закрыт доступ к функционалу приложения</string>
-    <string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>
-    <string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>
-    <string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>
+    <string name="data_loading">Дані завантажуються. Хвилинку...</string>
+    <!--&lt;!&ndash;Error codes&ndash;&gt;-->
+    <!--<string name="incorrect_login_password">Введенные логин/пароль отсутствуют в БД пользователей</string>-->
+    <!--<string name="not_active">Пользователю закрыт доступ к функционалу приложения</string>-->
+    <!--<string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>-->
+    <!--<string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>-->
+    <!--<string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>-->
 
 
 
 
 
     <string name="wtf_ok">Ок</string>
+    <string name="warning_title">Увага!</string>
 
-    <string name="warning_title">Внимание!</string>
-    <string name="warning_session_expired">Время токена соединения истекло - перелогиньтесь пожалуйста.</string>
-    <string name="warning_user_not_active">Пользователь не активен, обратитесь за разъяснениями к администрации Ф5.</string>
+    <string name="warning_session_expired">Час токену вичерпано - залогіньтесь будь ласка.</string>
+    <string name="warning_user_not_active">Профіль користувача не активний, зверніться будь ласка до адміністрації Ф5.</string>
     <string name="warning_ok">Ок</string>
-    <string name="unknown_error">Неизвестная ошибка - обратитесь к разработчику</string>
+    <string name="unknown_error">Невідома помилка - зверніться до розробника будь ласка.</string>
 
     <string name="menu_exit_title">Вихід</string>
     <string name="menu_exit_text">Ви впевнені?</string>
     <string name="menu_exit_yes"> Так </string>
     <string name="menu_exit_no"> Ні </string>
 
-    <string name="edit_title">Редактирование</string>
+    <string name="edit_title">Редагування</string>
 
-
+    <string name="internal_base_error_title"> Помилка </string>
+    <string name="internal_base_error_text"> Пошкоджено внутрішню базу, перевстановіть додаток. </string>
 
 </resources>

@@ -36,7 +36,6 @@ public class Dialogs {
         cancelBtn.setTypeface(calibri_bold);
         Title.setText(title);
         Title.setTypeface(calibri_bold);
-
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

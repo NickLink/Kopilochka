@@ -3,7 +3,6 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,15 +75,15 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
             @Override
             public void onRefresh() {
                 getFromInternet();
-                Log.v("", "SSS Refresh Started ");
-                new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
-                        //Run refresh querry
-                        adapter.setNotice_data(db.getNoticeArray());
-
-                        Log.v("", "SSS Refresh finished ");
-                    }
-                }, 1000);
+//                Log.v("", "SSS Refresh Started ");
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override public void run() {
+//                        //Run refresh querry
+//                        adapter.setNotice_data(db.getNoticeArray());
+//
+//                        Log.v("", "SSS Refresh finished ");
+//                    }
+//                }, 1000);
 
             }
         });
@@ -132,16 +131,6 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
                 Methods.PutNotificationInBase(getActivity(), result);
                 adapter.setNotice_data(db.getNoticeArray());
                 adapter.notifyDataSetChanged();
-//                ArrayList<Notice> notices = new ArrayList<>();
-//                notices = Parser.getNoticesArray(result);
-//                if(notices != null){
-//                    //Actions ok
-//                    if(PutNoticesInDatabase(notices)) {
-//                        adapter.setNotice_data(notices);
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                }
-
         }
     }
 

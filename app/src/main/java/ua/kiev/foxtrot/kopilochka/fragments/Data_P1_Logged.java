@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
 public class Data_P1_Logged extends BaseFragment implements HttpRequest {
 
     private long mLastClickTime = 0;
-
     Interfaces interfaces;
 
     private Button data_show_extra_button; //data_show_logout_button;
@@ -90,6 +90,10 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
         data_show_extra_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 interfaces.ShowDataExtra();
             }
         });
@@ -97,6 +101,10 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 Dialogs.ShowLogoutDialog(getActivity(), interfaces);
             }
         });

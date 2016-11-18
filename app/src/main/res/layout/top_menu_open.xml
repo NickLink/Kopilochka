@@ -19,10 +19,20 @@
         style="@style/myWhite_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/menu_item_icon"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_with_stroke"
+        android:id="@+id/imageView6"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>

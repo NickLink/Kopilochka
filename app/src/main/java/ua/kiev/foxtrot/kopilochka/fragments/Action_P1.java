@@ -37,7 +37,6 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
     ListView action_listview;
     SwipeRefreshLayout swipeRefreshLayout;
     Action_ListView_Adapter adapter;
-    //private ArrayList<BBS_News> action_data;
     DB db = AppContr.db;
     private Typeface calibri_bold;
 

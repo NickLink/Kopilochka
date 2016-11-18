@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import ua.kiev.foxtrot.kopilochka.R;
  * Created by NickNb on 04.10.2016.
  */
 public class ScanFragment extends BaseFragment implements ZBarScannerView.ResultHandler {
+    private long mLastClickTime = 0;
     private ZBarScannerView mScannerView;
     Interfaces interfaces;
     int id;
@@ -55,6 +57,10 @@ public class ScanFragment extends BaseFragment implements ZBarScannerView.Result
         cancel_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 interfaces.ScannResult(id, null);
             }
         });

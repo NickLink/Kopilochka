@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -159,6 +160,10 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         serial_numbers_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 ShowSerialDialog(i);
             }
         });
@@ -175,6 +180,10 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         action_register_model_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 goRegister();
             }
         });
@@ -215,7 +224,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
 
         serial.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable s) {
-                if(serial.getText().toString().length() != 0) {
+                if(serial.getText().toString().trim().length() != 0) {
                     ok.setEnabled(true);
                     delete.setEnabled(true);
                 } else {
@@ -230,7 +239,11 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.getSerials_data().set(position,serial.getText().toString());
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                adapter.getSerials_data().set(position,serial.getText().toString().trim());
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -238,6 +251,10 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 interfaces.ScannStart(position);
                 dialog.dismiss();
             }
@@ -245,6 +262,10 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 serial.setText("");
             }
         });
@@ -416,6 +437,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                 adapter.getSerials_data().set(i, "");
             }
             adapter.notifyDataSetChanged();
+            action_register_model_button.setEnabled(false);
         }
     }
 

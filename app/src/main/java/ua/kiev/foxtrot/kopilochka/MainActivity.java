@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     RelativeLayout drawerView;
     RelativeLayout mainView;
     ListView list_slidermenu;
+    SliderMenuAdapter adapter;
     ArrayList<String> menu_items;
     TextView main_text, menu_text;
     Button open_close;
@@ -121,14 +122,16 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         mDrawerLayout.setScrimColor(getResources().getColor(android.R.color.transparent));
 
         list_slidermenu.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        SliderMenuAdapter adapter = new SliderMenuAdapter(MainActivity.this);
+        adapter = new SliderMenuAdapter(MainActivity.this);
         list_slidermenu.setAdapter(adapter);
 
         list_slidermenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
+                adapter.setViewed(i);
+                switch (i) {
                     case 0:
+                        Utils.setGroupViewed();
                         fragmentManager
                                 .beginTransaction()
                                 .replace(R.id.fragment_place,
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
                         break;
                     case 1:
+                        Utils.setNoticeViewed();
                         fragmentManager
                                 .beginTransaction()
                                 .replace(R.id.fragment_place,
@@ -143,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
                         break;
                     case 2:
+                        Utils.setActionViewed();
                         fragmentManager
                                 .beginTransaction()
                                 .replace(R.id.fragment_place,
@@ -172,10 +177,10 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
             }
         });
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        if(fragmentList !=null && fragmentList.get(fragmentList.size()-1)!=null){
+        if (fragmentList != null && fragmentList.get(fragmentList.size() - 1) != null) {
             //Fragments exist
         } else {
-            if(AppContr.getSharPref().getString(Const.SAVED_SES, null)!=null) {
+            if (AppContr.getSharPref().getString(Const.SAVED_SES, null) != null) {
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.fragment_place,
@@ -191,17 +196,13 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         }
 
 
-
-
-
-
     }
 
     private void checkForLoggedStatus() {
         Log.v(TAG, "SSS TIME Start=" + System.currentTimeMillis());
         Utils.Restore_User(this, encrypt);
         Log.v(TAG, "SSS TIME Finish=" + System.currentTimeMillis());
-        if(Utils.Correct_User()){
+        if (Utils.Correct_User()) {
             //All data exist we can move
             fragmentManager
                     .beginTransaction()
@@ -224,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         Log.v(Const.TAG, "SSS MainActivity: onStart() Stop service");
         //if(isMyServiceRunning(BackgroundService.class)){
         //    service_running = false;
-            Intent stopServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
-            stopService(stopServiceIntent);
+        Intent stopServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
+        stopService(stopServiceIntent);
         //}
     }
 
@@ -234,16 +235,16 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         super.onStop();
         Log.v(Const.TAG, "SSS MainActivity: onStop() Start service");
         //if(!isMyServiceRunning(BackgroundService.class)) {
-         //   service_running = true;
-            Intent startServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
-            startService(startServiceIntent);
+        //   service_running = true;
+        Intent startServiceIntent = new Intent(getApplicationContext(), BackgroundService.class);
+        startService(startServiceIntent);
         //}
     }
 
     @Override
     public void OpenClose() {
 
-        if(mDrawerLayout.isDrawerOpen(drawerView)){
+        if (mDrawerLayout.isDrawerOpen(drawerView)) {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
         } else {
             mDrawerLayout.openDrawer(Gravity.LEFT);
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 //        TransactionAction(fragmentManager.findFragmentByTag(Const.Fr_AcP1),
 //                scanner, Const.Fr_AcP1, Const.Fr_Scan, false);
         Action_P3 frag = (Action_P3)
-        getSupportFragmentManager().findFragmentByTag(Const.Fr_AcP3);
+                getSupportFragmentManager().findFragmentByTag(Const.Fr_AcP3);
         frag.updateScanCode(id, result);
 //        ((EditText)getSupportFragmentManager()
 //                .findFragmentByTag(Const.Fr_AcP3).getView().findViewById(R.id.scan_result)).setText(result);
@@ -359,8 +360,8 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     void TransactionActionStack(Fragment fragment_in, String tag_in, boolean forward) {
         transaction = fragmentManager.beginTransaction();
         //Log.v(TAG, "TransactionAction tag_in=" + tag_in + " tag_out=" + tag_out);
-        if(fragment_in != null){
-            if(forward) {
+        if (fragment_in != null) {
+            if (forward) {
                 transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out, R.anim.slide_left_in, R.anim.slide_left_out);
                 transaction.add(R.id.fragment_place, fragment_in, tag_in);
                 transaction.addToBackStack(null);
@@ -377,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
     @Override
     public void onBackPressed() {
-        if(fragmentManager.getBackStackEntryCount()>0)
+        if (fragmentManager.getBackStackEntryCount() > 0)
             //Back to stack
             fragmentManager.popBackStack();
         else

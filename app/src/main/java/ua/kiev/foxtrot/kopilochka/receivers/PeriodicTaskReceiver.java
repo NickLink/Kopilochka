@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.SystemClock;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.Const;
-import ua.kiev.foxtrot.kopilochka.MainActivity;
+import ua.kiev.foxtrot.kopilochka.MyLifecycleHandler;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
@@ -93,7 +94,9 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
 
     private void doPeriodicTask(Context context, AppContr appContr) {
         // Periodic task(s) go here ...
-        if(AppContr.getSharPref().getString(Const.SAVED_SES, null) != null && Connect.isOnline(context)) {
+        if(AppContr.getSharPref().getString(Const.SAVED_SES, null) != null
+                && Connect.isOnline(context)
+                && !MyLifecycleHandler.isApplicationInForeground()) {
             Log.v("TAG", "SSS doPeriodicTask");
             //Start from notices & continue after it
             //NOTICES----------------------------------------------
@@ -205,10 +208,15 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        //Intent intent = new Intent(context, MainActivity.class);
+        PackageManager pm = context.getPackageManager();
+        Intent launchIntent = pm.getLaunchIntentForPackage("ua.kiev.foxtrot.kopilochka");
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, launchIntent, 0);
+        //PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         // Строим уведомление
         //Sound

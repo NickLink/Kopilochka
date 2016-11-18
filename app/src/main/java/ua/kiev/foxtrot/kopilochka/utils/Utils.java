@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +58,9 @@ public class Utils {
                 .remove(Const.SAVED_NAME)
                 .remove(Const.SAVED_EMAIL)
                 .remove(Const.SAVED_PHONE)
+                .remove(Const.new_in_action)
+                .remove(Const.new_in_group)
+                .remove(Const.new_in_notice)
                 .apply();
     }
 
@@ -233,6 +239,42 @@ public class Utils {
             }
         } catch (Exception ex) {
             Log.e(TAG, "Was not able to restart application");
+        }
+    }
+
+    public static int getResourceId(Context context, String resource){
+        Resources resources = context.getResources();
+        return resources.getIdentifier(resource, "drawable", context.getPackageName());
+    }
+
+    public static void setNewGroup(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, true).apply();
+    }
+
+    public static void setNewNotice(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, true).apply();
+    }
+
+    public static void setNewAction(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, true).apply();
+    }
+
+    public static void setGroupViewed(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, false).apply();
+    }
+
+    public static void setNoticeViewed(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, false).apply();
+    }
+
+    public static void setActionViewed(){
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, false).apply();
+    }
+
+    public static void hideKeyboard(Context context, View view){
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

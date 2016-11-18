@@ -2,8 +2,11 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +27,20 @@ import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
+import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
  * Created by NickNb on 29.09.2016.
  */
-public class Data_P1 extends BaseFragment implements HttpRequest{
+public class Data_P1 extends BaseFragment implements HttpRequest {
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     private LinearLayout login_layout, loged_layout;
     private boolean logged;
 
     private EditText data_email_edit, data_password_edit;
     private Button data_login_button;
-    private String login, password;
+    private String login = "", password = "";
     ProgressDialog load_data;
     private Typeface calibri, calibri_bold;
 
@@ -57,6 +62,43 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
         }
     }
 
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View newView = inflater.inflate(R.layout.frag_data_p1, null);
+        // This just inflates the view but doesn't add it to any thing.
+        // You need to add it to the root view of the fragment
+        ViewGroup rootView = (ViewGroup) getView();
+        // Remove all the existing views from the root view.
+        // This is also a good place to recycle any resources you won't need anymore
+        rootView.removeAllViews();
+        rootView.addView(newView);
+
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            View newView = inflater.inflate(R.layout.frag_data_p1, null);
+//            // This just inflates the view but doesn't add it to any thing.
+//            // You need to add it to the root view of the fragment
+//            ViewGroup rootView = (ViewGroup) getView();
+//            // Remove all the existing views from the root view.
+//            // This is also a good place to recycle any resources you won't need anymore
+//            rootView.removeAllViews();
+//            rootView.addView(newView);
+//        } else {
+//            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            View newView = inflater.inflate(R.layout.frag_data_p1, null);
+//            // This just inflates the view but doesn't add it to any thing.
+//            // You need to add it to the root view of the fragment
+//            ViewGroup rootView = (ViewGroup) getView();
+//            // Remove all the existing views from the root view.
+//            // This is also a good place to recycle any resources you won't need anymore
+//            rootView.removeAllViews();
+//            rootView.addView(newView);
+//        }
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,17 +113,22 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
         TextView log_01_login_text = (TextView) rootView.findViewById(R.id.log_01_login_text);
         TextView log_01_password_text = (TextView) rootView.findViewById(R.id.log_01_password_text);
 
-        data_email_edit = (EditText)rootView.findViewById(R.id.data_email_edit);
-        data_password_edit = (EditText)rootView.findViewById(R.id.data_password_edit);
-        data_login_button = (Button)rootView.findViewById(R.id.data_login_button);
+        data_email_edit = (EditText) rootView.findViewById(R.id.data_email_edit);
+        data_password_edit = (EditText) rootView.findViewById(R.id.data_password_edit);
+        data_login_button = (Button) rootView.findViewById(R.id.data_login_button);
 
         data_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                Utils.hideKeyboard(getActivity(), view);
                 login = data_email_edit.getText().toString();
                 password = data_password_edit.getText().toString();
-                if(!login.trim().isEmpty() && //Utils.email_Correct(data_email_edit.getText().toString())
-                        !password.trim().isEmpty()  ){ //Utils.password_Correct(data_password_edit.getText().toString())
+                if (!login.trim().isEmpty() && //Utils.email_Correct(data_email_edit.getText().toString())
+                        !password.trim().isEmpty()) { //Utils.password_Correct(data_password_edit.getText().toString())
                     getToken(login, password);
                 } else {
                     //Data not complete
@@ -115,6 +162,10 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
     }
 
     private void getToken(String login, String password) {
+        load_data = new ProgressDialog(getActivity());
+        load_data.setTitle(getString(R.string.data_loading));
+        load_data.show();
+
         Requests requests = new Requests(getActivity(), Const.getSession, Data_P1.this);
         HashMap<String, String> params = new HashMap<>();
         params.put(Const.login, login);
@@ -123,21 +174,15 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
         requests.getHTTP_Responce(params);
     }
 
-//    private void RefreshView() {
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.detach(this).attach(this).commit();
-//    }
-
-
     @Override
     public void http_result(int type, String result) {
-        switch (type){
+        switch (type) {
 
             case Const.getSession:
                 //Parse data
                 AppContr.userData = Parser.getUserData(result);
-                if(AppContr.userData != null){
-                    switch (AppContr.userData.getCode()){
+                if (AppContr.userData != null) {
+                    switch (AppContr.userData.getCode()) {
                         case Const.JSON_Ok:
                             //All ok
                             AppContr.userData.setLogin(login);
@@ -173,7 +218,7 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
 
             case Const.getNotices:
                 Methods.PutNotificationInBase(getActivity(), result);
-                if(load_data != null)
+                if (load_data != null)
                     load_data.dismiss();
                 interfaces.LoginSuccess();
                 break;
@@ -183,9 +228,9 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
 
     @Override
     public void http_error(int type, String error) {
-        if(load_data != null)
+        if (load_data != null)
             load_data.dismiss();
-        switch (type){
+        switch (type) {
             case Const.getSession:
 
                 break;
@@ -194,14 +239,16 @@ public class Data_P1 extends BaseFragment implements HttpRequest{
 
     }
 
-    private void Load_All_data(){
-        load_data = new ProgressDialog(getActivity());
-        load_data.setTitle("Load database");
-        load_data.show();
+    private void Load_All_data() {
+        //Set preferences
+        Utils.setNewGroup();
+        Utils.setNewNotice();
+        Utils.setNewAction();
+
         Methods.GetActionList(getActivity(), this);
     }
 
-    private void Clear_Input_Fields(){
+    private void Clear_Input_Fields() {
         data_email_edit.setText("");
         data_password_edit.setText("");
         data_email_edit.requestFocus();

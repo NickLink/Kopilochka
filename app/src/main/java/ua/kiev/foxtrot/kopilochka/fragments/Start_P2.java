@@ -32,19 +32,16 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  * Created by NickNb on 25.10.2016.
  */
 public class Start_P2 extends BaseFragment implements HttpRequest {
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
 
-    private long mLastClickTime = 0;
-    private int model_group_id, action_type_id;
-    private String model_group_name;
     ListView product_listview;
     View header;
     ArrayList<Model> modelArrayList;
     GroupModels_ListView_Adapter adapter;
     ArrayList<Action> actionArrayList;
     DB db = AppContr.db;
-    private Typeface calibri_bold;
 
     public static Start_P2 newInstance(int group_id, String group_name, int action_type_id) {
         Start_P2 fragment = new Start_P2();
@@ -76,13 +73,15 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_start_p2, container,
                 false);
 
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
-        model_group_id = getArguments().getInt(Const.model_group_id, -2);
-        model_group_name = getArguments().getString(Const.model_group_name);
-        action_type_id = getArguments().getInt(Const.action_type_id, -2);
+        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        int model_group_id = getArguments().getInt(Const.model_group_id, -2);
+        String model_group_name = getArguments().getString(Const.model_group_name, "");
+        int action_type_id = getArguments().getInt(Const.action_type_id, -2);
         if(model_group_id == -2 || model_group_name.isEmpty() || action_type_id == -2){
             //Error getting data
-            Dialogs.ShowDialog(getActivity(), "Error", "Start P2  Model group error", "OK");
+            Dialogs.ShowDialog(getActivity(), getString(R.string.internal_base_error_title),
+                    getString(R.string.internal_base_error_text),
+                    getString(R.string.ok));
             return null;
         }
         //Go for Data
@@ -92,13 +91,13 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
         for(int i = 0 ; i<actionArrayList.size() ; i++){
             for(int j = 0 ; j<actionArrayList.get(i).getModels().size(); j++){
                 Model item = actionArrayList.get(i).getModels().get(j);
-                boolean isDateValid = false;
-                boolean isPGroupValid = false;
+                boolean isDateValid;
+                boolean isPGroupValid;
                 isDateValid = Utils.isDateInRange(
                         actionArrayList.get(i).getAction_date_from(),
                         actionArrayList.get(i).getAction_date_to());
                 if(action_type_id == 1) {
-                    isPGroupValid = item.getModel_group_id() == model_group_id ? true : false;
+                    isPGroupValid = item.getModel_group_id() == model_group_id;
                 } else isPGroupValid = true;
                 if(isDateValid && isPGroupValid){
                     item.setModel_days_left(Utils.daysLeft(actionArrayList.get(i).getAction_date_to()));

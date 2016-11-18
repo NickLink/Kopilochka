@@ -51,6 +51,7 @@ public class Methods {
                     actions.get(i).setViewed(item_old.getViewed());
                 } else {
                     new_actions = true;
+                    Utils.setNewAction();
                 }
 
             }
@@ -89,6 +90,7 @@ public class Methods {
                     notices.get(i).setViewed(item_old.getViewed());
                 } else {
                     new_notification = true;
+                    Utils.setNewNotice();
                 }
             }
             if (db.addNoticeArray(notices)) {
@@ -116,6 +118,7 @@ public class Methods {
                     arrayList.get(i).setViewed(item_old.getViewed());
                 } else {
                     new_groups = true;
+                    Utils.setNewGroup();
                 }
             }
 

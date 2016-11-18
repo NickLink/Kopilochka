@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +31,13 @@ import ua.kiev.foxtrot.kopilochka.utils.Utils;
  * Created by NickNb on 29.09.2016.
  */
 public class WTF_P1 extends BaseFragment implements HttpRequest {
+    private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
     EditText wtf_name_edit, wtf_email_edit, wtf_text_edit;
-    private Typeface calibri_bold;
 
     public static WTF_P1 newInstance() {
-        WTF_P1 fragment = new WTF_P1();
-        return fragment;
+        return new WTF_P1();
     }
 
     public WTF_P1() {
@@ -59,7 +59,7 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_wtf_p1, container,
                 false);
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         TextView wtf_name = (TextView) rootView.findViewById(R.id.wtf_name);
         TextView wtf_email = (TextView) rootView.findViewById(R.id.wtf_email);
@@ -72,6 +72,10 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 300){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 if (Utils.isQuestionCorrect(
                         wtf_name_edit.getText().toString(),
                         wtf_email_edit.getText().toString(),
@@ -110,7 +114,7 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
     private void sendQuestion() {
         //sendQuestion-----------------------------------------------
         Requests question_requests = new Requests(getActivity(), Const.postQuestion, this);
-        HashMap<String, String> question_params = new HashMap<String, String>();
+        HashMap<String, String> question_params = new HashMap<>();
         question_params.put(Const.method, Const.PostQuestion);
         question_params.put(Const.session, Encryption.getDefault("Key", "Disabled", new byte[16])
                 .decryptOrNull(AppContr.getSharPref().getString(Const.SAVED_SES, null)));

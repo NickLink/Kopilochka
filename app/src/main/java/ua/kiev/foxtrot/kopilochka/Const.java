@@ -36,6 +36,11 @@ public class Const {
     public static final String Fr_WtP1 = "Fr_WtP1";
     public static final String Fr_Scan = "Fr_Scan";
 
+    public static final String new_in_group = "new_in_group";
+    public static final String new_in_notice = "new_in_notice";
+    public static final String new_in_action = "new_in_action";
+    public static final String new_in_serial = "new_in_serial";
+
     public static final String methodresponse = "methodresponse";
 
     //GetSession

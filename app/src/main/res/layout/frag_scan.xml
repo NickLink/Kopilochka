@@ -8,8 +8,12 @@
         android:layout_height="wrap_content"
         android:text="@string/cancel_scan"
         android:id="@+id/cancel_scan"
+        style="@style/myWhite_24"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/blue_button_selector"
+        android:textAllCaps="false"
+        android:padding="10dp"/>
 
     <FrameLayout
         android:id="@+id/scan_zone"
