@@ -32,8 +32,11 @@ public class SliderMenuAdapter extends BaseAdapter {
     public SliderMenuAdapter(Context context) {
         this.context = context;
         calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
-        menuItemList = new ArrayList<MenuItem>();
+        refreshData();
+    }
 
+    public void refreshData(){
+        menuItemList = new ArrayList<MenuItem>();
         menuItemList.add(new MenuItem(context.getString(R.string.menu_start), //Start
                 AppContr.getSharPref().getBoolean(Const.new_in_group, true),
                 Utils.getResourceId(context, "f5_head")));

@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
         transaction.add(R.id.fragment_place, Data_P1.newInstance(), Const.Fr_DtP1);
         transaction.remove(fragmentManager.findFragmentByTag(Const.Fr_DtPL));
         transaction.commit();
-
+        adapter.refreshData();
     }
 
     @Override
