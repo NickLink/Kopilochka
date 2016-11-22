@@ -3,6 +3,7 @@ package ua.kiev.foxtrot.kopilochka.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -14,6 +15,7 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.MyLifecycleHandler;
 import ua.kiev.foxtrot.kopilochka.data.UserData;
 import ua.kiev.foxtrot.kopilochka.database.DB;
+import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.LruBitmapCache;
 
 /**
@@ -29,6 +31,9 @@ public class AppContr extends Application {
     public static UserData userData;
     public static DB db;
 
+    public static Typeface calibri;
+    public static Typeface calibri_bold;
+
     private static AppContr mInstance;
 
     @Override
@@ -43,6 +48,8 @@ public class AppContr extends Application {
         // Initialize the singletons so their instances
         // are bound to the application process.
         registerActivityLifecycleCallbacks(new MyLifecycleHandler());
+        calibri = FontCache.get("fonts/calibri.ttf", context);
+        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
 //        Intent startServiceIntent = new Intent(context, BackgroundService.class);
 //        startService(startServiceIntent);
     }

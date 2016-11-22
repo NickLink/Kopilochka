@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -23,7 +22,6 @@ import ua.kiev.foxtrot.kopilochka.data.Notice;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -37,7 +35,7 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
     Notif_ListView_Adapter adapter;
     //ArrayList<Notice> notif_data;
     DB db = AppContr.db;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
 
     public static Notif_P1 newInstance() {
         Notif_P1 fragment = new Notif_P1();
@@ -63,7 +61,7 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_notif_p1, container,
                 false);
 
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         notif_listview = (ListView) rootView.findViewById(R.id.notif_listview);
         adapter = new Notif_ListView_Adapter(getActivity(), db.getNoticeArray());
@@ -107,7 +105,7 @@ public class Notif_P1 extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_notification));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import ua.kiev.foxtrot.kopilochka.Const;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.MenuItem;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -26,12 +24,12 @@ public class SliderMenuAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
     private List<MenuItem> menuItemList;
 
     public SliderMenuAdapter(Context context) {
         this.context = context;
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
         refreshData();
     }
 
@@ -55,6 +53,7 @@ public class SliderMenuAdapter extends BaseAdapter {
         menuItemList.add(new MenuItem(context.getString(R.string.menu_wtf), //Question
                 false,
                 Utils.getResourceId(context, "help")));
+        notifyDataSetChanged();
     }
 
     public void setViewed(int id) {
@@ -97,7 +96,7 @@ public class SliderMenuAdapter extends BaseAdapter {
         else
             red_dot.setVisibility(View.GONE);
 
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
 
 /*        switch (i){
             case 0:

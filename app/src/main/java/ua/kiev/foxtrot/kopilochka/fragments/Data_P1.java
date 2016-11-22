@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -42,7 +40,7 @@ public class Data_P1 extends BaseFragment implements HttpRequest {
     private Button data_login_button;
     private String login = "", password = "";
     ProgressDialog load_data;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     public static Data_P1 newInstance() {
         Data_P1 fragment = new Data_P1();
@@ -105,8 +103,8 @@ public class Data_P1 extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_data_p1, container,
                 false);
 
-        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         TextView log_01_work_with = (TextView) rootView.findViewById(R.id.log_01_work_with);
         TextView log_01_to_manager = (TextView) rootView.findViewById(R.id.log_01_to_manager);
@@ -140,14 +138,14 @@ public class Data_P1 extends BaseFragment implements HttpRequest {
             }
         });
 
-        log_01_work_with.setTypeface(calibri_bold);
-        log_01_to_manager.setTypeface(calibri);
-        log_01_login_text.setTypeface(calibri_bold);
-        log_01_password_text.setTypeface(calibri_bold);
+        log_01_work_with.setTypeface(AppContr.calibri_bold);
+        log_01_to_manager.setTypeface(AppContr.calibri);
+        log_01_login_text.setTypeface(AppContr.calibri_bold);
+        log_01_password_text.setTypeface(AppContr.calibri_bold);
 
-        data_email_edit.setTypeface(calibri_bold);
-        data_password_edit.setTypeface(calibri_bold);
-        data_login_button.setTypeface(calibri_bold);
+        data_email_edit.setTypeface(AppContr.calibri_bold);
+        data_password_edit.setTypeface(AppContr.calibri_bold);
+        data_login_button.setTypeface(AppContr.calibri_bold);
 
 //        ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
 //        TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);

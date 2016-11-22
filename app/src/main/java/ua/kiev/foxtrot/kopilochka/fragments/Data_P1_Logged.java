@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -30,7 +28,7 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
 
     private Button data_show_extra_button; //data_show_logout_button;
     private ImageView logout_button;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     public static Data_P1_Logged newInstance() {
         Data_P1_Logged fragment = new Data_P1_Logged();
@@ -56,8 +54,8 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_data_p1_logged, container,
                 false);
 
-        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         TextView data_name_text = (TextView)rootView.findViewById(R.id.data_name_text);
         TextView data_email_email = (TextView)rootView.findViewById(R.id.data_email_email);
@@ -79,13 +77,13 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
         else data_phone_phone.setText(getString(R.string.data_phone_text_empty));
 
         //Fonts
-        data_name_text.setTypeface(calibri_bold);
-        data_email_email.setTypeface(calibri);
-        data_email_text.setTypeface(calibri);
-        data_phone_phone.setTypeface(calibri);
-        data_phone_text.setTypeface(calibri);
-        data_show_extra_button.setTypeface(calibri_bold);
-        data_f5_ua_message.setTypeface(calibri);
+        data_name_text.setTypeface(AppContr.calibri_bold);
+        data_email_email.setTypeface(AppContr.calibri);
+        data_email_text.setTypeface(AppContr.calibri);
+        data_phone_phone.setTypeface(AppContr.calibri);
+        data_phone_text.setTypeface(AppContr.calibri);
+        data_show_extra_button.setTypeface(AppContr.calibri_bold);
+        data_f5_ua_message.setTypeface(AppContr.calibri);
 
         data_show_extra_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +116,7 @@ public class Data_P1_Logged extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_data));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

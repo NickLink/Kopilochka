@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Model;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 11.11.2016.
@@ -21,12 +20,12 @@ public class GroupModels_ListView_Adapter  extends BaseAdapter {
     private Context context;
     private ArrayList<Model> models_data;
     private LayoutInflater inflater;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
 
     public GroupModels_ListView_Adapter(Context context, ArrayList<Model> models_data) {
         this.context = context;
         this.models_data = models_data;
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     @Override
@@ -64,9 +63,9 @@ public class GroupModels_ListView_Adapter  extends BaseAdapter {
         action_list_item_days.setText(String.valueOf(feed.getModel_days_left()));
         action_list_item_points.setText(String.valueOf(feed.getModel_points()));
 
-        action_list_item_days.setTypeface(calibri_bold);
-        action_list_item_name.setTypeface(calibri_bold);
-        action_list_item_points.setTypeface(calibri_bold);
+        action_list_item_days.setTypeface(AppContr.calibri_bold);
+        action_list_item_name.setTypeface(AppContr.calibri_bold);
+        action_list_item_points.setTypeface(AppContr.calibri_bold);
 
         return convertView;
     }

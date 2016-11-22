@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
@@ -59,7 +57,7 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_wtf_p1, container,
                 false);
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         TextView wtf_name = (TextView) rootView.findViewById(R.id.wtf_name);
         TextView wtf_email = (TextView) rootView.findViewById(R.id.wtf_email);
@@ -90,13 +88,13 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
             }
         });
 
-        wtf_name.setTypeface(calibri_bold);
-        wtf_email.setTypeface(calibri_bold);
-        wtf_text.setTypeface(calibri_bold);
-        wtf_name_edit.setTypeface(calibri_bold);
-        wtf_email_edit.setTypeface(calibri_bold);
-        wtf_text_edit.setTypeface(calibri_bold);
-        send_button.setTypeface(calibri_bold);
+        wtf_name.setTypeface(AppContr.calibri_bold);
+        wtf_email.setTypeface(AppContr.calibri_bold);
+        wtf_text.setTypeface(AppContr.calibri_bold);
+        wtf_name_edit.setTypeface(AppContr.calibri_bold);
+        wtf_email_edit.setTypeface(AppContr.calibri_bold);
+        wtf_text_edit.setTypeface(AppContr.calibri_bold);
+        send_button.setTypeface(AppContr.calibri_bold);
 
         ImageButton menu_item_icon = (ImageButton) rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView) rootView.findViewById(R.id.menu_item_title);
@@ -107,7 +105,7 @@ public class WTF_P1 extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_wtf));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

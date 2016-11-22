@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Charge;
 import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.data.Payment;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -24,13 +23,13 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
     private FinInfo mFinInfo;
     private Context mContext;
     private LayoutInflater inflater;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     public FinInfo_ExpList_Adapter(Context context, FinInfo finInfo) {
         mContext = context;
         mFinInfo = finInfo;
-        calibri = FontCache.get("fonts/calibri.ttf", context);
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //calibri = FontCache.get("fonts/calibri.ttf", context);
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     private static class ItemHolder {
@@ -98,9 +97,9 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
                 TextView textView2 = (TextView) convertView.findViewById(R.id.textView2);
                 TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
                 TextView textView4 = (TextView) convertView.findViewById(R.id.textView4);
-                textView2.setTypeface(calibri);
-                textView3.setTypeface(calibri);
-                textView4.setTypeface(calibri);
+                textView2.setTypeface(AppContr.calibri);
+                textView3.setTypeface(AppContr.calibri);
+                textView4.setTypeface(AppContr.calibri);
             } else {
                 //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h1, null);
@@ -113,17 +112,17 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
                 TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
                 TextView textView4 = (TextView) convertView.findViewById(R.id.textView4);
                 TextView textView5 = (TextView) convertView.findViewById(R.id.textView5);
-                textView2.setTypeface(calibri);
-                textView3.setTypeface(calibri);
-                textView4.setTypeface(calibri);
-                textView5.setTypeface(calibri);
+                textView2.setTypeface(AppContr.calibri);
+                textView3.setTypeface(AppContr.calibri);
+                textView4.setTypeface(AppContr.calibri);
+                textView5.setTypeface(AppContr.calibri);
             } else {
                 //Изменяем что-нибудь, если текущая Group скрыта
                 convertView = inflater.inflate(R.layout.frag_data_p1_extra_h2, null);
             }
         }
         TextView title = (TextView) convertView.findViewById(R.id.title);
-        title.setTypeface(calibri_bold);
+        title.setTypeface(AppContr.calibri_bold);
 
         return convertView;
     }
@@ -151,11 +150,11 @@ public class FinInfo_ExpList_Adapter extends BaseExpandableListAdapter {
             itemHolder.action = (TextView) row.findViewById(R.id.fininfo_payment_actionname);
             itemHolder.sum = (TextView) row.findViewById(R.id.fininfo_payment_ammount);
             itemHolder.about = (TextView) row.findViewById(R.id.fininfo_payment_about);
-            itemHolder.about.setTypeface(calibri);
+            itemHolder.about.setTypeface(AppContr.calibri);
         }
-        itemHolder.date.setTypeface(calibri);
-        itemHolder.action.setTypeface(calibri);
-        itemHolder.sum.setTypeface(calibri);
+        itemHolder.date.setTypeface(AppContr.calibri);
+        itemHolder.action.setTypeface(AppContr.calibri);
+        itemHolder.sum.setTypeface(AppContr.calibri);
         //row.setTag(itemHolder);
 //        }
 //        else {

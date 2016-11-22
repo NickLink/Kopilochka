@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -38,7 +37,6 @@ import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -62,7 +60,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
     Button action_register_model_button;
     ProgressDialog pDialog;
     boolean edit_mode = false;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     public static Action_P3 newInstance(int action_id, int model_id) {
         Action_P3 fragment = new Action_P3();
@@ -110,8 +108,8 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
             return null;
         }
 
-        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         serials = getArguments().getString(Const.serials, null);
         if(serials != null){
@@ -171,11 +169,11 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         model_name_tv.setText(model.getModel_name());
         bonus_points_tv.setText(String.valueOf(model.getModel_points()));
 
-        action_name_tv.setTypeface(calibri_bold);
-        model_name_tv.setTypeface(calibri_bold);
-        bonus_points_tv.setTypeface(calibri_bold);
-        action_p3_info_text.setTypeface(calibri);
-        action_register_model_button.setTypeface(calibri_bold);
+        action_name_tv.setTypeface(AppContr.calibri_bold);
+        model_name_tv.setTypeface(AppContr.calibri_bold);
+        bonus_points_tv.setTypeface(AppContr.calibri_bold);
+        action_p3_info_text.setTypeface(AppContr.calibri);
+        action_register_model_button.setTypeface(AppContr.calibri_bold);
 
         action_register_model_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +196,7 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
             }
         });
         menu_item_title.setText(title);
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 
@@ -279,9 +277,9 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         });
 
         serial.setHint(getString(R.string.hist_sn_imei_hint));
-        dialog_title.setTypeface(calibri_bold);
-        serial.setTypeface(calibri_bold);
-        ok.setTypeface(calibri_bold);
+        dialog_title.setTypeface(AppContr.calibri_bold);
+        serial.setTypeface(AppContr.calibri_bold);
+        ok.setTypeface(AppContr.calibri_bold);
 
         dialog.show();
 

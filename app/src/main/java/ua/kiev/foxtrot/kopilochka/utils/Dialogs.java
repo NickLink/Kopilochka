@@ -3,7 +3,6 @@ package ua.kiev.foxtrot.kopilochka.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import ua.kiev.foxtrot.kopilochka.R;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 02.11.2016.
@@ -30,12 +28,12 @@ public class Dialogs {
         dialog.setContentView(R.layout.dialog_not_a_member);
         dialog.setCancelable(false);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
         TextView Title = (TextView) dialog.findViewById(R.id.title);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
-        cancelBtn.setTypeface(calibri_bold);
+        cancelBtn.setTypeface(AppContr.calibri_bold);
         Title.setText(title);
-        Title.setTypeface(calibri_bold);
+        Title.setTypeface(AppContr.calibri_bold);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +42,39 @@ public class Dialogs {
         });
         dialog.show();
     }
+
+    public static void ShowCallSyncDialog(final Context context, final Interfaces interfaces) {
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_exit);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
+        Button exitBtn = (Button) dialog.findViewById(R.id.exit_button);
+
+        Title.setText(context.getString(R.string.call_sync_title));
+        Message.setText(context.getString(R.string.call_sync_text));
+        cancelBtn.setText(context.getString(R.string.menu_exit_no));
+        exitBtn.setText(context.getString(R.string.menu_exit_yes));
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                interfaces.DoSync();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     public static void ShowLoginDialog(Context context, int code) {
         final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
@@ -192,10 +223,39 @@ public class Dialogs {
             Message.setText(context.getString(R.string.act_reg_failed_text));
         }
 
-        Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
-        Title.setTypeface(calibri_bold);
-        Message.setTypeface(calibri);
+        //Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        Title.setTypeface(AppContr.calibri_bold);
+        Message.setTypeface(AppContr.calibri);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void ShowSyncDialog(final Context context) {
+        final Dialog dialog = new Dialog(context, R.style.Error_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_success_reg);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ImageView icon = (ImageView) dialog.findViewById(R.id.reg_icon);
+        TextView Title = (TextView) dialog.findViewById(R.id.title);
+        TextView Message = (TextView) dialog.findViewById(R.id.message);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_button);
+
+        icon.setImageResource(R.drawable.book_opened);
+        Title.setText(context.getString(R.string.call_sync_title));
+        Message.setText(context.getString(R.string.call_sync_text2));
+
+        //Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        Title.setTypeface(AppContr.calibri_bold);
+        Message.setTypeface(AppContr.calibri);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,12 +381,12 @@ public class Dialogs {
             }
         });
 
-        Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //Typeface calibri = FontCache.get("fonts/calibri.ttf", context);
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
 
-        action_name.setTypeface(calibri_bold);
-        model_name.setTypeface(calibri_bold);
-        serial_numbers_list.setTypeface(calibri_bold);
+        action_name.setTypeface(AppContr.calibri_bold);
+        model_name.setTypeface(AppContr.calibri_bold);
+        serial_numbers_list.setTypeface(AppContr.calibri_bold);
         dialog.show();
     }
 

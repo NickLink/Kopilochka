@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import ua.kiev.foxtrot.kopilochka.data.Model;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -73,7 +71,7 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_start_p2, container,
                 false);
 
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         int model_group_id = getArguments().getInt(Const.model_group_id, -2);
         String model_group_name = getArguments().getString(Const.model_group_name, "");
         int action_type_id = getArguments().getInt(Const.action_type_id, -2);
@@ -140,7 +138,7 @@ public class Start_P2 extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(model_group_name);
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

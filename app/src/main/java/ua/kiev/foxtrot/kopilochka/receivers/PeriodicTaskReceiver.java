@@ -140,6 +140,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                 } else {
                     error_count++;
                 }
+                arrayList.remove(arrayList.size()-1);
                 if(arrayList !=null && arrayList.size() > 0) {
                     doSerialsRegister();
                 } else {
@@ -158,7 +159,6 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         if(arrayList !=null && arrayList.size() > 0) {
             register_item = arrayList.get(arrayList.size()-1);
             Methods.post_SN(context, register_item, this);
-            arrayList.remove(arrayList.size()-1);
             Log.v("TAG", "DDD Send " + "new " + " item");
         }
     }

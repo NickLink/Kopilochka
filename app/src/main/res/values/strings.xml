@@ -134,4 +134,8 @@
     <string name="internal_base_error_title"> Помилка </string>
     <string name="internal_base_error_text"> Пошкоджено внутрішню базу, перевстановіть додаток. </string>
 
+    <string name="call_sync_title">Увага!</string>
+    <string name="call_sync_text">В наявності є моделі, що очікують реєстрації. Відправити їх зараз?</string>
+    <string name="call_sync_text2">Реєстрацію проведено - результати можете подивитись у історії реєстрацій.</string>
+
 </resources>

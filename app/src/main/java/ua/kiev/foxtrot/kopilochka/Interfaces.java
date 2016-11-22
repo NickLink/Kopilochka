@@ -19,4 +19,6 @@ public interface Interfaces {
     void DeleteExistPostSN();
     void SaveUser();
 
+    void CallSync();
+    void DoSync();
 }

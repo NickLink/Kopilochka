@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import ua.kiev.foxtrot.kopilochka.adapters.History_ExpList_Adapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.StringTools;
 
@@ -35,7 +33,7 @@ public class History_P1 extends BaseFragment {
     History_ExpList_Adapter adapter;
     DB db = AppContr.db;
     List<List<Post_SN>> fullArray;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
 
     public static History_P1 newInstance() {
         History_P1 fragment = new History_P1();
@@ -65,7 +63,7 @@ public class History_P1 extends BaseFragment {
         adapter = new History_ExpList_Adapter(getActivity(), fullArray); //complete_list, error_list, await_list
         history_listview.setAdapter(adapter);
         history_listview.setGroupIndicator(null);
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         history_listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -102,7 +100,7 @@ public class History_P1 extends BaseFragment {
             }
         });
         menu_item_title.setText(getString(R.string.menu_history));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

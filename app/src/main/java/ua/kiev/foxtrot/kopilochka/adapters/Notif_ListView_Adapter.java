@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Notice;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 11.10.2016.
@@ -24,13 +23,13 @@ public class Notif_ListView_Adapter extends BaseAdapter {
     private ArrayList<Notice> _notif_data;
     //ImageLoader imageLoader = AppContr.getInstance().getImageLoader();
     private LayoutInflater inflater;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     public Notif_ListView_Adapter(Context context, ArrayList<Notice> data) {
         this.context = context;
         this._notif_data = data;
-        calibri = FontCache.get("fonts/calibri.ttf", context);
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //calibri = FontCache.get("fonts/calibri.ttf", context);
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     public ArrayList<Notice> getNotice_data(){
@@ -92,8 +91,8 @@ public class Notif_ListView_Adapter extends BaseAdapter {
         }
         title.setText(feed.getNotice_name());
         text.setText(feed.getNotice_text());
-        title.setTypeface(calibri_bold);
-        text.setTypeface(calibri);
+        title.setTypeface(AppContr.calibri_bold);
+        text.setTypeface(AppContr.calibri);
 
         return convertView;
     }

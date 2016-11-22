@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.data.ProductGroup;
 import ua.kiev.foxtrot.kopilochka.database.DB;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -63,7 +61,7 @@ public class Start_P1 extends BaseFragment{
         View rootView = inflater.inflate(R.layout.frag_start_p1, container,
                 false);
 
-        Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //Typeface calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         start_listview = (ListView)rootView.findViewById(R.id.listView);
         no_bonuses_layout = (RelativeLayout)rootView.findViewById(R.id.no_bonuses_layout);
 
@@ -119,7 +117,7 @@ public class Start_P1 extends BaseFragment{
             }
         });
         menu_item_title.setText(getString(R.string.menu_start));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

@@ -1,1 +1,1 @@
-include ':app', ':pstat_release'
+include ':app'

@@ -38,7 +38,7 @@ public class Utils {
                 .putString(Const.SAVED_NAME, encrypt.encryptOrNull(AppContr.userData.getUser_name()))
                 .putString(Const.SAVED_EMAIL, encrypt.encryptOrNull(AppContr.userData.getUser_email()))
                 .putString(Const.SAVED_PHONE, encrypt.encryptOrNull(AppContr.userData.getUser_phone()))
-                .apply();
+                .commit();
     }
 
     public static void Restore_User(Context context, Encryption encrypt){
@@ -61,7 +61,7 @@ public class Utils {
                 .remove(Const.new_in_action)
                 .remove(Const.new_in_group)
                 .remove(Const.new_in_notice)
-                .apply();
+                .commit();
     }
 
     public static boolean Correct_User(){
@@ -248,27 +248,27 @@ public class Utils {
     }
 
     public static void setNewGroup(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, true).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, true).commit();
     }
 
     public static void setNewNotice(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, true).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, true).commit();
     }
 
     public static void setNewAction(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, true).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, true).commit();
     }
 
     public static void setGroupViewed(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, false).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_group, false).commit();
     }
 
     public static void setNoticeViewed(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, false).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_notice, false).commit();
     }
 
     public static void setActionViewed(){
-        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, false).apply();
+        AppContr.getSharPref().edit().putBoolean(Const.new_in_action, false).commit();
     }
 
     public static void hideKeyboard(Context context, View view){

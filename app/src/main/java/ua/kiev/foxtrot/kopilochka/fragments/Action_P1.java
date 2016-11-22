@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,7 +24,6 @@ import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.http.Methods;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 
 /**
  * Created by NickNb on 29.09.2016.
@@ -38,7 +36,7 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
     SwipeRefreshLayout swipeRefreshLayout;
     Action_ListView_Adapter adapter;
     DB db = AppContr.db;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
 
     public static Action_P1 newInstance() {
         Action_P1 fragment = new Action_P1();
@@ -65,7 +63,7 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
                 false);
         Log.v("", "SSS onCreateView ");
 
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -104,7 +102,7 @@ public class Action_P1 extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_action));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

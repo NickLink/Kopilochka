@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.data.Action;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
@@ -40,7 +38,7 @@ public class Action_P2 extends BaseFragment {
     View action_header;
     DB db = AppContr.db;
     Action action;
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
 
     public static Action_P2 newInstance(int action_id) { //
@@ -78,8 +76,8 @@ public class Action_P2 extends BaseFragment {
             return null;
         }
         //All ok
-        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
 
         //Inflate header
         action_header = inflater.inflate(R.layout.frag_action_p2_list_header, null);
@@ -129,17 +127,17 @@ public class Action_P2 extends BaseFragment {
         action_days_left_tv.setText(String.valueOf(Utils.daysLeft(action.getAction_date_to())));
         action_comment_tv.setText(action.getAction_description());
 
-        action_name.setTypeface(calibri_bold);
-        action_models_count.setTypeface(calibri_bold);
-        action_period_tv.setTypeface(calibri_bold);
-        action_type_tv.setTypeface(calibri_bold);
-        action_data_tv.setTypeface(calibri_bold);
-        action_days_left_tv.setTypeface(calibri_bold);
-        action_comment_tv.setTypeface(calibri);
-        action_period_text.setTypeface(calibri);
-        action_type_text.setTypeface(calibri);
-        action_data_text.setTypeface(calibri);
-        action_days_left_text.setTypeface(calibri);
+        action_name.setTypeface(AppContr.calibri_bold);
+        action_models_count.setTypeface(AppContr.calibri_bold);
+        action_period_tv.setTypeface(AppContr.calibri_bold);
+        action_type_tv.setTypeface(AppContr.calibri_bold);
+        action_data_tv.setTypeface(AppContr.calibri_bold);
+        action_days_left_tv.setTypeface(AppContr.calibri_bold);
+        action_comment_tv.setTypeface(AppContr.calibri);
+        action_period_text.setTypeface(AppContr.calibri);
+        action_type_text.setTypeface(AppContr.calibri);
+        action_data_text.setTypeface(AppContr.calibri);
+        action_days_left_text.setTypeface(AppContr.calibri);
 
         ImageButton menu_item_icon = (ImageButton)rootView.findViewById(R.id.menu_item_icon);
         TextView menu_item_title = (TextView)rootView.findViewById(R.id.menu_item_title);
@@ -151,7 +149,7 @@ public class Action_P2 extends BaseFragment {
             }
         });
         menu_item_title.setText(getString(R.string.menu_action));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

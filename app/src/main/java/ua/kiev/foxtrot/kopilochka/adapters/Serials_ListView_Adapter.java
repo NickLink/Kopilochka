@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import java.util.List;
 
 import ua.kiev.foxtrot.kopilochka.Interfaces;
 import ua.kiev.foxtrot.kopilochka.R;
+import ua.kiev.foxtrot.kopilochka.app.AppContr;
 import ua.kiev.foxtrot.kopilochka.interfaces.Delete_Serial;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
 /**
@@ -32,7 +31,7 @@ public class Serials_ListView_Adapter extends BaseAdapter {
     TextView scan_result;
     Button scan_button;
     Button delete_button;
-    private Typeface calibri_bold;
+    //private Typeface calibri_bold;
 
     public Serials_ListView_Adapter(Context context, int sn_count,
                                          Delete_Serial delete_click, Interfaces interfaces) {
@@ -41,7 +40,7 @@ public class Serials_ListView_Adapter extends BaseAdapter {
         this.interfaces = interfaces;
         this.serials_data = new ArrayList<String>(sn_count);
         while(serials_data.size() < sn_count) serials_data.add("");
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", context);
     }
 
     public Serials_ListView_Adapter(Context context, List<String> arrayList,
@@ -134,7 +133,7 @@ public class Serials_ListView_Adapter extends BaseAdapter {
             setItem(position, ""); //context.getString(R.string.hist_sn_imei_hint)
         }
         scan_result.setText(getItem(position));
-        scan_result.setTypeface(calibri_bold);
+        scan_result.setTypeface(AppContr.calibri_bold);
         return convertView;
     }
 }

@@ -1,9 +1,10 @@
 package ua.kiev.foxtrot.kopilochka;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -15,18 +16,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import test.com.pstat.PstatProvider;
 import ua.kiev.foxtrot.kopilochka.adapters.SliderMenuAdapter;
 import ua.kiev.foxtrot.kopilochka.app.AppContr;
+import ua.kiev.foxtrot.kopilochka.data.Post_SN;
 import ua.kiev.foxtrot.kopilochka.database.DB;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Action_P2;
@@ -40,14 +38,16 @@ import ua.kiev.foxtrot.kopilochka.fragments.ScanFragment;
 import ua.kiev.foxtrot.kopilochka.fragments.Start_P1;
 import ua.kiev.foxtrot.kopilochka.fragments.Start_P2;
 import ua.kiev.foxtrot.kopilochka.fragments.WTF_P1;
+import ua.kiev.foxtrot.kopilochka.http.Methods;
+import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
 import ua.kiev.foxtrot.kopilochka.receivers.BackgroundService;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
+import ua.kiev.foxtrot.kopilochka.receivers.NetworkChangeReceiver;
 import ua.kiev.foxtrot.kopilochka.utils.Dialogs;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
 
-public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress {
+public class MainActivity extends AppCompatActivity implements Interfaces, OnBackPress, HttpRequest {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -55,24 +55,32 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     RelativeLayout mainView;
     ListView list_slidermenu;
     SliderMenuAdapter adapter;
-    ArrayList<String> menu_items;
-    TextView main_text, menu_text;
-    Button open_close;
 
     FragmentTransaction transaction;
     FragmentManager fragmentManager;
     FrameLayout fragment_place;
-    boolean service_running;
     DB db = AppContr.db;
 
-    ScanFragment scanner;
-    private String scan_code;
     private Encryption encrypt;
-    private boolean account_logged = false;
-    private String start_session, start_login, start_password;
 
     private String TAG = "MainActivity";
-    public Typeface calibri, calibri_bold;
+
+    private List<Post_SN> arrayList;
+    private Post_SN register_item;
+    ProgressDialog pDialog;
+
+    NetworkChangeReceiver broadcastReceiver = new NetworkChangeReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            CallSync();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +89,15 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
 
         db.create();
 
-        PstatProvider item = new PstatProvider();
-        item.init(getBaseContext());
-        item.addEvent("Kopilka", null);
+//        PstatProvider item = new PstatProvider();
+//        item.init(getBaseContext());
+//        item.addEvent("Kopilka", null);
+
+        registerReceiver(broadcastReceiver, new IntentFilter("INTERNET_AWAKE"));
 
         encrypt = Encryption.getDefault("Key", "Disabled", new byte[16]);
-        calibri = FontCache.get("fonts/calibri.ttf", getBaseContext());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getBaseContext());
+        //calibri = FontCache.get("fonts/calibri.ttf", getBaseContext());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getBaseContext());
 
         fragmentManager = getSupportFragmentManager();
 
@@ -279,6 +289,60 @@ public class MainActivity extends AppCompatActivity implements Interfaces, OnBac
     public void SaveUser() {
         //Encrypt & Save token
         Utils.Save_User(this, encrypt);
+    }
+
+    @Override
+    public void CallSync() {
+        arrayList = db.getPost_SN_List(Const.reg_status_await);
+        if(arrayList != null && arrayList.size()>0){
+            Dialogs.ShowCallSyncDialog(this, this);
+        }
+
+    }
+
+    @Override
+    public void DoSync() {
+        pDialog = new ProgressDialog(this);
+        pDialog.show();
+        SyncRepeat();
+    }
+
+    private void SyncRepeat(){
+        register_item = arrayList.get(arrayList.size()-1);
+        Methods.post_SN(this, register_item, this);
+    }
+
+    @Override
+    public void http_result(int type, String result) {
+        switch (type){
+            case Const.postSN:
+                if(Methods.RegisterReceive(this, result, register_item)){
+                    //succes_count++;
+                } else {
+                    //error_count++;
+                }
+                arrayList.remove(arrayList.size()-1);
+                if(arrayList !=null && arrayList.size() > 0) {
+                    SyncRepeat();
+                } else {
+                    //Dialog for completeing SYNC
+                    if(pDialog != null && pDialog.isShowing())
+                        pDialog.dismiss();
+                    Dialogs.ShowSyncDialog(this);
+//                    if(arrayList !=null && arrayList.size() == 0 && (succes_count > 0 || error_count > 0)){
+//                        CreateNotification("Повідомлення", "Вдало зареєстровано - " + String.valueOf(succes_count)
+//                                + System.getProperty("line.separator") + " невдалих реєстрацій - " + String.valueOf(error_count) , "");
+//                        succes_count = 0;
+//                        error_count = 0;
+//                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void http_error(int type, String error) {
+
     }
 
     @Override

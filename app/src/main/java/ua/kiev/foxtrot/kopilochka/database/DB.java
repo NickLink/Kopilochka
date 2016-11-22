@@ -198,9 +198,11 @@ public class DB {
     }
 
     public Cursor getModelByGroupIdCursor(int group) {
-        String selection = Const.model_group_id + " = ?";
+        String table = Tables.table_name_models + " as model inner join " + Tables.table_name_actions
+                + " as action on model.model_action = action.action_id";
+        String selection = Const.model_group_id + " = ? and action.action_type_id = 1";
         String[] selectionArgs = {String.valueOf(group)};
-        return mDB.query(Tables.table_name_models, null, selection, selectionArgs, null, null, null);
+        return mDB.query(table, null, selection, selectionArgs, null, null, null);
     }
 
     public Cursor getModelByIdsCursor(int action, int model) {
@@ -211,6 +213,12 @@ public class DB {
 
     public Cursor getActionsCursor() {
         return mDB.query(Tables.table_name_actions, null, null, null, null, null, null);
+    }
+
+    public Cursor getActionsCursor(int action_type) {
+        String selection = Const.action_type_id + " = ?";
+        String[] selectionArgs = {String.valueOf(action_type)};
+        return mDB.query(Tables.table_name_actions, null, selection, selectionArgs, null, null, null);
     }
 
     public Cursor getActionByIdCursor(int action) {
@@ -401,10 +409,26 @@ public class DB {
         Cursor myCursor = this.getActionsCursor();
         myCursor.moveToFirst();
         //if(myCursor.moveToFirst()) {
-            while (myCursor.isAfterLast() == false) {
-                actions.add(getAction(myCursor));
-                myCursor.moveToNext();
-            }
+        while (myCursor.isAfterLast() == false) {
+            actions.add(getAction(myCursor));
+            myCursor.moveToNext();
+        }
+        //} else actions = null;
+        //Log.v("", "SSS getActionArray = " + actions.size());
+        //this.close();
+        return actions;
+    }
+
+    public ArrayList<Action> getActionArray(int action_type){
+        ArrayList<Action> actions = new ArrayList<Action>();
+        //this.open();
+        Cursor myCursor = this.getActionsCursor(action_type);
+        myCursor.moveToFirst();
+        //if(myCursor.moveToFirst()) {
+        while (myCursor.isAfterLast() == false) {
+            actions.add(getAction(myCursor));
+            myCursor.moveToNext();
+        }
         //} else actions = null;
         //Log.v("", "SSS getActionArray = " + actions.size());
         //this.close();
@@ -477,7 +501,7 @@ public class DB {
                     String.valueOf(data.getAction_id()),
                     String.valueOf(data.getModel_id()),
                     StringTools.StringFromList(data.getSerials())};
-            if(mDB.delete(Tables.table_name_postsn, selection, selectionArgs) == 1){
+            if(mDB.delete(Tables.table_name_postsn, selection, selectionArgs) > 0){
                 //All ok
                 this.getDB().setTransactionSuccessful();
                 is_ok = true;

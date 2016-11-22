@@ -1,7 +1,6 @@
 package ua.kiev.foxtrot.kopilochka.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import ua.kiev.foxtrot.kopilochka.data.FinInfo;
 import ua.kiev.foxtrot.kopilochka.http.Requests;
 import ua.kiev.foxtrot.kopilochka.interfaces.HttpRequest;
 import ua.kiev.foxtrot.kopilochka.interfaces.OnBackPress;
-import ua.kiev.foxtrot.kopilochka.ui.FontCache;
 import ua.kiev.foxtrot.kopilochka.utils.Encryption;
 import ua.kiev.foxtrot.kopilochka.utils.Parser;
 import ua.kiev.foxtrot.kopilochka.utils.Utils;
@@ -33,7 +31,7 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
     Interfaces interfaces;
     OnBackPress onBackPress;
 
-    private Typeface calibri, calibri_bold;
+    //private Typeface calibri, calibri_bold;
 
     ExpandableListView payment_listview;
     FinInfo_ExpList_Adapter adapter;
@@ -67,8 +65,8 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
         View rootView = inflater.inflate(R.layout.frag_data_p1_extra, container,
                 false);
 
-        calibri = FontCache.get("fonts/calibri.ttf", getActivity());
-        calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
+        //calibri = FontCache.get("fonts/calibri.ttf", getActivity());
+        //calibri_bold = FontCache.get("fonts/calibri_bold.ttf", getActivity());
         //Header part
         header = inflater.inflate(R.layout.frag_data_p1_extra_header, null);
         fininfo_name = (TextView)header.findViewById(R.id.fininfo_name);
@@ -94,13 +92,13 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
 //                R.color.holo_green_light,
 //                R.color.holo_orange_light,
 //                R.color.holo_red_light);
-        fininfo_name.setTypeface(calibri_bold);
-        fininfo_contact_e_mail.setTypeface(calibri);
-        fininfo_contact_e_mail_title.setTypeface(calibri);
-        fininfo_contact_phone.setTypeface(calibri);
-        fininfo_contact_phone_title.setTypeface(calibri);
-        fininfo_bonus.setTypeface(calibri_bold);
-        data_f5_ua_message.setTypeface(calibri);
+        fininfo_name.setTypeface(AppContr.calibri_bold);
+        fininfo_contact_e_mail.setTypeface(AppContr.calibri);
+        fininfo_contact_e_mail_title.setTypeface(AppContr.calibri);
+        fininfo_contact_phone.setTypeface(AppContr.calibri);
+        fininfo_contact_phone_title.setTypeface(AppContr.calibri);
+        fininfo_bonus.setTypeface(AppContr.calibri_bold);
+        data_f5_ua_message.setTypeface(AppContr.calibri);
 
         getFromInternet();
 
@@ -114,7 +112,7 @@ public class Data_P1_Extra extends BaseFragment implements HttpRequest {
             }
         });
         menu_item_title.setText(getString(R.string.menu_data));
-        menu_item_title.setTypeface(calibri_bold);
+        menu_item_title.setTypeface(AppContr.calibri_bold);
         return rootView;
     }
 

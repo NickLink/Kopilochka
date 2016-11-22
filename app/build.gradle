@@ -25,11 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'me.dm7.barcodescanner:zbar:1.9'
-
-//    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-
-    compile project(':pstat_release')
 }
 
