@@ -83,7 +83,7 @@ public class Notif_ListView_Adapter extends BaseAdapter {
             notyLayout.setBackgroundResource(R.drawable.message_grey);
         } else if(feed.getNotice_type_id() == 3){
             imageView.setImageResource(R.drawable.f5_head_3);
-            notyLayout.setBackgroundResource(R.drawable.message_red);
+            notyLayout.setBackgroundResource(R.drawable.message_orange);
         } else if(feed.getNotice_type_id() == 4){
             imageView.setImageResource(R.drawable.f5_head_4);
             notyLayout.setBackgroundResource(R.drawable.message_red);

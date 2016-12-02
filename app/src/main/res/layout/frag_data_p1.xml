@@ -25,7 +25,6 @@
                 style="@style/myHeader_Red_24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/log_01_work_with" />
 
             <TextView
@@ -115,9 +114,12 @@
             <Button
                 android:id="@+id/data_login_button"
                 style="@style/myWhite_24"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:background="@drawable/blue_button_selector"
                 android:text="@string/data_login_button_text"
                 android:textAllCaps="false" />

@@ -56,15 +56,22 @@
                     style="@style/myTableH_13Base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:text="Бонус/шт"  />
 
                 <TextView
                     android:id="@+id/action_p3_bonus_points"
                     style="@style/myWhite_24"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_grey_corners"
-                    android:textAlignment="center" />
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"/>
 
 
             </LinearLayout>

@@ -145,8 +145,10 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
                     doSerialsRegister();
                 } else {
                     if(arrayList !=null && arrayList.size() == 0 && (succes_count > 0 || error_count > 0)){
-                        CreateNotification("Повідомлення", "Вдало зареєстровано - " + String.valueOf(succes_count)
-                                + System.getProperty("line.separator") + " невдалих реєстрацій - " + String.valueOf(error_count) , "");
+                        CreateNotification(context.getString(R.string.notification_ticker),
+                                context.getString(R.string.notification_good) + String.valueOf(succes_count)
+                                + System.getProperty("line.separator") + context.getString(R.string.notification_bad)
+                                + String.valueOf(error_count) , "");
                         succes_count = 0;
                         error_count = 0;
                     }
@@ -165,14 +167,14 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
 
     @Override
     public void http_error(int type, String error) {
-        CreateNotification("Повідомлення", "Помилка інтернет з\'єднання", error);
+        //CreateNotification("Повідомлення", "Помилка інтернет з\'єднання", error);
     }
 
     private void PutNoticesInDatabase(ArrayList<Notice> notices) {
         if(db.addNoticeArray(notices)){
             //Data to base added successfully
         } else {
-            CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
+            //CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
         }
     }
 
@@ -180,7 +182,7 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         if(db.addActionArray(actions)){
             //Data to base added successfully
         } else {
-            CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
+            //CreateNotification("Повідомлення", "Помилка запису данних у базу.", "");
         }
     }
 
@@ -226,10 +228,10 @@ public class PeriodicTaskReceiver extends BroadcastReceiver implements HttpReque
         long[] vibrate = new long[] { 1000, 1000, 1000 };
 
         Notification builder = new Notification.Builder(context)
-                .setTicker("Повідомлення")
+                .setTicker(context.getString(R.string.notification_ticker))
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.bug)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pIntent)
                 .setStyle(new Notification.BigTextStyle().bigText(text))
                 //.addAction(R.drawable.pencil, "Open", pIntent)

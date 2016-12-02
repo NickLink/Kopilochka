@@ -370,9 +370,34 @@ public class Dialogs {
         }
 
         if (item.getReg_status() == Const.reg_status_error) {
+            //=================================================
             error_title.setVisibility(View.VISIBLE);
             error_text.setVisibility(View.VISIBLE);
-            error_text.setText(item.getFail_reason());
+            StringBuilder sb = new StringBuilder();
+            sb.append(context.getString(R.string.register_error1));
+            sb.append(" ");
+            sb.append(Utils.getDateFromMillis(item.getReg_date()));
+            sb.append(" ");
+            sb.append(context.getString(R.string.register_error2));
+            sb.append(" ");
+            sb.append(item.getFail_reason());
+            sb.append(" ");
+            sb.append(context.getString(R.string.register_error3));
+            error_text.setText(sb.toString());
+        } else if(item.getReg_status() == Const.reg_status_await){
+            //=================================================
+            error_title.setVisibility(View.VISIBLE);
+            error_text.setVisibility(View.VISIBLE);
+            error_text.setText(context.getString(R.string.register_await));
+        } else if(item.getReg_status() == Const.reg_status_ok){
+            //=================================================
+            StringBuilder sb = new StringBuilder();
+            sb.append(context.getString(R.string.register_success1));
+            sb.append(" ");
+            sb.append(Utils.getDateFromMillis(item.getReg_date()));
+            sb.append(" ");
+            sb.append(context.getString(R.string.register_success2));
+            error_text.setText(sb.toString());
         }
         cancel_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,6 +412,7 @@ public class Dialogs {
         action_name.setTypeface(AppContr.calibri_bold);
         model_name.setTypeface(AppContr.calibri_bold);
         serial_numbers_list.setTypeface(AppContr.calibri_bold);
+        error_text.setTypeface(AppContr.calibri_bold);
         dialog.show();
     }
 

@@ -14,12 +14,13 @@
     <Button
         android:id="@+id/action_register_model_button"
         style="@style/myWhite_24"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/act_register_model_button"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textAllCaps="false"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/blue_button_selector"/>
 
 

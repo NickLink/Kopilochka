@@ -68,12 +68,14 @@
 
         <Button
             android:id="@+id/data_show_extra_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/data_extradata_button"
             style="@style/myWhite_24"
             android:background="@drawable/blue_button_selector"
             android:layout_marginTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
             android:textAllCaps="false"
             android:layout_gravity="center_horizontal"/>
 

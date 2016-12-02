@@ -97,23 +97,11 @@
 
     <string name="cancel_scan">Відмінити</string>
 
-    <!--<string name="data_enter_email_text">Введите email</string>-->
-    <!--<string name="data_enter_password_text">Введите пароль</string>-->
-
     <string name="input_error">Помилка вводу даних.</string>
     <string name="fill_all_fields">Заповніть будь ласка всі поля вірно.</string>
     <string name="input_ok">Ок</string>
 
     <string name="data_loading">Дані завантажуються. Хвилинку...</string>
-    <!--&lt;!&ndash;Error codes&ndash;&gt;-->
-    <!--<string name="incorrect_login_password">Введенные логин/пароль отсутствуют в БД пользователей</string>-->
-    <!--<string name="not_active">Пользователю закрыт доступ к функционалу приложения</string>-->
-    <!--<string name="incorrect_session">Введена некорректная сессия: требуется повторная аутентификация</string>-->
-    <!--<string name="incorrect_data">Введены некорректные данные по модели или серийному номеру</string>-->
-    <!--<string name="double_sn">Введенный серийный номер уже зарегистрирован, повторная регистрация невозможна</string>-->
-
-
-
 
 
     <string name="wtf_ok">Ок</string>
@@ -137,5 +125,15 @@
     <string name="call_sync_title">Увага!</string>
     <string name="call_sync_text">В наявності є моделі, що очікують реєстрації. Відправити їх зараз?</string>
     <string name="call_sync_text2">Реєстрацію проведено - результати можете подивитись у історії реєстрацій.</string>
+
+    <string name="notification_ticker">Повідомлення</string>
+    <string name="notification_good">Вдало зареєстровано - </string>
+    <string name="notification_bad"> невдалих реєстрацій - </string>
+    <string name="register_await">Серійний номер очікує на реєстрацію: він буде зареєстрований при наявності Інтернету.</string>
+    <string name="register_error1">Серійний номер не було зареєстровано </string>
+    <string name="register_error2"> за причини </string>
+    <string name="register_error3">. Ви можете виправити помилку та спробувати ще раз.</string>
+    <string name="register_success1">Серійний номер було вдало зареєстровано </string>
+    <string name="register_success2">. Ви можете видалити серійний номер з Історії, при цьому він не буде видалений з бази реєстрації f5.ua</string>
 
 </resources>

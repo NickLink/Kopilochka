@@ -45,14 +45,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="9">
 
         <TextView
             android:id="@+id/textView7"
             style="@style/myTableH_13Base"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:text="@string/hist_model_text" />
 
         <TextView
@@ -60,7 +60,7 @@
             style="@style/myTableH_13Base"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:text="@string/hist_sn_imei_text" />
     </LinearLayout>
 

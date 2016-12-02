@@ -25,36 +25,39 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:weightSum="3">
 
         <Button
             android:id="@+id/action_ok"
             style="@style/myWhite_24"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="49dp"
             android:text="@string/ok"
             android:background="@drawable/blue_button_selector"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/action_scan"
             style="@style/myWhite_24"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="49dp"
             android:background="@drawable/photo_button_selector"
             android:textAllCaps="false"
             android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp" />
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"/>
         <!--android:text="@string/act_scan"-->
 
         <Button
             android:id="@+id/action_delete"
             style="@style/myWhite_24"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="49dp"
-
             android:background="@drawable/bin_button_selector"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:layout_weight="1"/>
         <!--android:text="@string/act_delete"-->
     </LinearLayout>
 </LinearLayout>

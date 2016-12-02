@@ -20,15 +20,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="4"
-        android:paddingLeft="10dp">
+        android:layout_weight="4">
 
         <TextView
             android:id="@+id/model_serial"
             style="@style/mySub_Black_18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text" />
+            android:text="New Text"
+            android:gravity="left"/>
     </LinearLayout>
 
     <RelativeLayout

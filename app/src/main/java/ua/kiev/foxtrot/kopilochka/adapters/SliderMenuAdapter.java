@@ -37,7 +37,7 @@ public class SliderMenuAdapter extends BaseAdapter {
         menuItemList = new ArrayList<MenuItem>();
         menuItemList.add(new MenuItem(context.getString(R.string.menu_start), //Start
                 AppContr.getSharPref().getBoolean(Const.new_in_group, true),
-                Utils.getResourceId(context, "f5_head")));
+                Utils.getResourceId(context, "logo_with_stroke"))); // f5_head
         menuItemList.add(new MenuItem(context.getString(R.string.menu_notification), //Notices
                 AppContr.getSharPref().getBoolean(Const.new_in_notice, true),
                 Utils.getResourceId(context, "letter")));
