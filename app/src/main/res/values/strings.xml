@@ -108,6 +108,7 @@
     <string name="warning_title">Увага!</string>
 
     <string name="warning_session_expired">Час токену вичерпано - залогіньтесь будь ласка.</string>
+    <string name="warning_data_broken">Проводяться профілактичні роботи на сервері F5.ua, прохання спробувати зв\'язатись з нами пізніше. Просимо вибачення за незручності.</string>
     <string name="warning_user_not_active">Профіль користувача не активний, зверніться будь ласка до адміністрації Ф5.</string>
     <string name="warning_ok">Ок</string>
     <string name="unknown_error">Невідома помилка - зверніться до розробника будь ласка.</string>

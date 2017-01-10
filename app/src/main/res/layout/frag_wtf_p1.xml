@@ -33,7 +33,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4">
+        android:weightSum="40">
 
         <TextView
             android:id="@+id/wtf_name"
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/wtf_name_text"
-            android:layout_weight="1" />
+            android:layout_weight="12" />
 
         <EditText
             android:id="@+id/wtf_name_edit"
@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:layout_weight="3"
+            android:layout_weight="28"
             android:background="@null"/>
     </LinearLayout>
 
@@ -63,7 +63,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4">
+        android:weightSum="40">
 
         <TextView
             android:id="@+id/wtf_email"
@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/wtf_email_text"
-            android:layout_weight="1" />
+            android:layout_weight="12" />
 
         <EditText
             android:id="@+id/wtf_email_edit"
@@ -79,7 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:layout_weight="3"
+            android:layout_weight="28"
             android:background="@null"/>
     </LinearLayout>
 
@@ -93,7 +93,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4">
+        android:weightSum="40">
 
         <TextView
             android:id="@+id/wtf_text"
@@ -101,14 +101,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/wtf_text_text"
-            android:layout_weight="1" />
+            android:layout_weight="12" />
 
         <EditText
             android:id="@+id/wtf_text_edit"
             style="@style/myRegular_21"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="28"
             android:background="@null"/>
     </LinearLayout>
 

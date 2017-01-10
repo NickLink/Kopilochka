@@ -122,7 +122,8 @@
                 android:paddingRight="20dp"
                 android:background="@drawable/blue_button_selector"
                 android:text="@string/data_login_button_text"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
