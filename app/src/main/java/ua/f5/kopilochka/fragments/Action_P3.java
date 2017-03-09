@@ -45,6 +45,7 @@ import ua.f5.kopilochka.utils.Utils;
  * Created by NickNb on 07.10.2016.
  */
 public class Action_P3 extends BaseFragment implements Delete_Serial, HttpRequest {
+    private static final String TAG = "TAG";
     private long mLastClickTime = 0;
     Interfaces interfaces;
     OnBackPress onBackPress;
@@ -310,14 +311,26 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         if (edit_mode) {
             editPostSN_toBase(item, edited_serials);
         } else {
-            savePostSN_toBase(item);
+            //We need to check if this item was saved before
+            if(db.getPostSNbyData(
+                    item.getAction_id(),
+                    item.getModel_id(),
+                    StringTools.StringFromList(item.getSerials()).replace("\"", "")) != null){
+                //Record exist show dialog for existing record
+                Dialogs.ShowInternetDialog(getActivity(), getString(R.string.hist_reg_already));
+                ClearOrFinish();
+                return;
+            } else {
+                //Record unique - proceed recording
+                long position = db.addPostSN(item);
+            }
+//            savePostSN_toBase(item);
         }
         if (Connect.isOnline(getActivity())) {
 
             pDialog = new ProgressDialog(getActivity());
             pDialog.show();
             Methods.post_SN(getActivity(), item, this);
-
         } else {
             Dialogs.ShowInternetDialog(getActivity(), getString(R.string.hist_reg_with_inet));
             ClearOrFinish();
@@ -341,9 +354,19 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
         return item;
     }
 
-    private long savePostSN_toBase(Post_SN item) {
-        long position = db.addPostSN(item);
-        return position;
+    private void savePostSN_toBase(Post_SN item) {
+        //We need to check if this item was saved before
+        if(db.getPostSNbyData(
+                item.getAction_id(),
+                item.getModel_id(),
+                StringTools.StringFromList(item.getSerials()).replace("\"", "")) != null){
+            //Record exist show dialog for existing record
+
+        } else {
+            //Record unique - proceed recording
+            long position = db.addPostSN(item);
+        }
+
     }
 
     private boolean editPostSN_toBase(Post_SN item, String old_serials) {
@@ -401,20 +424,23 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
 
             } else {
                 if (data.has(Const.ok) && data.getInt(Const.ok) == 1) {
+                    Log.v(TAG, "2121 ->> response OK");
                     Post_SN received = new Post_SN();
                     received.setAction_id(data.getInt(Const.action_id));
                     received.setModel_id(data.getInt(Const.model_id));
                     received.setReg_date(Utils.getMillisFromDate(data.getString(Const.date)));
                     received.setReg_status(Const.reg_status_ok);
                     received.setSerials(StringTools.ListFromString(data.getString(Const.serials)));
+                    received.setFail_reason("");
                     if (db.setStatus_Post_SN_item(received)) {
                         //model successfully registered
+                        Log.v(TAG, "2121 ->> model successfully registered");
                         Dialogs.ShowRegDialog(getActivity(), true);
                         ClearOrFinish();
                         //adapter.getSerials_data().clear();
                     } else {
                         //something wrong with DB
-
+                        Log.v(TAG, "2121 ->> something wrong with DB");
                     }
 
                 }
@@ -437,9 +463,6 @@ public class Action_P3 extends BaseFragment implements Delete_Serial, HttpReques
                     history.NotifyAdapter();
                 }
             onBackPress.onBackPressed();
-
-
-
         } else {
             for (int i = 0; i < adapter.getSerials_data().size(); i++) {
                 adapter.getSerials_data().set(i, "");

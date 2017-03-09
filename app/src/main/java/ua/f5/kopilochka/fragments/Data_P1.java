@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import ua.f5.kopilochka.Const;
 import ua.f5.kopilochka.Interfaces;
@@ -159,7 +160,14 @@ public class Data_P1 extends BaseFragment implements HttpRequest {
         switch (type) {
             case Const.getSession:
                 //Parse data
-                AppContr.userData = Parser.getUserData(result);
+                try {
+                    AppContr.userData = Parser.getUserData(result);
+                } catch (Exception e){
+                    Clear_Input_Fields();
+                    Dialogs.ShowJSONErrorDialog(getActivity());
+                    return;
+                }
+
                 if (AppContr.userData != null) {
                     switch (AppContr.userData.getCode()) {
                         case Const.JSON_Ok:

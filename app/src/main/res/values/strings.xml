@@ -49,6 +49,7 @@
     <string name="hist_sn_imei_text">СН/IMEI</string>
     <string name="hist_sn_imei_hint">IMEI/Серійний номер</string>
     <string name="hist_reg_with_inet">Реєстрація відбудеться при наявності Інтернету</string>
+    <string name="hist_reg_already">Ви вже реєстрували цей серійний номер/імеї, подивитися результат можна в Історії реєстрацій</string>
     <string name="hist_imei_sn_text">Серійний номер/імеі</string>
     <string name="hist_explan_text">Пояснення</string>
 

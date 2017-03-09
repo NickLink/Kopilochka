@@ -122,6 +122,7 @@ public class Parser {
     public static UserData getUserData(String result){
         UserData item = new UserData();
         try {
+            Log.v("->>", "-->> " + result);
             JSONObject data = new JSONObject(result);
             if(data.has(Const.JSON_Error)){
                 item.setCode(data.getJSONObject(Const.JSON_Error).getInt(Const.JSON_Code));

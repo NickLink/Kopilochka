@@ -5,13 +5,11 @@ package ua.f5.kopilochka;
  */
 public class Const {
     public static final String BACKGROUND_SERVICE_BATTERY_CONTROL = new String("battery_service");
-    public static final String BEER_DOWNLOAD_PROGRESS = new String("beer_download_progress");
     public static final String myAppPrefs = "myAppPrefs";
 
-    public static final String BBS_NEWS_API_KEY = "a463fd41d3e94d9b8237df34320e6b9d";
-    public static final String BBS_NEWS_API_PATH = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=";
-    public static final String API_PATH = "http://dev.f5.ua/api/kopilochka/";
-
+    //public static final String API_PATH = "https://f5.ua/api/kopilochka/";
+    public static final String API_PATH = "https://m.f5.ua/api/kopilochka/";
+    //public static final String API_PATH = "http://f5.ua/api/kopilochka/";
 
     public static final String TAG = "kopilochka";
     public static final String TAG_JSON = "TAG_JSON";

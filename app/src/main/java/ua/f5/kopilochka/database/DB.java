@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -484,10 +485,19 @@ public class DB {
             cv.put(Const.reg_date, data.getReg_date());
             cv.put(Const.reg_status, data.getReg_status());
             cv.put(Const.fail_reason, data.getFail_reason());
+
+            for (String s: cv.keySet()
+                 ) {
+                Log.v("", "2121 CV key = " + s + " value = " + cv.get(s));
+            }
+
             code = mDB.insert(Tables.table_name_postsn, null, cv);
-            if (code != -1) this.getDB().setTransactionSuccessful();
+            if (code != -1) {
+                this.getDB().setTransactionSuccessful();
+                Log.v("", "2121 addPostSN setTransactionSuccessful code = " + code);
+            }
         } catch (Exception e){
-            //Log.v("", "SSS Exception addPostSN= " + e.toString());
+            Log.v("", "2121 addPostSN Exception = " + e.toString());
             code = -1;
         }finally {
             this.getDB().endTransaction();
@@ -563,22 +573,30 @@ public class DB {
         //Cursor cursor = this.getPostSNbyData(data);
         //if(cursor.moveToFirst()){
         String selection = Const.action_id + " = ? AND " + Const.model_id + " = ? AND " + Const.serials + " = ?";
+        Log.v(TAG, "2121 ->> selection = " + selection);
         String[] selectionArgs = {
                 String.valueOf(data.getAction_id()),
                 String.valueOf(data.getModel_id()),
-                StringTools.StringFromList(data.getSerials())};
+                StringTools.StringFromList(data.getSerials()).replace("\"", "")};
+        for (String s: selectionArgs
+             ) {
+            Log.v(TAG, "2121 ->> selectionArgs = " + s);
+        }
         ContentValues cv = new ContentValues();
         cv.put(Const.reg_status, data.getReg_status());
         cv.put(Const.fail_reason, data.getFail_reason());
+        Log.v(TAG, "2121 ->> fail_reason = " + data.getFail_reason());
         this.getDB().beginTransaction();
         if(mDB.update(Tables.table_name_postsn, cv, selection, selectionArgs) > 0){
             //All ok
+            Log.v(TAG, "2121 ->> All ok");
             this.getDB().setTransactionSuccessful();
             this.getDB().endTransaction();
             //this.close();
             return true;
         } else {
             //No record found
+            Log.v(TAG, "2121 ->> No record found ");
             this.getDB().endTransaction();
             //this.close();
             return false;

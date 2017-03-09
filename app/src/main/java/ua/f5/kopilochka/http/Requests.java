@@ -1,6 +1,8 @@
 package ua.f5.kopilochka.http;
 
 import android.content.Context;
+import android.util.Base64;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -13,14 +15,34 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.apache.http.HttpVersion;
+import org.apache.http.client.HttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import ua.f5.kopilochka.Const;
 import ua.f5.kopilochka.MyLifecycleHandler;
@@ -28,6 +50,23 @@ import ua.f5.kopilochka.app.AppContr;
 import ua.f5.kopilochka.interfaces.HttpRequest;
 import ua.f5.kopilochka.utils.Dialogs;
 import ua.f5.kopilochka.utils.Utils;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 
 /**
  * Created by NickNb on 05.10.2016.
@@ -37,6 +76,7 @@ public class Requests {
     private Context context;
     private HttpRequest request;
     int req_type;
+//    HashMap<String, Object> gl_params;
 
     public Requests(Context context, int req_type, HttpRequest request){ //, Context context
         this.context = context;
@@ -44,27 +84,9 @@ public class Requests {
         this.req_type = req_type;
     }
 
-    public void getNewsData(){
-        StringRequest stringObjReq = new StringRequest(Request.Method.GET,
-                Const.BBS_NEWS_API_PATH + Const.BBS_NEWS_API_KEY,new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //Log.v(TAG, "SSS String responce=" + response.toString());
-                request.http_result(req_type, response.toString());
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //VolleyLog.d(TAG, "Error: " + error.getMessage());
-                        request.http_error(req_type, error.getMessage());
-                    }
-
-                });
-        AppContr.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
-    }
-
     public void getHTTP_Responce(HashMap<String, Object> params){
+
+//        gl_params = params;
 
         JSONObject jsonBody = new JSONObject();
         JSONArray serials = new JSONArray((List)(params.get(Const.serials)));
@@ -77,12 +99,13 @@ public class Requests {
                     jsonBody.put(entry.getKey().toString(),entry.getValue().toString());
             }
             final String mRequestBody = jsonBody.toString();
-            //Log.v("", "2121 mRequestBody =" + mRequestBody);
+            Log.v(TAG, "2121 Const.API_PATH =" + Const.API_PATH);
+            Log.v(TAG, "2121 mRequestBody =" + mRequestBody);
             StringRequest stringObjReq = new StringRequest(Request.Method.POST,
                     Const.API_PATH, new Response.Listener<String>() { //jsonBody
                 @Override
                 public void onResponse(String response) {
-                    //Log.v(TAG, "SSS String responce=" + response);
+                    Log.v(TAG, "2121 String responce =" + response);
                     //Log.v(TAG, "SSS String CheckError_1_2=" + Utils.CheckError_1_2(context, response));
                     request.http_result(req_type, Utils.CheckError_1_2(context, response));
                 }
@@ -121,6 +144,14 @@ public class Requests {
                     return "application/json"; //"application/json; charset=utf-8"
                 }
 
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    Map<String, String> headers = new HashMap<>();
+//                    headers.put("Content-Type", "application/json");
+//                    headers.putAll(getAuthHeaders((String)gl_params.get("login"), (String)gl_params.get("password")));
+//                    return headers;
+//                }
+
                 @Override
                 public byte[] getBody() throws AuthFailureError {
                     try {
@@ -131,6 +162,7 @@ public class Requests {
                     }
                 }
             };
+            AllCertificatesAndHostsTruster.apply();
             AppContr.getInstance().addToRequestQueue(stringObjReq, Const.TAG_JSON);
             
         } catch (JSONException e) {
@@ -140,5 +172,13 @@ public class Requests {
         }
 
     }
+
+//    public Map<String, String> getAuthHeaders(String loginName, String password) {
+//        HashMap<String, String> params = new HashMap<String, String>();
+//        String creds = String.format("%s:%s", loginName, password);
+//        String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+//        params.put("Authorization", auth);
+//        return params;
+//    }
 
 }
